@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title id="pageTitle">You're Invited</title>
+
+
+    <!-- =====================================
+         GOOGLE FONTS
+    ====================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================
+         CSS
+    ====================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<main class="invitation">
+
+
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
+
+    <div class="stars"></div>
+
+    <div class="ambient-glow"></div>
+
+
+
+    <!-- =====================================
+         OPENING SCREEN
+    ====================================== -->
+
+    <section
+        class="opening-screen"
+        id="openingScreen"
+    >
+
+        <div class="intro-text">
+
+            <span>
+                <span id="openingLine1"></span>
+            </span>
+
+            <strong>
+                <span id="openingEmphasis"></span>
+            </strong>
+
+            <span>
+                <span id="openingLine2"></span>
+            </span>
+
+        </div>
+
+
+        <div class="envelope-scene">
+
+            <div
+                class="envelope-wrapper"
+                id="envelopeWrapper"
+            >
+
+                <div class="envelope">
+
+
+                    <!-- LETTER -->
+
+                    <div class="letter">
+
+                        <span>
+                            <span id="letterLine1"></span>
+                        </span>
+
+                        <strong>
+                            <span id="letterEmphasis"></span>
+                        </strong>
+
+                        <span>
+                            <span id="letterLine2"></span>
+                        </span>
+
+                    </div>
+
+
+                    <!-- ENVELOPE FRONT -->
+
+                    <div class="envelope-front"></div>
+
+
+                    <!-- ENVELOPE FLAP -->
+
+                    <div class="envelope-flap"></div>
+
+
+                    <!-- WAX SEAL -->
+
+                    <div
+                        class="wax-seal"
+                        id="waxSeal"
+                    >
+                        ✦
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- OPEN BUTTON -->
+
+            <button
+                class="open-button"
+                id="openInvitation"
+            >
+                <span id="openButtonText"></span>
+            </button>
+
+        </div>
+
+
+        <div class="bottom-hint">
+            <span id="openingHint"></span>
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         SCRATCH REVEAL
+    ====================================== -->
+
+    <section
+        class="reveal-section"
+        id="revealSection"
+    >
+
+        <div class="reveal-content">
+
+
+            <!-- HEADING -->
+
+            <div class="reveal-heading">
+
+                <span>
+                    <span id="revealEyebrow"></span>
+                </span>
+
+                <h1>
+                    <span id="revealTitle"></span>
+                </h1>
+
+                <p>
+                    <span id="revealDescription"></span>
+                </p>
+
+            </div>
+
+
+            <!-- PHOTO SCRATCH CARD -->
+
+            <div
+                class="photo-reveal"
+                id="photoReveal"
+            >
+
+                <img
+                    src=""
+                    alt=""
+                    class="reveal-image"
+                    id="revealImage"
+                    draggable="false"
+                >
+
+
+                <!-- SCRATCH COVER -->
+
+                <div
+                    class="reveal-cover"
+                    id="revealCover"
+                >
+
+                    <canvas
+                        id="scratchCanvas"
+                    ></canvas>
+
+
+                    <div
+                        class="scratch-content"
+                        id="scratchContent"
+                    >
+
+                        <div class="scratch-symbol">
+                            ✦
+                        </div>
+
+                        <strong>
+                            <span id="scratchPrompt"></span>
+                        </strong>
+
+                        <span>
+                            <span id="scratchPromptDetail"></span>
+                        </span>
+
+                        <small class="scratch-hint">
+                            ✧
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHOTO FRAME -->
+
+                <div class="photo-frame"></div>
+
+
+                <!-- PARTICLES -->
+
+                <div
+                    class="scratch-particles"
+                    id="scratchParticles"
+                ></div>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div class="reveal-progress">
+
+                <div class="progress-track">
+
+                    <div
+                        class="progress-bar"
+                        id="progressBar"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPLETE MESSAGE -->
+
+            <div
+                class="reveal-complete"
+                id="revealComplete"
+            >
+
+                <span>
+                    ✦
+                </span>
+
+                <p>
+                    <span id="revealCompleteMessage"></span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         WELCOME SECTION
+    ====================================== -->
+
+    <section
+        class="welcome-section"
+        id="welcomeSection"
+    >
+
+        <div class="welcome-content">
+
+
+            <!-- SYMBOL -->
+
+            <div class="welcome-symbol">
+                ✦
+            </div>
+
+
+            <!-- EYEBROW -->
+
+            <span class="welcome-eyebrow">
+                <span id="welcomeEyebrow"></span>
+            </span>
+
+
+            <!-- TITLE -->
+
+            <h1 class="welcome-title">
+
+                <span id="welcomeTitle"></span>
+
+            </h1>
+
+
+            <!-- DIVIDER -->
+
+            <div class="welcome-divider">
+
+                <span></span>
+
+                ✦
+
+                <span></span>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <p class="welcome-text">
+
+                <span id="welcomeDescription"></span>
+
+            </p>
+
+
+            <!-- NAMES -->
+
+            <div class="welcome-names">
+
+                <span>
+                    <span id="eventNames"></span>
+                </span>
+
+                <small>
+                    <span id="welcomeNamesSuffix"></span>
+                </small>
+
+            </div>
+
+
+            <!-- DISCOVER BUTTON -->
+
+            <button
+                class="discover-button"
+                id="discoverButton"
+            >
+
+                <span>
+                    <span id="discoverButtonText"></span>
+                </span>
+
+                <b>
+                    ↓
+                </b>
+
+            </button>
+
+        </div>
+
+
+        <!-- SCROLL HINT -->
+
+        <div class="welcome-scroll-hint">
+
+            <span>
+                <span id="welcomeScrollHint"></span>
+            </span>
+
+            <div class="scroll-line"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         MAIN INVITATION
+    ====================================== -->
+
+    <section
+        class="main-invitation"
+        id="mainInvitation"
+    >
+
+        <div class="invitation-inner">
+
+
+            <!-- TOP SYMBOL -->
+
+            <div class="invitation-top-symbol">
+                ✦
+            </div>
+
+
+            <!-- EYEBROW -->
+
+            <span class="invitation-eyebrow">
+                <span id="invitationEyebrow"></span>
+            </span>
+
+
+            <!-- MAIN HEADING -->
+        <h1>
+            <span id="eventTitleLine1"></span>
+            <br>
+            <span id="eventTitleLine2"></span>
+        </h1>
+
+
+            <!-- DATE -->
+
+            <div class="date-display">
+                <span id="eventDateDay"></span>
+                <span id="eventDateMonth"></span>
+                <span id="eventDateYear"></span>
+
+            </div>
+
+
+            <!-- DATE DIVIDER -->
+
+            <div class="date-divider">
+
+                <span></span>
+
+                ✦
+
+                <span></span>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <p class="invitation-description">
+
+                <span id="invitationDescription"></span>
+
+            </p>
+
+
+            <!-- EVENT NAME -->
+
+            <div class="event-name">
+
+                <span>
+                    <span id="eventLabel"></span>
+                </span>
+
+                <h3>
+                    <span id="eventName"></span>
+                </h3>
+
+                <small>
+                    <span id="familyLine"></span>
+                </small>
+
+            </div>
+
+
+            <!-- EVENT PREVIEW -->
+
+            <div class="event-preview">
+
+
+                <!-- DAY -->
+
+                <div class="event-preview-item">
+
+                    <span class="preview-icon">
+                        ♡
+                    </span>
+
+                    <strong>
+                        <span id="eventWeekday"></span>
+                    </strong>
+
+                    <small>
+                        <span id="dayPreviewLabel"></span>
+                    </small>
+
+                </div>
+
+
+                <div class="event-preview-line"></div>
+
+
+                <!-- TIME -->
+
+                <div class="event-preview-item">
+
+                    <span class="preview-icon">
+                        ◷
+                    </span>
+                <strong id="eventTime">
+                </strong>
+
+                    <small>
+                        <span id="timePreviewLabel"></span>
+                    </small>
+
+                </div>
+
+
+                <div class="event-preview-line"></div>
+
+
+                <!-- VENUE -->
+
+                <div class="event-preview-item">
+
+                    <span class="preview-icon">
+                        ♧
+                    </span>
+
+                    <strong id="eventVenue">
+                    </strong>
+
+                    <small>
+                        <span id="venuePreviewLabel"></span>
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- DETAILS BUTTON -->
+
+            <button
+                class="details-button"
+                id="detailsButton"
+            >
+
+                <span>
+                    <span id="detailsButtonText"></span>
+                </span>
+
+                <b>
+                    ↓
+                </b>
+
+            </button>
+
+        </div>
+
+
+        <!-- BOTTOM HINT -->
+
+        <div class="invitation-bottom-hint">
+
+            <span>
+                <span id="invitationScrollHint"></span>
+            </span>
+
+            <div></div>
+
+        </div>
+
+    </section>
+<!-- =========================================
+     EVENT DETAILS SECTION
+========================================= -->
+
+<section class="event-details-section" id="eventDetailsSection">
+
+    <div class="event-details-inner">
+
+        <div class="details-symbol">✦</div>
+
+        <p class="details-eyebrow" id="detailsEyebrow"></p>
+
+        <h2 class="details-title">
+            <span id="detailsTitle"></span>
+        </h2>
+
+        <div class="details-divider">
+            <span>✦</span>
+        </div>
+
+        <p class="details-intro">
+            <span id="detailsIntro"></span>
+        </p>
+
+        <!-- DATE -->
+        <div class="detail-card">
+
+            <div class="detail-icon">01</div>
+
+            <div class="detail-content">
+                <span class="detail-label" id="dateDetailsLabel"></span>
+                <h3 id="eventDateDisplay"></h3>
+                <p id="eventDetailsWeekday"></p>
+            </div>
+
+        </div>
+
+        <!-- TIME -->
+        <div class="detail-card">
+
+            <div class="detail-icon">02</div>
+
+            <div class="detail-content">
+                <span class="detail-label" id="timeDetailsLabel"></span>
+                <h3 id="eventDetailsTime"></h3>
+                <p id="eventTimeNote"></p>
+            </div>
+
+        </div>
+
+        <!-- VENUE -->
+        <div class="detail-card">
+
+            <div class="detail-icon">03</div>
+
+            <div class="detail-content">
+                <span class="detail-label" id="venueDetailsLabel"></span>
+                <h3 id="eventDetailsVenue"></h3>
+                <p id="eventAddress"></p>
+            </div>
+
+        </div>
+
+        <button class="location-button" id="locationButton">
+            <span id="locationButtonText"></span>
+            <span class="location-arrow">↗</span>
+        </button>
+
+        <div class="details-bottom">
+            <span id="detailsFooterLeft"></span>
+            <span>✦</span>
+            <span id="detailsFooterRight"></span>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Dynamically populated only when gallery or videos are configured. -->
+<div id="eventMedia" hidden></div>
+
+</main>
+
+
+
+<!-- =====================================
+     JAVASCRIPT
+====================================== -->
+
+<script src="event-data.js"></script>
+<script src="script.js"></script>
+
+</body>
+
+</html>
