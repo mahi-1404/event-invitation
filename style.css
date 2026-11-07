@@ -524,8 +524,9 @@ body {
 
 .wax-monogram {
     font-family: var(--font-serif);
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
+    letter-spacing: 1.5px;
     color: var(--gold-200);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8), 0 0 8px rgba(245, 215, 127, 0.6);
     line-height: 1;
@@ -733,6 +734,7 @@ body {
     height: 100%;
     overflow: hidden;
     background: #140d22;
+    border-radius: inherit;
 }
 
 .reveal-image {
@@ -740,12 +742,12 @@ body {
     height: 100%;
     object-fit: cover;
     object-position: center;
-    transform: scale(1.02);
+    transform: scale(1);
     transition: transform 1.5s var(--ease-out-expo);
 }
 
 .photo-reveal-card:hover .reveal-image {
-    transform: scale(1.06);
+    transform: scale(1.05);
 }
 
 .reveal-cover {
@@ -757,18 +759,22 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: inherit;
+    overflow: hidden;
     transition: opacity 0.8s ease;
 }
 
 #scratchCanvas {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
     z-index: 2;
     display: block;
     cursor: crosshair;
     touch-action: none;
+    border-radius: inherit;
 }
 
 .scratch-content {
@@ -831,25 +837,25 @@ body {
 /* Ornate Frame Border */
 .photo-frame-border {
     position: absolute;
-    inset: 12px;
+    inset: 0;
     z-index: 10;
     border: 1px solid rgba(232, 198, 124, 0.45);
     pointer-events: none;
-    border-radius: var(--radius-sm);
+    border-radius: inherit;
 }
 
 .frame-corner {
     position: absolute;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     border-color: var(--gold-300);
     border-style: solid;
 }
 
-.corner-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
-.corner-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
-.corner-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
-.corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+.corner-tl { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+.corner-tr { top: 8px; right: 8px; border-width: 2px 2px 0 0; }
+.corner-bl { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
+.corner-br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
 
 /* Scratch Particles */
 .scratch-particles {
@@ -1134,16 +1140,17 @@ body {
 }
 
 .crest-monogram {
-    width: 60px;
-    height: 60px;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
     border: 1.5px solid rgba(232, 198, 124, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-serif);
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 700;
+    letter-spacing: 2px;
     color: var(--gold-200);
     background: radial-gradient(circle, rgba(46, 28, 77, 0.5) 0%, rgba(14, 9, 24, 0.8) 100%);
     box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
@@ -1185,7 +1192,7 @@ body {
     line-height: 0.95;
     letter-spacing: -1px;
     color: #f7eee2;
-    margin: 8px 0 24px;
+    margin: 8px 0 14px;
 }
 
 .title-line-1 {
@@ -1207,6 +1214,22 @@ body {
     display: block;
     font-style: italic;
     color: #fdfaf5;
+}
+
+.wedding-badge-pill {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--gold-300);
+    padding: 6px 20px;
+    border-radius: var(--radius-pill);
+    background: rgba(232, 198, 124, 0.1);
+    border: 1px solid rgba(232, 198, 124, 0.35);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    margin: 8px 0 24px;
+    backdrop-filter: blur(8px);
 }
 
 .host-announcement {
@@ -1466,6 +1489,189 @@ body {
 @keyframes mouseScroll {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(14px); opacity: 0; }
+}
+
+/* -----------------------------------------------------
+   SECTION: MEET THE COUPLE (BRIDE & GROOM)
+   ----------------------------------------------------- */
+
+.couple-spotlight-section {
+    padding: 80px 24px 60px;
+    position: relative;
+}
+
+.couple-cards-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.couple-card {
+    flex: 1;
+    max-width: 360px;
+    background: var(--grad-royal-card);
+    border: 1px solid rgba(232, 198, 124, 0.28);
+    border-radius: var(--radius-lg);
+    padding: 34px 26px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(14px);
+    transition: all 0.4s var(--ease-out-expo);
+    position: relative;
+    overflow: hidden;
+}
+
+.couple-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--gold-400);
+    box-shadow: var(--shadow-card-hover), var(--glow-gold);
+}
+
+.couple-photo-wrap {
+    position: relative;
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    padding: 6px;
+    background: linear-gradient(135deg, rgba(245, 215, 127, 0.7) 0%, rgba(184, 134, 11, 0.3) 100%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.couple-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 50%;
+    display: block;
+}
+
+.couple-photo-border {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px dashed rgba(232, 198, 124, 0.45);
+    pointer-events: none;
+    animation: rotateStar 25s linear infinite;
+}
+
+.couple-role {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-400);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.couple-name {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 600;
+    color: #f7eee2;
+    margin-bottom: 10px;
+}
+
+.couple-quote {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: rgba(247, 238, 226, 0.7);
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.couple-union-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.union-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #3d2360 0%, #170f28 100%);
+    border: 1.5px solid var(--gold-400);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(232, 198, 124, 0.4);
+}
+
+.union-rings {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.union-text {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--gold-300);
+    margin-top: 2px;
+}
+
+/* Floating Quick Navigation Dock */
+.quick-nav-dock {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    z-index: 950;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    background: rgba(18, 12, 30, 0.88);
+    border: 1px solid rgba(232, 198, 124, 0.35);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), var(--glow-gold);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: transform 0.4s var(--ease-out-expo), opacity 0.4s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.quick-nav-dock.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nav-item {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: rgba(247, 238, 226, 0.75);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    transition: all 0.25s ease;
+}
+
+.nav-item:hover {
+    color: var(--gold-200);
+    background: rgba(232, 198, 124, 0.15);
+}
+
+.nav-item.rsvp-pill {
+    background: var(--grad-gold);
+    color: #140d24;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.nav-item.rsvp-pill:hover {
+    transform: scale(1.05);
+    color: #0c0817;
 }
 
 /* -----------------------------------------------------

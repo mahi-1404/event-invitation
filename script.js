@@ -70,14 +70,14 @@
                 .join("<br>");
         }
 
-        const names = Array.isArray(data.names) ? data.names.filter(Boolean) : ["Naveen", "Ramya"];
+        const names = Array.isArray(data.names) ? data.names.filter(Boolean) : ["Nithin", "Lekhana"];
         setText("eventNames", names.join(" & "));
 
         // Titles
         const title = data.title || {};
-        setText("eventTitleLine1", title.line1 || "Grihith's");
-        setText("eventTitleLine2", title.line2 || "Second Birthday");
-        setText("familyLine", invitation.familyLine || "Together with our families");
+        setText("eventTitleLine1", title.line1 || "Nithin");
+        setText("eventTitleLine2", title.line2 || "Lekhana");
+        setText("familyLine", invitation.familyLine || "Together with our beloved families");
 
         // Date Display
         setText("eventWeekday", date.weekday || "Sunday");
@@ -88,10 +88,10 @@
         setText("eventDetailsWeekday", date.weekday || "Sunday");
 
         // Time & Venue
-        setMany(["eventTime", "eventDetailsTime"], data.time || "11 AM");
-        setText("eventTimeNote", data.timeNote || "Guests are welcome from 10:30 AM");
-        setMany(["eventVenue", "eventDetailsVenue"], data.venue || "Savi Events Venue");
-        setText("eventAddress", data.address || "Bangalore");
+        setMany(["eventTime", "eventDetailsTime"], data.time || "10:30 AM");
+        setText("eventTimeNote", data.timeNote || "Muhurtham at 10:30 AM • Guests welcome from 9:30 AM");
+        setMany(["eventVenue", "eventDetailsVenue"], data.venue || "Karnataka Police Bhavana");
+        setText("eventAddress", data.address || "Mysore");
 
         // Details Section
         setText("detailsEyebrow", details.eyebrow || "THE CELEBRATION");
@@ -455,7 +455,11 @@
             if (revealSection) {
                 revealSection.classList.add("active");
                 revealSection.removeAttribute("aria-hidden");
-                setTimeout(setupScratchCanvas, 150);
+                // Initialize scratch canvas and adjust as scale animation settles
+                setupScratchCanvas();
+                setTimeout(setupScratchCanvas, 200);
+                setTimeout(setupScratchCanvas, 600);
+                setTimeout(setupScratchCanvas, 1200);
             }
         }, 1800);
     }
@@ -490,18 +494,21 @@
     const FINISH_PERCENT = 55;
 
     function setupScratchCanvas() {
-        if (!scratchCanvas || !revealCover) return;
-        const rect = revealCover.getBoundingClientRect();
-        if (rect.width === 0 || rect.height === 0) return;
+        if (!scratchCanvas || !revealCover || isRevealDone) return;
+        
+        // Use unscaled element dimensions
+        const w = revealCover.offsetWidth || revealCover.clientWidth;
+        const h = revealCover.offsetHeight || revealCover.clientHeight;
+        if (!w || !h) return;
 
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvasW = rect.width;
-        canvasH = rect.height;
+        canvasW = Math.ceil(w);
+        canvasH = Math.ceil(h);
 
-        scratchCanvas.width = Math.floor(canvasW * dpr);
-        scratchCanvas.height = Math.floor(canvasH * dpr);
-        scratchCanvas.style.width = `${canvasW}px`;
-        scratchCanvas.style.height = `${canvasH}px`;
+        scratchCanvas.width = Math.round(canvasW * dpr);
+        scratchCanvas.height = Math.round(canvasH * dpr);
+        scratchCanvas.style.width = "100%";
+        scratchCanvas.style.height = "100%";
 
         scratchCtx = scratchCanvas.getContext("2d");
         scratchCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -519,14 +526,14 @@
         const ctx = scratchCtx;
         if (!ctx) return;
 
-        // Luxurious Gilded Gold & Deep Plum Gradient
+        // Luxurious Gilded Gold & Deep Plum Gradient - extra margin ensures zero edge bleed
         const grad = ctx.createLinearGradient(0, 0, canvasW, canvasH);
         grad.addColorStop(0, "#23163a");
         grad.addColorStop(0.35, "#3b2359");
         grad.addColorStop(0.7, "#281740");
         grad.addColorStop(1, "#180d2a");
         ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, canvasW, canvasH);
+        ctx.fillRect(-4, -4, canvasW + 8, canvasH + 8);
 
         // Radiant Golden Shimmer Halo
         const glow = ctx.createRadialGradient(canvasW * 0.5, canvasH * 0.45, 10, canvasW * 0.5, canvasH * 0.45, canvasW * 0.65);
@@ -534,7 +541,7 @@
         glow.addColorStop(0.5, "rgba(212, 175, 55, 0.12)");
         glow.addColorStop(1, "rgba(212, 175, 55, 0)");
         ctx.fillStyle = glow;
-        ctx.fillRect(0, 0, canvasW, canvasH);
+        ctx.fillRect(-4, -4, canvasW + 8, canvasH + 8);
 
         // Gold Leaf Dust & Star Spangles
         for (let i = 0; i < 90; i++) {
@@ -816,11 +823,11 @@
 
     if (addGoogleCalendarBtn) {
         addGoogleCalendarBtn.addEventListener("click", () => {
-            const title = encodeURIComponent((data.title && `${data.title.line1} ${data.title.line2}`) || "Grihith's Second Birthday Celebration");
-            const details = encodeURIComponent((data.details && data.details.intro) || "Join us to celebrate this beautiful occasion!");
-            const location = encodeURIComponent(`${data.venue || "Savi Events Venue"}, ${data.address || "Bangalore"}`);
+            const title = encodeURIComponent((data.title && `${data.title.line1} & ${data.title.line2}'s Wedding Celebration`) || "Nithin & Lekhana's Wedding Celebration");
+            const details = encodeURIComponent((data.details && data.details.intro) || "Join us to celebrate the wedding of Nithin and Lekhana!");
+            const location = encodeURIComponent(`${data.venue || "Karnataka Police Bhavana"}, ${data.address || "Mysore"}`);
             // Dates format: YYYYMMDDTHHmmssZ
-            const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=20260920T053000Z/20260920T093000Z&details=${details}&location=${location}`;
+            const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=20261126T050000Z/20261126T140000Z&details=${details}&location=${location}`;
             window.open(gcalUrl, "_blank", "noopener,noreferrer");
             showToast("Opening Google Calendar...");
         });
@@ -831,17 +838,17 @@
             const icsContent = [
                 "BEGIN:VCALENDAR",
                 "VERSION:2.0",
-                "PRODID:-//Grihith Birthday//Invitation//EN",
+                "PRODID:-//Nithin and Lekhana Wedding//Invitation//EN",
                 "CALSCALE:GREGORIAN",
                 "METHOD:PUBLISH",
                 "BEGIN:VEVENT",
-                "UID:grihith-second-birthday-2026@invitation",
-                "DTSTAMP:20260920T053000Z",
-                "DTSTART:20260920T053000Z",
-                "DTEND:20260920T093000Z",
-                `SUMMARY:${(data.title && `${data.title.line1} ${data.title.line2}`) || "Grihith's Second Birthday"}`,
-                `DESCRIPTION:${(data.details && data.details.intro) || "Join us for Grihith's Second Birthday Celebration!"}`,
-                `LOCATION:${data.venue || "Savi Events Venue"}, ${data.address || "Bangalore"}`,
+                "UID:nithin-lekhana-wedding-2026@invitation",
+                "DTSTAMP:20261126T050000Z",
+                "DTSTART:20261126T050000Z",
+                "DTEND:20261126T140000Z",
+                `SUMMARY:${(data.title && `${data.title.line1} & ${data.title.line2}'s Wedding`) || "Nithin & Lekhana's Wedding"}`,
+                `DESCRIPTION:${(data.details && data.details.intro) || "Join us to celebrate the wedding of Nithin & Lekhana!"}`,
+                `LOCATION:${data.venue || "Karnataka Police Bhavana"}, ${data.address || "Mysore"}`,
                 "STATUS:CONFIRMED",
                 "END:VEVENT",
                 "END:VCALENDAR"
@@ -850,7 +857,7 @@
             const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = "Grihith-Birthday-Invitation.ics";
+            link.download = "Nithin-Lekhana-Wedding-Invitation.ics";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -861,7 +868,7 @@
 
     if (copyAddressButton) {
         copyAddressButton.addEventListener("click", () => {
-            const address = `${data.venue || "Savi Events Venue"}, ${data.address || "Bangalore"}`;
+            const address = `${data.venue || "Karnataka Police Bhavana"}, ${data.address || "Mysore"}`;
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(address).then(() => {
                     showToast("✓ Venue address copied to clipboard!");
@@ -894,10 +901,10 @@
         if (!timeline) return;
 
         const defaultItinerary = [
-            { time: "10:30 AM", title: "Welcoming & Refreshments", desc: "Arrival of cherished guests and welcome drinks" },
-            { time: "11:00 AM", title: "Celebration & Cake Cutting", desc: "Milestone celebration for Grihith's 2nd birthday" },
-            { time: "12:30 PM", title: "Grand Royal Feast", desc: "Delicious lunch with friends and family" },
-            { time: "02:00 PM", title: "Photographs & Sweet Memories", desc: "Capturing smiles, blessings, and joyful moments" }
+            { time: "09:00 AM", title: "Welcoming of Baraat & Guests", desc: "A traditional welcome with floral showers, refreshing drinks, and auspicious music" },
+            { time: "10:30 AM", title: "Auspicious Muhurtham", desc: "Sacred wedding rituals, Jeerakalla-Bellam, Saptapadi & Mangalya Dharana" },
+            { time: "12:30 PM", title: "Grand Wedding Feast", desc: "A grand traditional wedding lunch to celebrate the newlyweds" },
+            { time: "06:30 PM", title: "Evening Reception & Celebrations", desc: "An enchanting evening of music, celebrations, and photo memories" }
         ];
 
         const items = Array.isArray(data.itinerary) && data.itinerary.length ? data.itinerary : defaultItinerary;
@@ -1055,7 +1062,7 @@
         });
 
         // Load saved RSVP from localStorage
-        const savedRSVP = localStorage.getItem("event_rsvp_grihith");
+        const savedRSVP = localStorage.getItem("event_rsvp_nithin_lekhana");
         if (savedRSVP) {
             try {
                 const parsed = JSON.parse(savedRSVP);
@@ -1071,7 +1078,7 @@
             const blessing = document.getElementById("guestBlessing").value.trim();
 
             const rsvpData = { attendance, name, count, blessing, timestamp: new Date().toISOString() };
-            localStorage.setItem("event_rsvp_grihith", JSON.stringify(rsvpData));
+            localStorage.setItem("event_rsvp_nithin_lekhana", JSON.stringify(rsvpData));
 
             // If a blessing was entered, add it to the blessings wall!
             if (blessing) {
@@ -1097,10 +1104,10 @@
 
             if (res.attendance === "attending") {
                 rsvpSuccessTitle.textContent = `Joyfully Confirmed, ${res.name}!`;
-                rsvpSuccessDetail.textContent = `We are delighted to celebrate with you and your party of ${res.count} on 20 September 2026.`;
+                rsvpSuccessDetail.textContent = `We are delighted to celebrate our wedding with you and your party of ${res.count} on ${data.date && data.date.display ? data.date.display : "26 November 2026"}.`;
             } else {
                 rsvpSuccessTitle.textContent = `Thank You For Your Love, ${res.name}!`;
-                rsvpSuccessDetail.textContent = `We will truly miss you in person, but your warm wishes mean the world to Grihith and our family.`;
+                rsvpSuccessDetail.textContent = `We will miss your presence in person, but your heartfelt blessings mean everything to Nithin, Lekhana and our families.`;
             }
         }
     }
@@ -1113,14 +1120,14 @@
     const blessingsGrid = document.getElementById("blessingsGrid");
 
     const defaultBlessings = [
-        { name: "Aarav & Priya", note: "Wishing sweetest little Grihith the happiest 2nd birthday! May your days be filled with pure laughter and joy!", hearts: 12 },
-        { name: "Sunita & Family", note: "Dearest Naveen & Ramya, congratulations on this beautiful milestone! Sending endless blessings to little Grihith.", hearts: 19 },
-        { name: "Karthik & Deepa", note: "Happy 2nd Birthday to the star of the family! Can't wait to celebrate and see you grow up so bright!", hearts: 15 }
+        { name: "Aarav & Priya", note: "Wishing gorgeous couple Nithin & Lekhana a lifetime of endless love, deep companionship, and pure joy!", hearts: 24 },
+        { name: "Suresh & Meena", note: "Heartiest congratulations to Nithin and Lekhana! May your marriage be blessed with happiness, health, and prosperity.", hearts: 32 },
+        { name: "Karthik & Deepa", note: "Two beautiful souls joined in love! Wishing you both an adventurous and blessed journey together forever!", hearts: 19 }
     ];
 
     function initBlessings() {
         if (!blessingsGrid) return;
-        let stored = localStorage.getItem("event_blessings_grihith");
+        let stored = localStorage.getItem("event_blessings_nithin_lekhana");
         let list = defaultBlessings;
         if (stored) {
             try { list = JSON.parse(stored); } catch (e) {}
@@ -1156,13 +1163,13 @@
     }
 
     function addBlessingToWall(name, note) {
-        let stored = localStorage.getItem("event_blessings_grihith");
+        let stored = localStorage.getItem("event_blessings_nithin_lekhana");
         let list = defaultBlessings;
         if (stored) {
             try { list = JSON.parse(stored); } catch (e) {}
         }
         list.unshift({ name, note, hearts: 1 });
-        localStorage.setItem("event_blessings_grihith", JSON.stringify(list));
+        localStorage.setItem("event_blessings_nithin_lekhana", JSON.stringify(list));
         renderBlessings(list);
     }
 
@@ -1191,6 +1198,16 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
     }
+
+    const quickNavDock = document.getElementById("quickNavDock");
+    window.addEventListener("scroll", () => {
+        if (!quickNavDock || !invitationScrollContainer) return;
+        if (invitationScrollContainer.classList.contains("active") && window.scrollY > 400) {
+            quickNavDock.classList.add("visible");
+        } else {
+            quickNavDock.classList.remove("visible");
+        }
+    }, { passive: true });
 
 
     /* =====================================================
