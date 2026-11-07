@@ -768,18 +768,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: inherit;
+    overflow: hidden;
     transition: opacity 0.8s ease;
 }
 
 #scratchCanvas {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
     z-index: 2;
     display: block;
     cursor: crosshair;
     touch-action: none;
+    border-radius: inherit;
 }
 
 .scratch-content {

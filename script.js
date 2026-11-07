@@ -455,7 +455,12 @@
             if (revealSection) {
                 revealSection.classList.add("active");
                 revealSection.removeAttribute("aria-hidden");
-                setTimeout(setupScratchCanvas, 150);
+                // Measure now and again as the scale-in animation settles
+                // (setupScratchCanvas is a no-op once the user starts scratching)
+                setupScratchCanvas();
+                setTimeout(setupScratchCanvas, 200);
+                setTimeout(setupScratchCanvas, 600);
+                setTimeout(setupScratchCanvas, 1200);
             }
         }, 1800);
     }
@@ -488,20 +493,24 @@
     let lastPoint = null;
     let lastParticleTime = 0;
     const FINISH_PERCENT = 55;
+    let hasScratched = false;   // once true the foil is never redrawn (that would wipe progress)
 
     function setupScratchCanvas() {
-        if (!scratchCanvas || !revealCover) return;
-        const rect = revealCover.getBoundingClientRect();
-        if (rect.width === 0 || rect.height === 0) return;
+        if (!scratchCanvas || !revealCover || isRevealDone || hasScratched) return;
+
+        // Unscaled layout size: getBoundingClientRect() is shrunk by the scale-in animation
+        const w = revealCover.offsetWidth || revealCover.clientWidth;
+        const h = revealCover.offsetHeight || revealCover.clientHeight;
+        if (!w || !h) return;
 
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvasW = rect.width;
-        canvasH = rect.height;
+        canvasW = Math.ceil(w);
+        canvasH = Math.ceil(h);
 
-        scratchCanvas.width = Math.floor(canvasW * dpr);
-        scratchCanvas.height = Math.floor(canvasH * dpr);
-        scratchCanvas.style.width = `${canvasW}px`;
-        scratchCanvas.style.height = `${canvasH}px`;
+        scratchCanvas.width = Math.round(canvasW * dpr);
+        scratchCanvas.height = Math.round(canvasH * dpr);
+        scratchCanvas.style.width = "100%";
+        scratchCanvas.style.height = "100%";
 
         scratchCtx = scratchCanvas.getContext("2d");
         scratchCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -526,7 +535,7 @@
         grad.addColorStop(0.7, "#281740");
         grad.addColorStop(1, "#180d2a");
         ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, canvasW, canvasH);
+        ctx.fillRect(-4, -4, canvasW + 8, canvasH + 8);
 
         // Radiant Golden Shimmer Halo
         const glow = ctx.createRadialGradient(canvasW * 0.5, canvasH * 0.45, 10, canvasW * 0.5, canvasH * 0.45, canvasW * 0.65);
@@ -534,7 +543,7 @@
         glow.addColorStop(0.5, "rgba(212, 175, 55, 0.12)");
         glow.addColorStop(1, "rgba(212, 175, 55, 0)");
         ctx.fillStyle = glow;
-        ctx.fillRect(0, 0, canvasW, canvasH);
+        ctx.fillRect(-4, -4, canvasW + 8, canvasH + 8);
 
         // Gold Leaf Dust & Star Spangles
         for (let i = 0; i < 90; i++) {
@@ -636,7 +645,10 @@
     function startScratch(e) {
         if (isRevealDone) return;
         isScratching = true;
+        hasScratched = true;
         if (scratchContent) scratchContent.style.opacity = "0";
+        // keep receiving move events even if the finger drifts off the canvas
+        try { scratchCanvas.setPointerCapture(e.pointerId); } catch (err) {}
         const pt = getCoords(e);
         lastPoint = pt;
         scratchAt(pt.x, pt.y);
@@ -712,10 +724,10 @@
         scratchCanvas.addEventListener("pointermove", moveScratch);
         scratchCanvas.addEventListener("pointerup", endScratch);
         scratchCanvas.addEventListener("pointercancel", endScratch);
+        // Phones fire "resize" whenever the address bar shows/hides; setupScratchCanvas
+        // ignores it once scratching has begun, so progress is never wiped.
         window.addEventListener("resize", () => {
-            if (!isRevealDone && revealSection.classList.contains("active")) {
-                setupScratchCanvas();
-            }
+            if (revealSection.classList.contains("active")) setupScratchCanvas();
         });
     }
 
