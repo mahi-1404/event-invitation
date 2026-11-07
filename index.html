@@ -2,687 +2,680 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title id="pageTitle">You're Invited</title>
 
+    <!-- Meta Description & Theme Color -->
+    <meta name="description" content="A special invitation to celebrate a beautiful milestone moment.">
+    <meta name="theme-color" content="#090714">
 
     <!-- =====================================
-         GOOGLE FONTS
+         GOOGLE FONTS: Luxury Serif & Modern Sans
     ====================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
-        rel="stylesheet"
-    >
-
-
-    <!-- =====================================
-         CSS
-    ====================================== -->
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-<main class="invitation">
+    <!-- Ambient Cosmic Particle Canvas -->
+    <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
 
+    <!-- Floating Ambient Glow Orbs -->
+    <div class="ambient-glow glow-1" aria-hidden="true"></div>
+    <div class="ambient-glow glow-2" aria-hidden="true"></div>
 
-    <!-- =====================================
-         BACKGROUND
-    ====================================== -->
-
-    <div class="stars"></div>
-
-    <div class="ambient-glow"></div>
-
-
+    <!-- Confetti Canvas for Celebratory Moments -->
+    <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
 
     <!-- =====================================
-         OPENING SCREEN
+         FLOATING AUDIO CONTROLLER
     ====================================== -->
-
-    <section
-        class="opening-screen"
-        id="openingScreen"
-    >
-
-        <div class="intro-text">
-
-            <span>
-                <span id="openingLine1"></span>
-            </span>
-
-            <strong>
-                <span id="openingEmphasis"></span>
-            </strong>
-
-            <span>
-                <span id="openingLine2"></span>
-            </span>
-
+    <div class="music-pill" id="musicToggle" role="button" tabindex="0" aria-label="Toggle background music">
+        <div class="music-bars" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-
-
-        <div class="envelope-scene">
-
-            <div
-                class="envelope-wrapper"
-                id="envelopeWrapper"
-            >
-
-                <div class="envelope">
-
-
-                    <!-- LETTER -->
-
-                    <div class="letter">
-
-                        <span>
-                            <span id="letterLine1"></span>
-                        </span>
-
-                        <strong>
-                            <span id="letterEmphasis"></span>
-                        </strong>
-
-                        <span>
-                            <span id="letterLine2"></span>
-                        </span>
-
-                    </div>
-
-
-                    <!-- ENVELOPE FRONT -->
-
-                    <div class="envelope-front"></div>
-
-
-                    <!-- ENVELOPE FLAP -->
-
-                    <div class="envelope-flap"></div>
-
-
-                    <!-- WAX SEAL -->
-
-                    <div
-                        class="wax-seal"
-                        id="waxSeal"
-                    >
-                        ✦
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- OPEN BUTTON -->
-
-            <button
-                class="open-button"
-                id="openInvitation"
-            >
-                <span id="openButtonText"></span>
-            </button>
-
-        </div>
-
-
-        <div class="bottom-hint">
-            <span id="openingHint"></span>
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================
-         SCRATCH REVEAL
-    ====================================== -->
-
-    <section
-        class="reveal-section"
-        id="revealSection"
-    >
-
-        <div class="reveal-content">
-
-
-            <!-- HEADING -->
-
-            <div class="reveal-heading">
-
-                <span>
-                    <span id="revealEyebrow"></span>
-                </span>
-
-                <h1>
-                    <span id="revealTitle"></span>
-                </h1>
-
-                <p>
-                    <span id="revealDescription"></span>
-                </p>
-
-            </div>
-
-
-            <!-- PHOTO SCRATCH CARD -->
-
-            <div
-                class="photo-reveal"
-                id="photoReveal"
-            >
-
-                <img
-                    src=""
-                    alt=""
-                    class="reveal-image"
-                    id="revealImage"
-                    draggable="false"
-                >
-
-
-                <!-- SCRATCH COVER -->
-
-                <div
-                    class="reveal-cover"
-                    id="revealCover"
-                >
-
-                    <canvas
-                        id="scratchCanvas"
-                    ></canvas>
-
-
-                    <div
-                        class="scratch-content"
-                        id="scratchContent"
-                    >
-
-                        <div class="scratch-symbol">
-                            ✦
-                        </div>
-
-                        <strong>
-                            <span id="scratchPrompt"></span>
-                        </strong>
-
-                        <span>
-                            <span id="scratchPromptDetail"></span>
-                        </span>
-
-                        <small class="scratch-hint">
-                            ✧
-                        </small>
-
-                    </div>
-
-                </div>
-
-
-                <!-- PHOTO FRAME -->
-
-                <div class="photo-frame"></div>
-
-
-                <!-- PARTICLES -->
-
-                <div
-                    class="scratch-particles"
-                    id="scratchParticles"
-                ></div>
-
-            </div>
-
-
-            <!-- PROGRESS -->
-
-            <div class="reveal-progress">
-
-                <div class="progress-track">
-
-                    <div
-                        class="progress-bar"
-                        id="progressBar"
-                    ></div>
-
-                </div>
-
-            </div>
-
-
-            <!-- COMPLETE MESSAGE -->
-
-            <div
-                class="reveal-complete"
-                id="revealComplete"
-            >
-
-                <span>
-                    ✦
-                </span>
-
-                <p>
-                    <span id="revealCompleteMessage"></span>
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================
-         WELCOME SECTION
-    ====================================== -->
-
-    <section
-        class="welcome-section"
-        id="welcomeSection"
-    >
-
-        <div class="welcome-content">
-
-
-            <!-- SYMBOL -->
-
-            <div class="welcome-symbol">
-                ✦
-            </div>
-
-
-            <!-- EYEBROW -->
-
-            <span class="welcome-eyebrow">
-                <span id="welcomeEyebrow"></span>
-            </span>
-
-
-            <!-- TITLE -->
-
-            <h1 class="welcome-title">
-
-                <span id="welcomeTitle"></span>
-
-            </h1>
-
-
-            <!-- DIVIDER -->
-
-            <div class="welcome-divider">
-
-                <span></span>
-
-                ✦
-
-                <span></span>
-
-            </div>
-
-
-            <!-- DESCRIPTION -->
-
-            <p class="welcome-text">
-
-                <span id="welcomeDescription"></span>
-
-            </p>
-
-
-            <!-- NAMES -->
-
-            <div class="welcome-names">
-
-                <span>
-                    <span id="eventNames"></span>
-                </span>
-
-                <small>
-                    <span id="welcomeNamesSuffix"></span>
-                </small>
-
-            </div>
-
-
-            <!-- DISCOVER BUTTON -->
-
-            <button
-                class="discover-button"
-                id="discoverButton"
-            >
-
-                <span>
-                    <span id="discoverButtonText"></span>
-                </span>
-
-                <b>
-                    ↓
-                </b>
-
-            </button>
-
-        </div>
-
-
-        <!-- SCROLL HINT -->
-
-        <div class="welcome-scroll-hint">
-
-            <span>
-                <span id="welcomeScrollHint"></span>
-            </span>
-
-            <div class="scroll-line"></div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================
-         MAIN INVITATION
-    ====================================== -->
-
-    <section
-        class="main-invitation"
-        id="mainInvitation"
-    >
-
-        <div class="invitation-inner">
-
-
-            <!-- TOP SYMBOL -->
-
-            <div class="invitation-top-symbol">
-                ✦
-            </div>
-
-
-            <!-- EYEBROW -->
-
-            <span class="invitation-eyebrow">
-                <span id="invitationEyebrow"></span>
-            </span>
-
-
-            <!-- MAIN HEADING -->
-        <h1>
-            <span id="eventTitleLine1"></span>
-            <br>
-            <span id="eventTitleLine2"></span>
-        </h1>
-
-
-            <!-- DATE -->
-
-            <div class="date-display">
-                <span id="eventDateDay"></span>
-                <span id="eventDateMonth"></span>
-                <span id="eventDateYear"></span>
-
-            </div>
-
-
-            <!-- DATE DIVIDER -->
-
-            <div class="date-divider">
-
-                <span></span>
-
-                ✦
-
-                <span></span>
-
-            </div>
-
-
-            <!-- DESCRIPTION -->
-
-            <p class="invitation-description">
-
-                <span id="invitationDescription"></span>
-
-            </p>
-
-
-            <!-- EVENT NAME -->
-
-            <div class="event-name">
-
-                <span>
-                    <span id="eventLabel"></span>
-                </span>
-
-                <h3>
-                    <span id="eventName"></span>
-                </h3>
-
-                <small>
-                    <span id="familyLine"></span>
-                </small>
-
-            </div>
-
-
-            <!-- EVENT PREVIEW -->
-
-            <div class="event-preview">
-
-
-                <!-- DAY -->
-
-                <div class="event-preview-item">
-
-                    <span class="preview-icon">
-                        ♡
-                    </span>
-
-                    <strong>
-                        <span id="eventWeekday"></span>
-                    </strong>
-
-                    <small>
-                        <span id="dayPreviewLabel"></span>
-                    </small>
-
-                </div>
-
-
-                <div class="event-preview-line"></div>
-
-
-                <!-- TIME -->
-
-                <div class="event-preview-item">
-
-                    <span class="preview-icon">
-                        ◷
-                    </span>
-                <strong id="eventTime">
-                </strong>
-
-                    <small>
-                        <span id="timePreviewLabel"></span>
-                    </small>
-
-                </div>
-
-
-                <div class="event-preview-line"></div>
-
-
-                <!-- VENUE -->
-
-                <div class="event-preview-item">
-
-                    <span class="preview-icon">
-                        ♧
-                    </span>
-
-                    <strong id="eventVenue">
-                    </strong>
-
-                    <small>
-                        <span id="venuePreviewLabel"></span>
-                    </small>
-
-                </div>
-
-            </div>
-
-
-            <!-- DETAILS BUTTON -->
-
-            <button
-                class="details-button"
-                id="detailsButton"
-            >
-
-                <span>
-                    <span id="detailsButtonText"></span>
-                </span>
-
-                <b>
-                    ↓
-                </b>
-
-            </button>
-
-        </div>
-
-
-        <!-- BOTTOM HINT -->
-
-        <div class="invitation-bottom-hint">
-
-            <span>
-                <span id="invitationScrollHint"></span>
-            </span>
-
-            <div></div>
-
-        </div>
-
-    </section>
-<!-- =========================================
-     EVENT DETAILS SECTION
-========================================= -->
-
-<section class="event-details-section" id="eventDetailsSection">
-
-    <div class="event-details-inner">
-
-        <div class="details-symbol">✦</div>
-
-        <p class="details-eyebrow" id="detailsEyebrow"></p>
-
-        <h2 class="details-title">
-            <span id="detailsTitle"></span>
-        </h2>
-
-        <div class="details-divider">
-            <span>✦</span>
-        </div>
-
-        <p class="details-intro">
-            <span id="detailsIntro"></span>
-        </p>
-
-        <!-- DATE -->
-        <div class="detail-card">
-
-            <div class="detail-icon">01</div>
-
-            <div class="detail-content">
-                <span class="detail-label" id="dateDetailsLabel"></span>
-                <h3 id="eventDateDisplay"></h3>
-                <p id="eventDetailsWeekday"></p>
-            </div>
-
-        </div>
-
-        <!-- TIME -->
-        <div class="detail-card">
-
-            <div class="detail-icon">02</div>
-
-            <div class="detail-content">
-                <span class="detail-label" id="timeDetailsLabel"></span>
-                <h3 id="eventDetailsTime"></h3>
-                <p id="eventTimeNote"></p>
-            </div>
-
-        </div>
-
-        <!-- VENUE -->
-        <div class="detail-card">
-
-            <div class="detail-icon">03</div>
-
-            <div class="detail-content">
-                <span class="detail-label" id="venueDetailsLabel"></span>
-                <h3 id="eventDetailsVenue"></h3>
-                <p id="eventAddress"></p>
-            </div>
-
-        </div>
-
-        <button class="location-button" id="locationButton">
-            <span id="locationButtonText"></span>
-            <span class="location-arrow">↗</span>
-        </button>
-
-        <div class="details-bottom">
-            <span id="detailsFooterLeft"></span>
-            <span>✦</span>
-            <span id="detailsFooterRight"></span>
-        </div>
-
+        <span class="music-label" id="musicStatusText">Music Playing</span>
+        <span class="music-icon" id="musicIcon">♪</span>
     </div>
 
-</section>
+    <!-- =====================================
+         MAIN INVITATION CONTAINER
+    ====================================== -->
+    <main class="invitation-app" id="invitationApp">
 
-<!-- Dynamically populated only when gallery or videos are configured. -->
-<div id="eventMedia" hidden></div>
+        <!-- =====================================
+             SCREEN 1: THE ROYAL ENVELOPE
+        ====================================== -->
+        <section class="opening-screen" id="openingScreen">
 
-</main>
+            <!-- Decorative Monogram Crest -->
+            <div class="opening-crest" aria-hidden="true">
+                <svg class="crest-svg" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="46" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                    <circle cx="50" cy="50" r="41" stroke="url(#goldGrad)" stroke-width="0.8"/>
+                    <path d="M50 16 L53 30 L67 33 L55 42 L58 56 L50 47 L42 56 L45 42 L33 33 L47 30 Z" fill="url(#goldGrad)" opacity="0.85"/>
+                    <defs>
+                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fdf3cd"/>
+                            <stop offset="50%" stop-color="#d4af37"/>
+                            <stop offset="100%" stop-color="#aa771c"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <!-- Intro Invitation Line -->
+            <div class="intro-text">
+                <span class="intro-line-1" id="openingLine1">YOU ARE</span>
+                <strong class="intro-emphasis" id="openingEmphasis">Invited</strong>
+                <span class="intro-line-2" id="openingLine2">TO SOMETHING SPECIAL</span>
+            </div>
+
+            <!-- 3D Luxury Envelope Scene -->
+            <div class="envelope-scene">
+                <div class="envelope-wrapper" id="envelopeWrapper" role="button" tabindex="0" aria-label="Open invitation envelope">
+                    
+                    <div class="envelope">
+                        <!-- Golden Foil Trim Inset -->
+                        <div class="envelope-back"></div>
+
+                        <!-- Parchment Letter Inside -->
+                        <div class="letter" id="envelopeLetter">
+                            <div class="letter-inner">
+                                <div class="letter-top-flourish">✦ ✧ ✦</div>
+                                <span class="letter-sub" id="letterLine1"></span>
+                                <strong class="letter-main" id="letterEmphasis"></strong>
+                                <span class="letter-desc" id="letterLine2"></span>
+                                <div class="letter-divider"></div>
+                                <span class="letter-seal-mini">❦</span>
+                            </div>
+                        </div>
+
+                        <!-- Envelope Front Pockets with Beveled Shadows -->
+                        <div class="envelope-left"></div>
+                        <div class="envelope-right"></div>
+                        <div class="envelope-bottom"></div>
+
+                        <!-- Envelope Flap (Folds open in 3D) -->
+                        <div class="envelope-flap" id="envelopeFlap"></div>
+
+                        <!-- 3D Royal Wax Seal -->
+                        <div class="wax-seal" id="waxSeal" title="Tap to Break Seal">
+                            <div class="wax-seal-outer"></div>
+                            <div class="wax-seal-inner">
+                                <span class="wax-symbol">✦</span>
+                                <span class="wax-monogram">G</span>
+                            </div>
+                            <div class="wax-shine"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Call-to-Action Open Button -->
+                <button class="open-button" id="openInvitation" aria-label="Open Invitation">
+                    <span class="btn-sparkle-left">✦</span>
+                    <span id="openButtonText">TAP TO OPEN</span>
+                    <span class="btn-sparkle-right">✦</span>
+                    <span class="btn-shine"></span>
+                </button>
+            </div>
+
+            <!-- Bottom Hint & Skip -->
+            <div class="bottom-hint">
+                <span class="hint-line"></span>
+                <span id="openingHint">A little moment awaits you</span>
+                <span class="hint-line"></span>
+            </div>
+            <button class="skip-to-invitation" id="skipEnvelopeBtn" type="button">Skip to Invitation →</button>
+
+        </section>
 
 
+        <!-- =====================================
+             SCREEN 2: SCRATCH REVEAL EXPERIENCE
+        ====================================== -->
+        <section class="reveal-section" id="revealSection" aria-hidden="true">
 
-<!-- =====================================
-     JAVASCRIPT
-====================================== -->
+            <div class="reveal-content">
 
-<script src="event-data.js"></script>
-<script src="script.js"></script>
+                <!-- Heading -->
+                <div class="reveal-heading">
+                    <span class="reveal-eyebrow" id="revealEyebrow">A LITTLE SURPRISE</span>
+                    <h2 class="reveal-title" id="revealTitle">Something beautiful awaits</h2>
+                    <p class="reveal-description" id="revealDescription">Scratch the golden surface to reveal the special moment.</p>
+                </div>
+
+                <!-- Scratch Card Container -->
+                <div class="photo-reveal-card" id="photoReveal">
+
+                    <!-- Underlying Photograph -->
+                    <div class="reveal-image-wrapper">
+                        <img src="" alt="Special memory" class="reveal-image" id="revealImage" draggable="false">
+                        <div class="image-shimmer" id="imageShimmer"></div>
+                    </div>
+
+                    <!-- Scratch Foil Cover Canvas -->
+                    <div class="reveal-cover" id="revealCover">
+                        <canvas id="scratchCanvas"></canvas>
+
+                        <!-- Shimmering Prompt Overlay -->
+                        <div class="scratch-content" id="scratchContent">
+                            <div class="scratch-symbol-wrap">
+                                <span class="scratch-sparkle">✦</span>
+                                <span class="scratch-coin-icon">✨</span>
+                                <span class="scratch-sparkle">✦</span>
+                            </div>
+                            <strong id="scratchPrompt">SCRATCH HERE</strong>
+                            <span id="scratchPromptDetail">TO REVEAL</span>
+                            <div class="scratch-hand-icon">👆</div>
+                        </div>
+                    </div>
+
+                    <!-- Golden Luxury Frame Overlay -->
+                    <div class="photo-frame-border" aria-hidden="true">
+                        <span class="frame-corner corner-tl"></span>
+                        <span class="frame-corner corner-tr"></span>
+                        <span class="frame-corner corner-bl"></span>
+                        <span class="frame-corner corner-br"></span>
+                    </div>
+
+                    <!-- Scratch Sparkle Particles Container -->
+                    <div class="scratch-particles" id="scratchParticles" aria-hidden="true"></div>
+
+                </div>
+
+                <!-- Scratch Progress Bar & Counter -->
+                <div class="reveal-progress-area">
+                    <div class="progress-info">
+                        <span class="progress-label">Scratch Progress</span>
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                </div>
+
+                <!-- Instant Reveal Button & Skip Hint -->
+                <div class="reveal-actions">
+                    <button class="quick-reveal-btn" id="quickRevealBtn" type="button">
+                        <span>✨ Tap to Unveil Photo</span>
+                    </button>
+                    <button class="skip-reveal-btn" id="skipRevealBtn" type="button">
+                        <span>Skip to Invitation →</span>
+                    </button>
+                </div>
+
+                <!-- Reveal Completion Message & Next Button -->
+                <div class="reveal-complete" id="revealComplete">
+                    <div class="complete-crest">✦ ✧ ✦</div>
+                    <p id="revealCompleteMessage">A beautiful moment</p>
+                    <button class="continue-invitation-btn" id="continueToInvitationBtn" type="button">
+                        <span>Explore the Full Invitation</span>
+                        <span class="arrow-down">↓</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             SCREEN 3: THE FULL ROYAL INVITATION (Continuous Majestic Scroll)
+        ====================================== -->
+        <div class="invitation-scroll-container" id="invitationScrollContainer">
+
+            <!-- ---------------------------------
+                 HERO & ROYAL ANNOUNCEMENT
+            ---------------------------------- -->
+            <section class="invitation-hero-section" id="welcomeSection">
+                <div class="hero-inner">
+
+                    <!-- Royal Filigree Emblem -->
+                    <div class="hero-crest" aria-hidden="true">
+                        <div class="royal-flourish">❦</div>
+                        <div class="crest-monogram">G</div>
+                        <div class="crest-stars">✦ ✦ ✦</div>
+                    </div>
+
+                    <!-- Eyebrows -->
+                    <div class="hero-eyebrow-group">
+                        <span class="royal-badge" id="invitationEyebrow">SAVE THE DATE</span>
+                        <span class="welcome-eyebrow" id="welcomeEyebrow">A SPECIAL DAY AWAITS</span>
+                    </div>
+
+                    <!-- Main Event Title -->
+                    <h1 class="hero-main-title">
+                        <span class="title-line-1" id="eventTitleLine1">Grihith's</span>
+                        <span class="title-line-amp">&</span>
+                        <span class="title-line-2" id="eventTitleLine2">Second Birthday</span>
+                    </h1>
+
+                    <!-- Host / Parents Announcement -->
+                    <div class="host-announcement">
+                        <span class="host-prefix" id="welcomeNamesSuffix">together with our families</span>
+                        <h2 class="host-names" id="eventNames">Naveen & Ramya</h2>
+                        <span class="host-family" id="familyLine">cordially invite you to celebrate with us</span>
+                    </div>
+
+                    <!-- Golden Ornamental Divider -->
+                    <div class="luxury-divider" aria-hidden="true">
+                        <span class="divider-line"></span>
+                        <span class="divider-gem">✦</span>
+                        <span class="divider-line"></span>
+                    </div>
+
+                    <!-- Welcome Note -->
+                    <p class="welcome-text" id="welcomeDescription">
+                        Come celebrate a beautiful moment with us and be part of memories that will last forever.
+                    </p>
+
+                    <!-- Large Interactive Date Display -->
+                    <div class="royal-date-card">
+                        <div class="date-weekday" id="eventWeekday">Sunday</div>
+                        <div class="date-main-row">
+                            <span class="date-day-num" id="eventDateDay">20</span>
+                            <div class="date-col">
+                                <span class="date-month-name" id="eventDateMonth">SEPTEMBER</span>
+                                <span class="date-year-num" id="eventDateYear">2026</span>
+                            </div>
+                        </div>
+                        <div class="date-time-row">
+                            <span class="time-badge">✦ At <span id="eventTime">11 AM</span> ✦</span>
+                        </div>
+                    </div>
+
+                    <!-- Live Countdown Timer -->
+                    <div class="countdown-wrapper" id="countdownWrapper">
+                        <div class="countdown-header">COUNTDOWN TO THE CELEBRATION</div>
+                        <div class="countdown-grid">
+                            <div class="countdown-box">
+                                <span class="countdown-num" id="cdDays">00</span>
+                                <span class="countdown-label">Days</span>
+                            </div>
+                            <span class="countdown-colon">:</span>
+                            <div class="countdown-box">
+                                <span class="countdown-num" id="cdHours">00</span>
+                                <span class="countdown-label">Hours</span>
+                            </div>
+                            <span class="countdown-colon">:</span>
+                            <div class="countdown-box">
+                                <span class="countdown-num" id="cdMinutes">00</span>
+                                <span class="countdown-label">Minutes</span>
+                            </div>
+                            <span class="countdown-colon">:</span>
+                            <div class="countdown-box">
+                                <span class="countdown-num" id="cdSeconds">00</span>
+                                <span class="countdown-label">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Quick Add Buttons -->
+                    <div class="calendar-actions">
+                        <button class="cal-btn google-cal" id="addGoogleCalendarBtn" type="button">
+                            <span>📅 Add to Google Calendar</span>
+                        </button>
+                        <button class="cal-btn ical-btn" id="downloadIcalBtn" type="button">
+                            <span>🗓️ Download .iCal Invite</span>
+                        </button>
+                    </div>
+
+                    <!-- Navigation Down Arrow -->
+                    <div class="scroll-indicator" id="scrollIndicator">
+                        <span class="scroll-hint-text" id="welcomeScrollHint">SCROLL TO EXPLORE</span>
+                        <div class="scroll-animated-mouse">
+                            <span class="scroll-wheel"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ---------------------------------
+                 SECTION: THE CELEBRATION DETAILS
+            ---------------------------------- -->
+            <section class="invitation-details-section" id="eventDetailsSection">
+                <div class="section-container">
+
+                    <!-- Section Header -->
+                    <div class="section-header">
+                        <div class="section-badge" id="detailsEyebrow">THE CELEBRATION</div>
+                        <h2 class="section-title" id="detailsTitle">A Day To<br><span>Remember</span></h2>
+                        <div class="luxury-divider">
+                            <span class="divider-line"></span>
+                            <span class="divider-gem">✦</span>
+                            <span class="divider-line"></span>
+                        </div>
+                        <p class="section-intro" id="detailsIntro">
+                            Join us as we celebrate this beautiful occasion surrounded by the people who mean the most to us.
+                        </p>
+                    </div>
+
+                    <!-- 3 Feature Detail Cards -->
+                    <div class="details-cards-grid">
+
+                        <!-- Card 1: Date -->
+                        <div class="detail-card card-date">
+                            <div class="card-glow"></div>
+                            <div class="detail-icon-badge">
+                                <span class="icon-number">01</span>
+                                <span class="icon-symbol">📅</span>
+                            </div>
+                            <div class="detail-card-content">
+                                <span class="detail-label" id="dateDetailsLabel">DATE & DAY</span>
+                                <h3 class="detail-title" id="eventDateDisplay">20 September 2026</h3>
+                                <p class="detail-sub" id="eventDetailsWeekday">Sunday</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Time -->
+                        <div class="detail-card card-time">
+                            <div class="card-glow"></div>
+                            <div class="detail-icon-badge">
+                                <span class="icon-number">02</span>
+                                <span class="icon-symbol">⏰</span>
+                            </div>
+                            <div class="detail-card-content">
+                                <span class="detail-label" id="timeDetailsLabel">TIME</span>
+                                <h3 class="detail-title" id="eventDetailsTime">11 AM</h3>
+                                <p class="detail-sub" id="eventTimeNote">Guests are welcome from 10:30 AM</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Venue -->
+                        <div class="detail-card card-venue">
+                            <div class="card-glow"></div>
+                            <div class="detail-icon-badge">
+                                <span class="icon-number">03</span>
+                                <span class="icon-symbol">📍</span>
+                            </div>
+                            <div class="detail-card-content">
+                                <span class="detail-label" id="venueDetailsLabel">VENUE</span>
+                                <h3 class="detail-title" id="eventDetailsVenue">Savi Events Venue</h3>
+                                <p class="detail-sub" id="eventAddress">Bangalore</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Interactive Venue & Map Card -->
+                    <div class="venue-showcase-card">
+                        <div class="venue-info">
+                            <div class="venue-pin">✦ SAVI EVENTS VENUE ✦</div>
+                            <h3 class="venue-name">Bangalore</h3>
+                            <p class="venue-note">We are eagerly waiting to welcome you to our festive gathering!</p>
+                            
+                            <div class="venue-actions">
+                                <button class="location-button" id="locationButton" type="button">
+                                    <span id="locationButtonText">VIEW LOCATION</span>
+                                    <span class="location-arrow">↗</span>
+                                </button>
+                                <button class="copy-address-button" id="copyAddressButton" type="button">
+                                    <span id="copyAddressIcon">📋</span>
+                                    <span id="copyAddressText">Copy Venue Address</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Event Highlights Pills -->
+                        <div class="event-meta-pills">
+                            <div class="meta-pill">
+                                <span class="pill-icon">👔</span>
+                                <span class="pill-text">Dress Code: Festive Elegance</span>
+                            </div>
+                            <div class="meta-pill">
+                                <span class="pill-icon">🅿️</span>
+                                <span class="pill-text">Parking Available on Premise</span>
+                            </div>
+                            <div class="meta-pill">
+                                <span class="pill-icon">🍲</span>
+                                <span class="pill-text">Grand Feast & Refreshments</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ---------------------------------
+                 SECTION: EVENT ITINERARY / TIMELINE
+            ---------------------------------- -->
+            <section class="itinerary-section" id="itinerarySection">
+                <div class="section-container">
+                    
+                    <div class="section-header">
+                        <div class="section-badge">SCHEDULE OF EVENTS</div>
+                        <h2 class="section-title">The Celebration <span>Timeline</span></h2>
+                        <div class="luxury-divider">
+                            <span class="divider-line"></span>
+                            <span class="divider-gem">✦</span>
+                            <span class="divider-line"></span>
+                        </div>
+                    </div>
+
+                    <div class="itinerary-timeline" id="itineraryTimeline">
+                        <!-- Populated dynamically via JS or default itinerary -->
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ---------------------------------
+                 SECTION: PRECIOUS MEMORIES GALLERY
+            ---------------------------------- -->
+            <section class="gallery-section" id="gallerySection">
+                <div class="section-container">
+
+                    <div class="section-header">
+                        <div class="section-badge">CHERISHED MOMENTS</div>
+                        <h2 class="section-title">Memories With <span>Love</span></h2>
+                        <div class="luxury-divider">
+                            <span class="divider-line"></span>
+                            <span class="divider-gem">✦</span>
+                            <span class="divider-line"></span>
+                        </div>
+                        <p class="section-intro">
+                            Every milestone is a chapter of joy. Here are some of our favorite memories along the way.
+                        </p>
+                    </div>
+
+                    <!-- Dynamic Gallery Grid -->
+                    <div id="eventMedia" class="event-media-container">
+                        <!-- Populated by JavaScript -->
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ---------------------------------
+                 SECTION: INTERACTIVE RSVP
+            ---------------------------------- -->
+            <section class="rsvp-section" id="rsvpSection">
+                <div class="section-container">
+
+                    <div class="rsvp-card">
+                        <div class="card-corner-decor tl"></div>
+                        <div class="card-corner-decor tr"></div>
+                        <div class="card-corner-decor bl"></div>
+                        <div class="card-corner-decor br"></div>
+
+                        <div class="rsvp-header">
+                            <span class="rsvp-symbol">💌</span>
+                            <h2 class="rsvp-title">Kindly Respond</h2>
+                            <p class="rsvp-sub">Please let us know if you can join us for this joyous occasion.</p>
+                        </div>
+
+                        <form class="rsvp-form" id="rsvpForm">
+
+                            <div class="attendance-options">
+                                <label class="radio-card selected">
+                                    <input type="radio" name="attendance" value="attending" checked>
+                                    <span class="radio-content">
+                                        <span class="radio-emoji">🎉</span>
+                                        <strong>Joyfully Accept</strong>
+                                        <small>Can't wait to celebrate!</small>
+                                    </span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="attendance" value="declined">
+                                    <span class="radio-content">
+                                        <span class="radio-emoji">💐</span>
+                                        <strong>Warm Wishes</strong>
+                                        <small>Sending love from afar</small>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="guestName">Your Full Name</label>
+                                    <input type="text" id="guestName" placeholder="e.g. Ramesh & Family" required autocomplete="name">
+                                </div>
+                                <div class="form-group guests-count-group" id="guestCountGroup">
+                                    <label for="guestCount">Number of Guests</label>
+                                    <select id="guestCount">
+                                        <option value="1">1 Guest</option>
+                                        <option value="2" selected>2 Guests</option>
+                                        <option value="3">3 Guests</option>
+                                        <option value="4">4 Guests</option>
+                                        <option value="5+">5+ Family Members</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="guestBlessing">Heartfelt Blessing or Note for Grihith</label>
+                                <textarea id="guestBlessing" rows="2" placeholder="Write a sweet message, blessing, or warm wish..."></textarea>
+                            </div>
+
+                            <button type="submit" class="rsvp-submit-btn" id="rsvpSubmitBtn">
+                                <span>Confirm RSVP & Send Wishes</span>
+                                <span class="btn-sparkle">✦</span>
+                            </button>
+
+                        </form>
+
+                        <!-- Success Confirmation Message (Hidden Initially) -->
+                        <div class="rsvp-success-message" id="rsvpSuccessMessage" hidden>
+                            <div class="success-icon">✨</div>
+                            <h3 id="rsvpSuccessTitle">Thank You So Much!</h3>
+                            <p id="rsvpSuccessDetail">We have received your response and look forward to celebrating together!</p>
+                            <button type="button" class="rsvp-change-btn" id="rsvpChangeBtn">Update RSVP</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ---------------------------------
+                 SECTION: GUEST BLESSINGS WALL
+            ---------------------------------- -->
+            <section class="blessings-section" id="blessingsSection">
+                <div class="section-container">
+                    
+                    <div class="section-header">
+                        <div class="section-badge">WARM WISHES</div>
+                        <h2 class="section-title">Blessings & <span>Love</span></h2>
+                        <div class="luxury-divider">
+                            <span class="divider-line"></span>
+                            <span class="divider-gem">✦</span>
+                            <span class="divider-line"></span>
+                        </div>
+                    </div>
+
+                    <div class="blessings-grid" id="blessingsGrid">
+                        <!-- Populated by JS -->
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ---------------------------------
+                 SECTION: ROYAL FOOTER
+            ---------------------------------- -->
+            <footer class="royal-footer">
+                <div class="footer-inner">
+                    
+                    <div class="footer-crest" aria-hidden="true">
+                        <span>❦</span>
+                        <div class="footer-dots">✦ ✧ ✦</div>
+                    </div>
+
+                    <div class="footer-credits">
+                        <span class="footer-left" id="detailsFooterLeft">WITH LOVE</span>
+                        <span class="footer-mid">✦</span>
+                        <span class="footer-right" id="detailsFooterRight">SEE YOU THERE</span>
+                    </div>
+
+                    <h3 class="footer-names">Naveen & Ramya</h3>
+                    <p class="footer-note">Together with our family, we thank you with all our hearts.</p>
+
+                    <button class="back-to-top-btn" id="backToTopBtn" type="button" aria-label="Back to Top">
+                        <span class="arrow-up">↑</span>
+                        <span>Back to Top</span>
+                    </button>
+
+                    <div class="footer-copy">
+                        <small>Celebration of Grihith's Second Birthday • Bangalore</small>
+                    </div>
+
+                </div>
+            </footer>
+
+        </div> <!-- /invitation-scroll-container -->
+
+    </main>
+
+
+    <!-- =====================================
+         LIGHTBOX MODAL FOR GALLERY
+    ====================================== -->
+    <div class="lightbox-modal" id="lightboxModal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+        <div class="lightbox-container">
+            <button class="lightbox-close" id="lightboxClose" aria-label="Close photo preview">✕</button>
+            <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
+            <div class="lightbox-content">
+                <img src="" alt="Gallery preview" class="lightbox-img" id="lightboxImg">
+                <div class="lightbox-caption" id="lightboxCaption"></div>
+            </div>
+            <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next photo">›</button>
+        </div>
+    </div>
+
+
+    <!-- =====================================
+         TOAST NOTIFICATION COMPONENT
+    ====================================== -->
+    <div class="toast-notification" id="toastNotification" role="alert" aria-live="polite">
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span class="toast-message" id="toastMessage">Address copied!</span>
+    </div>
+
+
+    <!-- =====================================
+         SCRIPTS
+    ====================================== -->
+    <script src="event-data.js"></script>
+    <script src="script.js"></script>
 
 </body>
 

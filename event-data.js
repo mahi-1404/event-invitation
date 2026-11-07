@@ -18,13 +18,22 @@ const eventData = {
     revealImage: "assets/photos/reveal.jpg",
     // Strings or { src, caption } objects are both supported.
     gallery: [
-    "assets/photos/photo1.jpg",
-    "assets/photos/photo2.jpg",
-    "assets/photos/photo3.jpg",
-    "assets/photos/photo4.jpg",
-    "assets/photos/photo5.jpg",
-    "assets/photos/photo6.jpg"
-],
+        "assets/photos/photo1.jpg",
+        "assets/photos/photo3.jpg",
+        "assets/photos/photo4.jpg",
+        "assets/photos/photo5.jpg",
+        "assets/photos/photo6.jpg",
+        "assets/photos/photo7.jpg"
+    ],
+    // Schedule / Itinerary
+    itinerary: [
+        { time: "10:30 AM", title: "Welcome & Refreshments", desc: "Arrival of cherished guests and welcome drinks" },
+        { time: "11:00 AM", title: "Cake Cutting & Celebration", desc: "Celebrating Grihith's milestone 2nd birthday" },
+        { time: "12:30 PM", title: "Royal Feast & Lunch", desc: "A grand celebration buffet with family & friends" },
+        { time: "02:00 PM", title: "Photos & Sweet Memories", desc: "Capturing smiles and heartfelt moments together" }
+    ],
+    // Target event date/time for the live countdown (ISO format or date string)
+    countdownTarget: "2026-09-20T11:00:00",
     videos: [],
     music: { enabled: true, source: "assets/music/background.mp3" }
 };
