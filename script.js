@@ -866,6 +866,25 @@
         });
     }
 
+    const shareInviteBtn = document.getElementById("shareInviteBtn");
+    if (shareInviteBtn) {
+        shareInviteBtn.addEventListener("click", () => {
+            const shareText = "You're cordially invited to celebrate the wedding of Nithin & Lekhana on Thursday, 26 November 2026 at Karnataka Police Bhavana, Mysore! Please join us and shower your blessings:";
+            const shareUrl = window.location.href;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: "Nithin & Lekhana — Wedding Invitation",
+                    text: shareText,
+                    url: shareUrl
+                }).catch(() => {});
+            } else {
+                const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + "\n" + shareUrl)}`;
+                window.open(waUrl, "_blank", "noopener,noreferrer");
+            }
+        });
+    }
+
     if (copyAddressButton) {
         copyAddressButton.addEventListener("click", () => {
             const address = `${data.venue || "Karnataka Police Bhavana"}, ${data.address || "Mysore"}`;

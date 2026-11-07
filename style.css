@@ -761,13 +761,13 @@ body {
     justify-content: center;
     border-radius: inherit;
     overflow: hidden;
+    background: #23163a;
     transition: opacity 0.8s ease;
 }
 
 #scratchCanvas {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100% !important;
     height: 100% !important;
     z-index: 2;
@@ -1451,6 +1451,22 @@ body {
     transform: translateY(-2px);
 }
 
+.share-btn {
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.22) 0%, rgba(18, 140, 126, 0.12) 100%);
+    color: #a3f7bf;
+    border: 1px solid rgba(37, 211, 102, 0.55);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.share-btn:hover {
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.38) 0%, rgba(18, 140, 126, 0.25) 100%);
+    border-color: #25d366;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+}
+
 /* Scroll Indicator */
 .scroll-indicator {
     display: flex;
@@ -1522,6 +1538,21 @@ body {
     transition: all 0.4s var(--ease-out-expo);
     position: relative;
     overflow: hidden;
+}
+
+.groom-card {
+    order: 1;
+}
+
+.couple-union-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: 2;
+}
+
+.bride-card {
+    order: 3;
 }
 
 .couple-card:hover {
@@ -2643,6 +2674,40 @@ body {
     .details-cards-grid {
         grid-template-columns: 1fr;
         gap: 18px;
+    }
+
+    /* Mobile / Tablet Couple Layout: Groom up, Bride below */
+    .couple-cards-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 16px !important;
+        width: 100% !important;
+        max-width: 380px !important;
+    }
+
+    .couple-card {
+        width: 100% !important;
+        max-width: 340px !important;
+        padding: 28px 20px !important;
+    }
+
+    .groom-card {
+        order: 1 !important; /* Groom up on mobile */
+    }
+
+    .couple-union-divider {
+        order: 2 !important; /* Union emblem between them */
+        margin: 4px 0 !important;
+    }
+
+    .bride-card {
+        order: 3 !important; /* Bride below on mobile */
+    }
+
+    .couple-photo-wrap {
+        width: 145px !important;
+        height: 145px !important;
+        margin-bottom: 16px !important;
     }
 
     .itinerary-timeline::before {
