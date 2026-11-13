@@ -4432,18 +4432,13 @@ textarea:focus-visible {
 }
 
 /* Strokes that get drawn in */
-.med-ring,
-.med-stem {
+.med-ring {
     stroke-dasharray: 1;
     stroke-dashoffset: 0;
 }
 
 .hero-play .med-ring {
     animation: crestDraw 1600ms var(--ease-soft) 200ms backwards;
-}
-
-.hero-play .med-stem {
-    animation: crestDraw 1200ms var(--ease-soft) 800ms backwards;
 }
 
 .hero-play .med-leaf {
@@ -4474,7 +4469,6 @@ textarea:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
     .med-ring,
-    .med-stem,
     .med-leaf,
     .med-dots,
     .med-gems,
