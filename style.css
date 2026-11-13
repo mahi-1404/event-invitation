@@ -5003,3 +5003,43 @@ textarea:focus-visible {
         animation: none;
     }
 }
+
+
+/* =====================================================
+   RSVP SAVING (status line, privacy note, honeypot)
+   ===================================================== */
+
+.rsvp-status {
+    min-height: 1.3em;
+    margin: 12px 0 0;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    color: var(--gold-300);
+}
+
+.rsvp-status.is-error {
+    color: #f4a7ba;
+}
+
+.rsvp-note {
+    margin: 6px 0 0;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(247, 238, 226, 0.5);
+}
+
+.rsvp-submit-btn.is-sending {
+    opacity: 0.75;
+    cursor: progress;
+}
+
+/* Invisible to guests and assistive tech; only bots fill it in */
+.rsvp-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}

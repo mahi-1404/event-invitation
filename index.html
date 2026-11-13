@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=28">
+    <link rel="stylesheet" href="style.css?v=29">
 </head>
 
 <body>
@@ -707,7 +707,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="guestName">Your Full Name</label>
-                                    <input type="text" id="guestName" placeholder="e.g. Ramesh & Family" required autocomplete="name">
+                                    <input type="text" id="guestName" placeholder="e.g. Ramesh & Family" required maxlength="80" autocomplete="name">
                                 </div>
                                 <div class="form-group guests-count-group" id="guestCountGroup">
                                     <label for="guestCount">Number of Guests</label>
@@ -723,13 +723,18 @@
 
                             <div class="form-group">
                                 <label for="guestBlessing">Heartfelt Blessing or Wedding Wish for the Couple</label>
-                                <textarea id="guestBlessing" rows="2" placeholder="Write a sweet message, blessing, or warm wedding wish for Nithin N S & Lekhana C..."></textarea>
+                                <textarea id="guestBlessing" rows="2" maxlength="500" placeholder="Write a sweet message, blessing, or warm wedding wish for Nithin N S & Lekhana C..."></textarea>
                             </div>
 
+                            <!-- Honeypot: invisible to guests; bots fill it and are ignored -->
+                            <input type="text" id="rsvpWebsite" name="website" class="rsvp-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
                             <button type="submit" class="rsvp-submit-btn" id="rsvpSubmitBtn">
-                                <span>Confirm RSVP & Send Wishes</span>
+                                <span id="rsvpSubmitLabel">Confirm RSVP & Send Wishes</span>
                                 <span class="btn-sparkle">✦</span>
                             </button>
+                            <p class="rsvp-status" id="rsvpStatus" role="status" aria-live="polite"></p>
+                            <p class="rsvp-note" id="rsvpNote" hidden>Your reply is shared with Nithin N S and Lekhana C.</p>
 
                         </form>
 
@@ -874,8 +879,8 @@
     <!-- =====================================
          SCRIPTS
     ====================================== -->
-    <script src="event-data.js?v=4"></script>
-    <script src="script.js?v=19"></script>
+    <script src="event-data.js?v=6"></script>
+    <script src="script.js?v=20"></script>
 
 </body>
 

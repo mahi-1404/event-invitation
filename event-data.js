@@ -107,5 +107,9 @@ const eventData = {
     // Target event date/time for the live countdown (ISO format or date string)
     countdownTarget: "2026-11-25T19:00:00",
     videos: [],
-    music: { enabled: true, source: "assets/music/background.mp3" }
+    music: { enabled: true, source: "assets/music/background.mp3" },
+    // RSVP replies are saved to a Google Sheet. Paste the Web app URL from
+    // google-apps-script/SETUP.md between the quotes (it ends with /exec).
+    // While it is empty, replies stay on the guest's own device only.
+    rsvp: { endpoint: "https://script.google.com/macros/s/AKfycbxZ6ThlvCtDmZsyjpQQtTm5bL6dOw37dCYwQYpQSx8ZJoFBpLKywqZikVb9-6F91A4ouA/exec" }
 };

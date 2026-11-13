@@ -1361,6 +1361,56 @@
 
         if (!rsvpForm) return;
 
+        const rsvpEndpoint = () => String((data.rsvp && data.rsvp.endpoint) || "").trim();
+        const submitBtn = document.getElementById("rsvpSubmitBtn");
+        const submitLabel = document.getElementById("rsvpSubmitLabel");
+        const statusEl = document.getElementById("rsvpStatus");
+        const noteEl = document.getElementById("rsvpNote");
+        const idleLabel = submitLabel ? submitLabel.textContent : "";
+        let sending = false;
+
+        // Only tell guests their reply is shared when it really is
+        if (noteEl && rsvpEndpoint()) noteEl.hidden = false;
+
+        function setStatus(message, isError) {
+            if (!statusEl) return;
+            statusEl.textContent = message;
+            statusEl.classList.toggle("is-error", !!isError);
+        }
+
+        function setSending(on) {
+            sending = on;
+            if (submitBtn) {
+                submitBtn.disabled = on;
+                submitBtn.classList.toggle("is-sending", on);
+                submitBtn.setAttribute("aria-busy", on ? "true" : "false");
+            }
+            if (submitLabel) submitLabel.textContent = on ? "Sending your reply…" : idleLabel;
+        }
+
+        // POST as text/plain (a "simple" request, so no preflight) in no-cors mode, which Google
+        // Apps Script accepts. The reply carries a unique id, so a retry is stored only once.
+        async function sendToSheet(endpoint, payload) {
+            const body = JSON.stringify(payload);
+            const attempt = () => {
+                const ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+                const timer = ctrl ? setTimeout(() => ctrl.abort(), 15000) : 0;
+                return fetch(endpoint, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body,
+                    signal: ctrl ? ctrl.signal : undefined
+                }).finally(() => clearTimeout(timer));
+            };
+            try {
+                await attempt();
+            } catch (err) {
+                await new Promise(resolve => setTimeout(resolve, 1200));
+                await attempt(); // one automatic retry; if this fails too, the guest is told
+            }
+        }
+
         // Radio styling toggle
         radioCards.forEach(card => {
             const input = card.querySelector("input");
@@ -1382,14 +1432,42 @@
             } catch (e) {}
         }
 
-        rsvpForm.addEventListener("submit", (e) => {
+        rsvpForm.addEventListener("submit", async (e) => {
             e.preventDefault();
+            if (sending) return;
+
             const attendance = rsvpForm.querySelector('input[name="attendance"]:checked').value;
             const name = document.getElementById("guestName").value.trim();
             const count = document.getElementById("guestCount").value;
             const blessing = document.getElementById("guestBlessing").value.trim();
+            const website = (document.getElementById("rsvpWebsite") || {}).value || "";
 
             const rsvpData = { attendance, name, count, blessing, timestamp: new Date().toISOString() };
+
+            // Save to the Google Sheet first. Nothing is confirmed to the guest unless it was actually sent.
+            const endpoint = rsvpEndpoint();
+            if (endpoint) {
+                setStatus("");
+                setSending(true);
+                try {
+                    await sendToSheet(endpoint, {
+                        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+                        attendance,
+                        name,
+                        count: attendance === "declined" ? 0 : count,
+                        blessing,
+                        website
+                    });
+                } catch (err) {
+                    setSending(false);
+                    setStatus("We could not send your reply. Please check your connection and try again.", true);
+                    showToast("Could not send. Please try again.");
+                    return;
+                }
+                setSending(false);
+                setStatus("");
+            }
+
             localStorage.setItem("event_rsvp_nithin_lekhana", JSON.stringify(rsvpData));
 
             // If a blessing was entered, add it to the blessings wall!
@@ -1398,7 +1476,6 @@
             }
 
             // A small gold sparkle; the success message and toast carry the actual confirmation
-            const submitBtn = document.getElementById("rsvpSubmitBtn");
             const submitRect = submitBtn ? submitBtn.getBoundingClientRect() : null;
             triggerConfetti(
                 submitRect ? submitRect.left + submitRect.width / 2 : window.innerWidth / 2,
