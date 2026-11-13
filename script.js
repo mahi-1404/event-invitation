@@ -1508,6 +1508,10 @@
         // Section headings (the blessings section gets one calm fade as a whole instead)
         add(".section-header", { skip: el => !!el.closest(".blessings-section") });
 
+        // The panoramic portrait and its caption
+        add(".panorama-frame");
+        add(".panorama-caption", { fade: true });
+
         // Couple: the two cards with a very small stagger, emblem between them
         add(".couple-card", { step: 120 });
         add(".couple-union-divider", { fade: true, step: 120 });
@@ -1904,7 +1908,7 @@
 
     function initKenBurns() {
         if (prefersReducedMotion() || !("IntersectionObserver" in window)) return;
-        const figures = document.querySelectorAll(".gallery-figure");
+        const figures = document.querySelectorAll(".gallery-figure, .panorama-frame");
         if (!figures.length) return;
 
         const io = new IntersectionObserver((entries) => {

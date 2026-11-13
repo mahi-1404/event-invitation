@@ -74,7 +74,7 @@ const eventData = {
         footerRight: "SEE YOU THERE"
     },
     // This image is used by the scratch-card reveal
-    revealImage: "assets/photos/WhatsApp Image 2026-11-07 at 10.27.36 PM.jpeg",
+    revealImage: "assets/photos/couple-courtyard-1000.jpg",
     // Gallery of wedding memories
     gallery: [
         {

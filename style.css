@@ -705,8 +705,8 @@ body {
 /* Scratch Card */
 .photo-reveal-card {
     position: relative;
-    width: min(84vw, 360px);
-    aspect-ratio: 3 / 4;
+    width: min(88vw, 480px);
+    aspect-ratio: 5 / 4;
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(232, 198, 124, 0.3);
@@ -728,7 +728,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: 30% 50%;   /* keeps the couple and the statue in frame */
     transform: scale(1.02);
     transition: transform 1.5s var(--ease-out-expo);
 }
@@ -849,7 +849,7 @@ body {
 
 /* Progress Area */
 .reveal-progress-area {
-    width: min(84vw, 360px);
+    width: min(88vw, 480px);
     margin-top: 18px;
 }
 
@@ -2359,7 +2359,7 @@ body {
 
     /* keep the card from eating the whole screen on short phones */
     .photo-reveal-card {
-        width: min(80vw, 340px, calc((100dvh - 300px) * 0.75));
+        width: min(88vw, 420px, calc((100dvh - 300px) * 1.25));
         min-width: 220px;
     }
 
@@ -4541,6 +4541,151 @@ textarea:focus-visible {
     .footer-flourish .fl-line,
     .footer-flourish .fl-gem,
     .footer-flourish .fl-dot {
+        animation: none !important;
+    }
+}
+
+
+/* =====================================================
+   PANORAMIC PORTRAIT
+   A wide, gold-framed photograph between the couple and the
+   details, with the caption beneath so faces stay uncovered.
+   ===================================================== */
+
+.panorama-section {
+    padding: 56px 24px 24px;
+    position: relative;
+}
+
+.panorama-section .section-container {
+    max-width: 1000px;
+}
+
+.panorama-frame {
+    position: relative;
+    margin: 0 auto;
+    padding: 7px;
+    border-radius: 22px;
+    background: linear-gradient(150deg, #fdf3cd 0%, #c8a45d 38%, #8c6206 62%, #e5c982 100%);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 56px rgba(212, 175, 55, 0.13);
+}
+
+/* Gold diamonds at the middle of the top and bottom edges */
+.panorama-frame::before,
+.panorama-frame::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    margin-left: -6px;
+    transform: rotate(45deg);
+    background: linear-gradient(135deg, #fdf3cd, #b8860b);
+    box-shadow: 0 0 12px rgba(245, 215, 127, 0.55);
+    z-index: 3;
+}
+
+.panorama-frame::before { top: -6px; }
+.panorama-frame::after  { bottom: -6px; }
+
+.panorama-photo {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    aspect-ratio: 3 / 2;
+    background: #140d22;
+    box-shadow: inset 0 0 0 2px #120b1f;
+}
+
+.panorama-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 55%;
+}
+
+/* A fine engraved line inside the photograph */
+.panorama-hairline {
+    position: absolute;
+    inset: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(253, 243, 205, 0.45);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.panorama-caption {
+    text-align: center;
+    padding-top: 6px;
+}
+
+.panorama-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(28px, 5.4vw, 46px);
+    line-height: 1.15;
+    letter-spacing: 0.5px;
+    margin: 4px 0 0;
+    background: linear-gradient(180deg, #fff6dc 0%, #ecd08a 55%, #dcb85a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0 2px 12px rgba(212, 175, 55, 0.2));
+}
+
+/* The earlier `section-title span` look is not wanted here */
+.panorama-title span {
+    font-style: inherit;
+    color: inherit;
+}
+
+/* Slow, continuous drift while the photo is on screen (JS toggles .kb-on) */
+.panorama-img {
+    animation: kenBurns 32s ease-in-out infinite alternate;
+    animation-play-state: paused;
+    --kb-x: -12px;
+    --kb-y: -6px;
+}
+
+.panorama-frame.kb-on .panorama-img {
+    animation-play-state: running;
+}
+
+@media (max-width: 600px) {
+    .panorama-section {
+        padding: 30px 16px 10px;
+    }
+
+    .panorama-frame {
+        padding: 5px;
+        border-radius: 16px;
+    }
+
+    .panorama-photo {
+        border-radius: 12px;
+    }
+
+    .panorama-hairline {
+        inset: 10px;
+        border-radius: 7px;
+    }
+
+    .panorama-frame::before,
+    .panorama-frame::after {
+        width: 10px;
+        height: 10px;
+        margin-left: -5px;
+    }
+
+    .panorama-frame::before { top: -5px; }
+    .panorama-frame::after  { bottom: -5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .panorama-img {
         animation: none !important;
     }
 }

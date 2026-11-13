@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=20">
+    <link rel="stylesheet" href="style.css?v=23">
 </head>
 
 <body>
@@ -476,6 +476,36 @@
 
 
             <!-- ---------------------------------
+                 SECTION: PANORAMIC PORTRAIT (full-width photograph)
+            ---------------------------------- -->
+            <section class="panorama-section" id="panoramaSection">
+                <div class="section-container">
+                    <figure class="panorama-frame">
+                        <div class="panorama-photo">
+                            <img class="panorama-img"
+                                 src="assets/photos/couple-courtyard-2000.jpg"
+                                 srcset="assets/photos/couple-courtyard-1000.jpg 1000w, assets/photos/couple-courtyard-2000.jpg 2000w"
+                                 sizes="(max-width: 800px) 94vw, 960px"
+                                 width="2000" height="1333"
+                                 alt="Nithin N S and Lekhana C seated together in a traditional courtyard strewn with rose petals"
+                                 loading="lazy" decoding="async">
+                            <div class="panorama-hairline" aria-hidden="true"></div>
+                        </div>
+                    </figure>
+                    <div class="panorama-caption">
+                        <div class="luxury-divider" aria-hidden="true">
+                            <span class="divider-line"></span>
+                            <span class="divider-gem"><svg class="gem-svg" viewBox="0 0 24 24" fill="none" focusable="false"><path d="M12 2 L19 12 L12 22 L5 12 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 8 L15 12 L12 16 L9 12 Z" fill="currentColor"/></svg></span>
+                            <span class="divider-line"></span>
+                        </div>
+                        <!-- Filled from event-data.js (welcome.title) -->
+                        <h2 class="panorama-title" id="welcomeTitle">Two Hearts,<br>One Beautiful Beginning</h2>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ---------------------------------
                  SECTION: THE CELEBRATION DETAILS
             ---------------------------------- -->
             <section class="invitation-details-section" id="eventDetailsSection">
@@ -790,8 +820,8 @@
     <!-- =====================================
          SCRIPTS
     ====================================== -->
-    <script src="event-data.js"></script>
-    <script src="script.js?v=13"></script>
+    <script src="event-data.js?v=2"></script>
+    <script src="script.js?v=14"></script>
 
 </body>
 
