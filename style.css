@@ -129,7 +129,6 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     background: radial-gradient(circle, rgba(142, 68, 173, 0.25) 0%, transparent 70%);
-    animation: pulseGlow 10s ease-in-out infinite alternate;
 }
 
 .glow-2 {
@@ -139,18 +138,6 @@ body {
     left: 50%;
     transform: translate(-50%, 0);
     background: radial-gradient(circle, rgba(212, 175, 55, 0.18) 0%, transparent 70%);
-    animation: pulseGlow 14s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes pulseGlow {
-    0% {
-        transform: translate(-50%, -50%) scale(0.9);
-        opacity: 0.35;
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1.15);
-        opacity: 0.55;
-    }
 }
 
 /* Confetti Canvas */
@@ -280,18 +267,12 @@ body {
     width: 64px;
     height: 64px;
     margin-bottom: 16px;
-    animation: crestFloat 4s ease-in-out infinite;
 }
 
 .crest-svg {
     width: 100%;
     height: 100%;
     filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
-}
-
-@keyframes crestFloat {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-6px) rotate(2deg); }
 }
 
 /* Intro Text */
@@ -594,13 +575,6 @@ body {
 .btn-sparkle-right {
     color: var(--gold-300);
     font-size: 12px;
-    animation: sparkleSpin 3s linear infinite;
-}
-
-@keyframes sparkleSpin {
-    0% { transform: scale(0.8) rotate(0deg); opacity: 0.6; }
-    50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
-    100% { transform: scale(0.8) rotate(360deg); opacity: 0.6; }
 }
 
 /* Bottom Hint */
@@ -669,11 +643,15 @@ body {
     overscroll-behavior: contain;
 }
 
-/* Once the photo is unveiled, drop the helper controls so the
-   "Explore the Full Invitation" button sits comfortably on screen */
+/* Once the photo is unveiled, the helper controls step aside (faded, not
+   removed) so the completion message can take their place without the card
+   jumping. See the "Premium motion system" block at the end of this file. */
 .reveal-section.reveal-done .reveal-progress-area,
 .reveal-section.reveal-done .reveal-actions {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 300ms ease-out, visibility 0s linear 300ms;
 }
 
 .reveal-section.active {
@@ -810,12 +788,6 @@ body {
 
 .scratch-coin-icon {
     font-size: 28px;
-    animation: coinPulse 2s ease-in-out infinite;
-}
-
-@keyframes coinPulse {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.2); opacity: 1; }
 }
 
 .scratch-content strong {
@@ -834,12 +806,6 @@ body {
 .scratch-hand-icon {
     font-size: 24px;
     margin-top: 6px;
-    animation: handSwipe 1.8s ease-in-out infinite;
-}
-
-@keyframes handSwipe {
-    0%, 100% { transform: translateX(-15px) translateY(0); }
-    50% { transform: translateX(15px) translateY(-5px); }
 }
 
 /* Ornate Frame Border */
@@ -879,12 +845,6 @@ body {
     border-radius: 50%;
     background: var(--gold-300);
     box-shadow: 0 0 10px rgba(245, 215, 127, 0.9);
-    animation: particleFly 0.8s ease-out forwards;
-}
-
-@keyframes particleFly {
-    0% { opacity: 1; transform: scale(1) translate(0, 0); }
-    100% { opacity: 0; transform: scale(0.2) translate(var(--px), var(--py)); }
 }
 
 /* Progress Area */
@@ -1022,12 +982,6 @@ body {
 
 .arrow-down {
     font-size: 16px;
-    animation: bounceDown 1.5s ease-in-out infinite;
-}
-
-@keyframes bounceDown {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(5px); }
 }
 
 /* =====================================================
@@ -1597,7 +1551,6 @@ body {
     border-radius: 50%;
     border: 1px dashed rgba(232, 198, 124, 0.45);
     pointer-events: none;
-    animation: rotateStar 25s linear infinite;
 }
 
 .couple-role {
@@ -2324,7 +2277,6 @@ body {
 .success-icon {
     font-size: 42px;
     margin-bottom: 12px;
-    animation: bounceDown 2s infinite;
 }
 
 .rsvp-success-message h3 {
@@ -2837,5 +2789,1166 @@ body {
 
     .countdown-colon {
         font-size: 18px;
+    }
+}
+
+/* Refined premium invitation treatment */
+:root {
+    --bg-night: #080b14;
+    --bg-midnight: #111827;
+    --bg-royal: #182235;
+    --gold-500: #c8a45d;
+    --gold-400: #e5c982;
+    --gold-300: #e5c982;
+}
+
+body {
+    background: radial-gradient(circle at 50% 20%, #182235 0%, #111827 52%, #080b14 100%);
+}
+
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--gold-300);
+    outline-offset: 4px;
+}
+
+.detail-sub,
+.venue-note {
+    white-space: pre-line;
+}
+
+.detail-card,
+.couple-card,
+.venue-showcase-card,
+.rsvp-card {
+    background: linear-gradient(180deg, rgba(24, 34, 53, 0.88), rgba(11, 16, 28, 0.94));
+}
+
+.venue-note {
+    line-height: 1.8;
+}
+
+.open-button,
+.continue-invitation-btn,
+.rsvp-submit-btn,
+.location-button,
+.copy-address-button,
+.cal-btn {
+    min-height: 44px;
+}
+
+.ambient-glow {
+    opacity: 0.24;
+}
+
+.ambient-canvas {
+    opacity: 0.58;
+}
+
+@media (max-width: 600px) {
+    .invitation-hero-section {
+        padding: 92px 20px 64px;
+    }
+
+    .hero-main-title {
+        font-size: clamp(44px, 15vw, 70px);
+    }
+
+    .royal-date-card {
+        padding: 26px 20px;
+    }
+
+    .time-badge {
+        display: block;
+        line-height: 1.7;
+    }
+
+    .details-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .calendar-actions {
+        width: 100%;
+    }
+
+    .cal-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* =====================================================
+   PREMIUM MOTION SYSTEM
+   -----------------------------------------------------
+   One visual language: fade, soft upward movement, a tiny
+   scale (0.98 -> 1), mask/clip reveals, fine gold line
+   drawing, and very slow ambient light.
+
+   Rules of thumb used throughout this block:
+   - Only opacity and transform are animated.
+   - Entrances: ease-out.  Breathing/emphasis: ease-in-out.
+   - Hidden "before reveal" states are gated behind
+     html.motion-ready (added by script.js), so nothing is
+     ever hidden if scripting or IntersectionObserver fails.
+   - Entrance animations use fill-mode "backwards": once they
+     finish, the element returns to its normal styles so hover,
+     focus and press states keep working.
+   ===================================================== */
+
+:root {
+    --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);   /* entrances: soft, unhurried */
+    --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);        /* breathing / emphasis */
+    --t-small: 220ms;                                 /* hover / focus / press */
+    --t-section: 700ms;                               /* section entrances */
+    --t-reveal: 1000ms;                               /* main reveals */
+    --rise: 16px;                                     /* default upward travel */
+    --line-from: 0;                                   /* gold lines grow from 0 (1 = just fade) */
+}
+
+/* ---------- Shared keyframes ---------- */
+
+@keyframes riseIn {
+    from { opacity: 0; transform: translate3d(0, var(--rise, 14px), 0) scale(var(--from-scale, 1)); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes openFade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes mrIn {
+    from { opacity: 0; transform: translate3d(0, var(--rise, 16px), 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes lineGrow {
+    from { opacity: 0; transform: scaleX(var(--line-from, 0)); }
+    to   { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes lineDraw {
+    from { opacity: 0; transform: translateX(-50%) scaleY(var(--line-from, 0)); }
+    to   { opacity: 1; transform: translateX(-50%) scaleY(1); }
+}
+
+/* ---------- Ambient light: slower, no heavy blur layers ---------- */
+
+.ambient-glow {
+    filter: none; /* the radial gradient already fades to transparent */
+}
+
+.glow-1 {
+    animation: ambientBreatheA 28s var(--ease-soft) infinite alternate;
+}
+
+.glow-2 {
+    animation: ambientBreatheB 34s var(--ease-soft) infinite alternate-reverse;
+}
+
+@keyframes ambientBreatheA {
+    from { transform: translate(-50%, -50%) scale(0.96); opacity: 0.18; }
+    to   { transform: translate(-50%, -50%) scale(1.06); opacity: 0.3; }
+}
+
+@keyframes ambientBreatheB {
+    from { transform: translate(-50%, 0) scale(0.96); opacity: 0.16; }
+    to   { transform: translate(-50%, 0) scale(1.06); opacity: 0.26; }
+}
+
+/* ---------- Music: equalizer moves only while playing ---------- */
+
+.music-pill {
+    transition: transform var(--t-small) var(--ease-out), border-color var(--t-small) ease,
+                background-color var(--t-small) ease, box-shadow var(--t-small) ease;
+}
+
+.music-bars span {
+    animation-duration: 1.6s;
+    animation-timing-function: var(--ease-soft);
+}
+
+.music-pill.paused .music-bars span {
+    animation-name: none; /* still, flat bars when paused */
+}
+
+/* =====================================================
+   1. OPENING ENVELOPE
+   ===================================================== */
+
+/* Fade the screen out (visibility is delayed so the fade is actually visible) */
+.opening-screen {
+    transition: opacity 700ms var(--ease-soft), transform 700ms var(--ease-out), visibility 0s linear 0s;
+}
+
+.opening-screen.hidden {
+    transform: scale(1.02);
+    transition: opacity 700ms var(--ease-soft), transform 700ms var(--ease-out), visibility 0s linear 700ms;
+}
+
+/* Very subtle warm light behind the envelope */
+.opening-screen::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(150vw, 980px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(226, 176, 96, 0.13) 0%, rgba(226, 176, 96, 0.05) 38%, transparent 68%);
+    animation: warmLight 11s var(--ease-soft) infinite alternate;
+}
+
+@keyframes warmLight {
+    from { opacity: 0.65; transform: translate(-50%, -50%) scale(0.97); }
+    to   { opacity: 1;    transform: translate(-50%, -50%) scale(1.04); }
+}
+
+/* Sparse, almost static dust */
+.opening-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle at 12% 24%, rgba(245, 215, 127, 0.55) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 27% 68%, rgba(245, 215, 127, 0.4) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 38% 12%, rgba(253, 243, 205, 0.45) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 51% 83%, rgba(245, 215, 127, 0.35) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 63% 30%, rgba(253, 243, 205, 0.5) 0 1.2px, transparent 1.8px),
+        radial-gradient(circle at 74% 74%, rgba(245, 215, 127, 0.4) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 86% 18%, rgba(245, 215, 127, 0.5) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 92% 58%, rgba(253, 243, 205, 0.35) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 7% 82%, rgba(245, 215, 127, 0.35) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 45% 46%, rgba(253, 243, 205, 0.25) 0 1px, transparent 1.6px);
+    animation: dustDrift 9s var(--ease-soft) infinite alternate;
+}
+
+@keyframes dustDrift {
+    from { opacity: 0.45; transform: translate3d(0, 0, 0); }
+    to   { opacity: 0.85; transform: translate3d(0, -6px, 0); }
+}
+
+/* Entrance order: crest, invitation text, envelope, button, hint */
+.opening-screen .opening-crest {
+    animation: openFade 900ms var(--ease-out) 100ms backwards;
+}
+
+.opening-screen .intro-text {
+    --rise: 10px;
+    animation: riseIn 900ms var(--ease-out) 550ms backwards;
+}
+
+.opening-screen .envelope-wrapper {
+    --rise: 22px;
+    animation: riseIn 1100ms var(--ease-out) 900ms backwards;
+}
+
+.opening-screen .open-button {
+    animation: openFade 800ms var(--ease-out) 1500ms backwards;
+}
+
+.opening-screen .bottom-hint {
+    animation: openFade 900ms var(--ease-out) 1700ms backwards;
+}
+
+/* The decorative sparkles twinkle in place instead of spinning */
+.btn-sparkle-left,
+.btn-sparkle-right {
+    animation: sparkleTwinkle 4.5s var(--ease-soft) infinite alternate;
+}
+
+.btn-sparkle-right {
+    animation-delay: 1.2s;
+}
+
+@keyframes sparkleTwinkle {
+    from { opacity: 0.5; }
+    to   { opacity: 1; }
+}
+
+/* Envelope hover is a quiet lift only */
+.envelope-wrapper {
+    --seal-size: 64px;
+    transition: transform var(--t-small) var(--ease-out);
+}
+
+.envelope-wrapper:hover {
+    transform: translateY(-3px);
+}
+
+/* Wax seal: one subtle press, then a restrained break */
+.wax-seal {
+    transition: transform var(--t-small) var(--ease-out), opacity 420ms ease-out, box-shadow var(--t-small) ease;
+}
+
+.wax-seal:hover {
+    transform: translate(-50%, -50%) scale(1.04);
+}
+
+.opening-screen.seal-press .wax-seal {
+    transform: translate(-50%, -50%) scale(0.93);
+}
+
+.opening-screen.opening .wax-seal {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 420ms var(--ease-out), opacity 420ms ease-out;
+}
+
+/* Seal break: one soft ring plus a few wax crumbs, drawn on the wrapper
+   so they are not faded out together with the seal itself */
+.envelope-wrapper::before,
+.envelope-wrapper::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: var(--seal-size);
+    height: var(--seal-size);
+    margin: calc(var(--seal-size) / -2) 0 0 calc(var(--seal-size) / -2);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 12;
+}
+
+.envelope-wrapper::after {
+    border: 1px solid rgba(245, 215, 127, 0.7);
+}
+
+.envelope-wrapper::before {
+    background:
+        radial-gradient(circle at 50% 4%, #a82e4f 0 2px, transparent 2.6px),
+        radial-gradient(circle at 92% 27%, #f5d77f 0 1.6px, transparent 2.2px),
+        radial-gradient(circle at 92% 73%, #a82e4f 0 2px, transparent 2.6px),
+        radial-gradient(circle at 50% 96%, #f5d77f 0 1.6px, transparent 2.2px),
+        radial-gradient(circle at 8% 73%, #a82e4f 0 2px, transparent 2.6px),
+        radial-gradient(circle at 8% 27%, #f5d77f 0 1.6px, transparent 2.2px);
+}
+
+.opening-screen.opening .envelope-wrapper::after {
+    animation: sealRing 800ms var(--ease-out) 40ms both;
+}
+
+.opening-screen.opening .envelope-wrapper::before {
+    animation: sealCrumbs 800ms var(--ease-out) both;
+}
+
+@keyframes sealRing {
+    from { opacity: 0.65; transform: scale(0.9); }
+    to   { opacity: 0;    transform: scale(2.1); }
+}
+
+@keyframes sealCrumbs {
+    from { opacity: 0.95; transform: scale(0.85); }
+    60%  { opacity: 0.7; }
+    to   { opacity: 0;    transform: scale(2); }
+}
+
+/* Flap opens in 3D (850ms). It drops behind the letter halfway through its swing,
+   when it is edge-on and invisible, so the layer swap cannot be seen. */
+.envelope-flap {
+    transition: transform 850ms cubic-bezier(0.65, 0.05, 0.36, 1), z-index 0s linear 0s;
+}
+
+.opening-screen.opening .envelope-flap {
+    transform: rotateX(-180deg);
+    z-index: 1;
+    transition: transform 850ms cubic-bezier(0.65, 0.05, 0.36, 1), z-index 0s linear 420ms;
+}
+
+/* The letter rises (transform only) from inside the pocket after the flap is part-way open.
+   It keeps its place in the stack: in front of the open flap, behind the front folds. */
+.letter {
+    transition: transform 950ms var(--ease-out);
+}
+
+.opening-screen.opening .letter {
+    bottom: 5%;
+    transform: translateY(-58%);
+    z-index: 2;
+    transition: transform 950ms var(--ease-out) 450ms;
+}
+
+.opening-screen.opening .envelope-wrapper {
+    transform: translateY(-6px);
+    transition: transform 900ms var(--ease-out);
+}
+
+/* The invitation button fades away */
+.opening-screen.opening .open-button {
+    opacity: 0;
+    transform: none;
+    pointer-events: none;
+    transition: opacity 450ms ease-out;
+}
+
+/* The intro text steps back as the letter rises, so the letter reads cleanly */
+.intro-text {
+    transition: opacity 600ms ease-out;
+}
+
+.opening-screen.opening .intro-text {
+    opacity: 0;
+}
+
+/* Skip stays visible and easy to hit at all times */
+.skip-to-invitation {
+    color: rgba(232, 198, 124, 0.72);
+    font-size: 10px;
+}
+
+.skip-to-invitation::after,
+.quick-reveal-btn::after,
+.skip-reveal-btn::after {
+    content: "";
+    position: absolute;
+    inset: -8px -10px;
+}
+
+.quick-reveal-btn,
+.skip-reveal-btn {
+    position: relative;
+}
+
+.skip-reveal-btn {
+    color: rgba(232, 198, 124, 0.75);
+}
+
+/* Nothing keeps looping once the opening screen is gone */
+.opening-screen.hidden,
+.opening-screen.hidden *,
+.opening-screen.hidden::before,
+.opening-screen.hidden::after,
+.opening-screen.hidden *::before,
+.opening-screen.hidden *::after {
+    animation-play-state: paused;
+}
+
+/* The seal is smaller on phones; the break ring and crumbs follow it */
+@media (max-width: 600px) {
+    .envelope-wrapper {
+        --seal-size: 54px;
+    }
+}
+
+/* Short phones: keep the envelope centred and readable */
+@media (max-height: 640px) {
+    .opening-crest {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 8px;
+    }
+
+    .intro-text {
+        margin-bottom: 16px;
+    }
+
+    .open-button {
+        margin-top: 24px;
+    }
+}
+
+/* =====================================================
+   2. PHOTO REVEAL (scratch card)
+   ===================================================== */
+
+.reveal-section {
+    transform: scale(0.985);
+    transition: opacity 800ms var(--ease-soft), transform 800ms var(--ease-out), visibility 800ms;
+}
+
+/* The completion message occupies the same grid cells as the helper
+   controls, so nothing shifts when the photo is unveiled. */
+.reveal-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    align-content: center;
+}
+
+/* Every item is pinned to column 1: grid auto-placement would otherwise push the
+   overlapping completion block into an implicit second column. */
+.reveal-heading        { grid-area: 1 / 1; }
+.photo-reveal-card     { grid-area: 2 / 1; }
+.reveal-progress-area  { grid-area: 3 / 1; }
+.reveal-actions        { grid-area: 4 / 1; }
+
+.reveal-complete {
+    grid-area: 3 / 1 / span 2 / auto;
+    align-self: start;
+    visibility: hidden;
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+    transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out), visibility 0s linear 700ms;
+}
+
+.reveal-complete.visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition-delay: 0s;
+}
+
+/* Order of arrival: heading first, then the card, then the helpers */
+.reveal-section.active .reveal-heading {
+    --rise: 10px;
+    animation: riseIn var(--t-reveal) var(--ease-out) 150ms backwards;
+}
+
+.reveal-section.active .photo-reveal-card {
+    --rise: 12px;
+    animation: riseIn var(--t-reveal) var(--ease-out) 450ms backwards;
+}
+
+.reveal-section.active .reveal-progress-area,
+.reveal-section.active .reveal-actions {
+    animation: openFade 700ms var(--ease-out) 950ms backwards;
+}
+
+/* One soft highlight drifting across the foil, slowly, left to right.
+   It stops for good at the first scratch. */
+.reveal-cover::after {
+    content: "";
+    position: absolute;
+    top: -10%;
+    bottom: -10%;
+    left: 0;
+    width: 45%;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(100deg, transparent 0%, rgba(255, 243, 209, 0) 25%, rgba(255, 243, 209, 0.16) 50%, rgba(255, 243, 209, 0) 75%, transparent 100%);
+    opacity: 0;
+    transform: translateX(-130%) skewX(-12deg);
+}
+
+.reveal-section.active .reveal-cover::after {
+    animation: foilSweep 8s var(--ease-soft) 1.6s infinite;
+}
+
+.photo-reveal-card.is-scratched .reveal-cover::after,
+.reveal-section.reveal-done .reveal-cover::after {
+    animation: none;
+    opacity: 0;
+}
+
+@keyframes foilSweep {
+    0%   { opacity: 0; transform: translateX(-130%) skewX(-12deg); }
+    8%   { opacity: 1; }
+    42%  { opacity: 1; transform: translateX(320%) skewX(-12deg); }
+    50%  { opacity: 0; transform: translateX(320%) skewX(-12deg); }
+    100% { opacity: 0; transform: translateX(320%) skewX(-12deg); }
+}
+
+/* The prompt stays readable: a still icon, plus a slow, small hint of the swipe */
+.scratch-coin-icon {
+    animation: none;
+}
+
+.scratch-hand-icon {
+    animation: none;
+}
+
+.reveal-section.active .scratch-hand-icon {
+    animation: handHint 3.6s var(--ease-soft) infinite;
+}
+
+.photo-reveal-card.is-scratched .scratch-hand-icon,
+.reveal-section.reveal-done .scratch-hand-icon {
+    animation: none;
+}
+
+@keyframes handHint {
+    0%, 100% { transform: translateX(-10px); }
+    50%      { transform: translateX(10px); }
+}
+
+.scratch-content {
+    transition: opacity 500ms ease-out;
+}
+
+/* Gold dust near the pointer: small, quiet, short-lived */
+.scratch-particle {
+    background: var(--gold-200);
+    box-shadow: 0 0 5px rgba(245, 215, 127, 0.55);
+    animation: dustFly 700ms ease-out forwards;
+}
+
+@keyframes dustFly {
+    from { opacity: 0.85; transform: translate(0, 0) scale(1); }
+    to   { opacity: 0;    transform: translate(var(--px), var(--py)) scale(0.3); }
+}
+
+/* Progress is a scaleX, never an animated width */
+.progress-bar {
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 220ms var(--ease-out);
+}
+
+/* The photograph, once unveiled, settles from 1.02 to 1; no zoom while it is still foil-covered */
+.reveal-image {
+    transform: scale(1.02);
+    transition: transform 1200ms var(--ease-out);
+}
+
+.photo-reveal-card:hover .reveal-image {
+    transform: scale(1.02);
+}
+
+.reveal-section.reveal-done .photo-reveal-card .reveal-image {
+    transform: scale(1);
+}
+
+/* Foil fades out smoothly on completion */
+.reveal-cover {
+    transition: opacity 900ms var(--ease-soft);
+}
+
+.reveal-section.reveal-done .reveal-cover {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Completion: message rises in first, the "Explore" button follows */
+.reveal-complete .continue-invitation-btn {
+    opacity: 0;
+    transition: opacity 600ms var(--ease-out) 350ms, transform var(--t-small) var(--ease-out),
+                box-shadow var(--t-small) ease;
+}
+
+.reveal-complete.visible .continue-invitation-btn {
+    opacity: 1;
+}
+
+.continue-invitation-btn .arrow-down {
+    animation: none;
+    transition: transform var(--t-small) var(--ease-out);
+}
+
+.continue-invitation-btn:hover .arrow-down {
+    transform: translateY(2px);
+}
+
+/* =====================================================
+   3. HERO ENTRANCE (editorial order)
+   crest 0 / label 100 / name 180 / & 300 / name 380 /
+   message 520 / details 650 / countdown 800
+   ===================================================== */
+
+.motion-ready .invitation-hero-section:not(.hero-play) :is(
+    .hero-crest, .hero-eyebrow-group, .title-line-1, .title-line-amp, .title-line-2,
+    .wedding-badge-pill, .host-announcement, .luxury-divider, .welcome-text,
+    .royal-date-card, .countdown-wrapper, .calendar-actions, .scroll-indicator
+) {
+    opacity: 0;
+}
+
+.hero-play .hero-crest {
+    --rise: 12px;
+    animation: riseIn 900ms var(--ease-out) 0ms backwards;
+}
+
+.hero-play .hero-eyebrow-group {
+    --rise: 10px;
+    animation: riseIn 900ms var(--ease-out) 100ms backwards;
+}
+
+.hero-play .title-line-1 {
+    --rise: 18px;
+    animation: riseIn 1100ms var(--ease-out) 180ms backwards;
+}
+
+.hero-play .title-line-amp {
+    --from-scale: 0.94;
+    animation: riseIn 900ms var(--ease-out) 300ms backwards;
+    --rise: 0px;
+}
+
+.hero-play .title-line-2 {
+    --rise: 18px;
+    animation: riseIn 1100ms var(--ease-out) 380ms backwards;
+}
+
+.hero-play .wedding-badge-pill {
+    --rise: 10px;
+    animation: riseIn 800ms var(--ease-out) 460ms backwards;
+}
+
+.hero-play .host-announcement {
+    --rise: 12px;
+    animation: riseIn 900ms var(--ease-out) 520ms backwards;
+}
+
+.hero-play .luxury-divider {
+    animation: openFade 800ms var(--ease-out) 540ms backwards;
+}
+
+.hero-play .welcome-text {
+    --rise: 12px;
+    animation: riseIn 900ms var(--ease-out) 580ms backwards;
+}
+
+.hero-play .royal-date-card {
+    --rise: 14px;
+    animation: riseIn 1000ms var(--ease-out) 650ms backwards;
+}
+
+.hero-play .countdown-wrapper {
+    --rise: 8px;
+    animation: riseIn 900ms var(--ease-out) 800ms backwards;
+}
+
+.hero-play .calendar-actions {
+    --rise: 8px;
+    animation: riseIn 800ms var(--ease-out) 900ms backwards;
+}
+
+.hero-play .scroll-indicator {
+    animation: openFade 900ms var(--ease-out) 1000ms backwards;
+}
+
+/* The scroll cue is slow and small */
+.scroll-wheel {
+    animation-duration: 2.8s;
+}
+
+/* Fine gold lines draw outward from the centre gem */
+.divider-line:first-child { transform-origin: right center; }
+.divider-line:last-child  { transform-origin: left center; }
+
+.hero-play .luxury-divider .divider-line {
+    animation: lineGrow 1100ms var(--ease-out) 640ms backwards;
+}
+
+.motion-ready .invitation-hero-section:not(.hero-play) .luxury-divider .divider-line {
+    opacity: 0;
+    transform: scaleX(var(--line-from));
+}
+
+/* =====================================================
+   4. SCROLL REVEALS
+   ===================================================== */
+
+.motion-ready .mr:not(.is-in) {
+    opacity: 0;
+    transform: translate3d(0, var(--rise), 0);
+}
+
+.mr.is-in {
+    animation: mrIn var(--t-section) var(--ease-out) var(--rd, 0ms) backwards;
+}
+
+.mr-small { --rise: 10px; }
+.mr-fade  { --rise: 0px; }
+
+.mr-fade.is-in {
+    animation-duration: 1000ms;
+}
+
+/* Section header lines draw once the header arrives */
+.motion-ready .section-header:not(.is-in) .divider-line {
+    opacity: 0;
+    transform: scaleX(var(--line-from));
+}
+
+.section-header.is-in .divider-line {
+    animation: lineGrow 1000ms var(--ease-out) calc(var(--rd, 0ms) + 250ms) backwards;
+}
+
+/* Cards: no `transition: all`, so opacity/transform reveals and hovers never fight */
+.couple-card,
+.detail-card,
+.blessing-card,
+.timeline-content {
+    transition: transform 300ms var(--ease-out), border-color 300ms ease, box-shadow 300ms ease;
+}
+
+.couple-card:hover,
+.detail-card:hover,
+.blessing-card:hover,
+.timeline-content:hover {
+    transform: translateY(-3px);
+}
+
+.countdown-box {
+    transition: transform var(--t-small) var(--ease-out), border-color var(--t-small) ease;
+}
+
+/* Event cards: a short gold border highlight, once, on first view */
+.detail-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid var(--gold-300);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.detail-card.is-in::after {
+    animation: edgeGlow 1800ms ease-out calc(var(--rd, 0ms) + 500ms) 1 both;
+}
+
+@keyframes edgeGlow {
+    0%   { opacity: 0; }
+    35%  { opacity: 0.85; }
+    100% { opacity: 0; }
+}
+
+/* Timeline: the central line draws, event nodes settle in with a small scale */
+.motion-ready .itinerary-timeline::before {
+    transform-origin: top center;
+}
+
+.motion-ready .itinerary-timeline:not(.is-in)::before {
+    opacity: 0;
+    transform: translateX(-50%) scaleY(var(--line-from));
+}
+
+.itinerary-timeline.is-in::before {
+    animation: lineDraw 1400ms var(--ease-out) backwards;
+}
+
+.motion-ready .timeline-item.mr:not(.is-in) .timeline-node {
+    transform: translateX(-50%) scale(0.8);
+}
+
+.timeline-item.is-in .timeline-node {
+    animation: nodeIn 600ms var(--ease-out) calc(var(--rd, 0ms) + 120ms) backwards;
+}
+
+@keyframes nodeIn {
+    from { transform: translateX(-50%) scale(0.8); }
+    to   { transform: translateX(-50%) scale(1); }
+}
+
+/* Venue: calm reveal, then the map button gets one soft ring after the address appears */
+.location-button {
+    position: relative;
+}
+
+.location-button::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    border: 1px solid rgba(245, 215, 127, 0.7);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.venue-showcase-card.is-in .location-button::after {
+    animation: softRing 1500ms ease-out calc(var(--rd, 0ms) + 1100ms) 1 both;
+}
+
+@keyframes softRing {
+    0%   { opacity: 0;   transform: scale(0.96); }
+    35%  { opacity: 0.8; }
+    100% { opacity: 0;   transform: scale(1.08); }
+}
+
+.location-arrow {
+    transition: transform var(--t-small) var(--ease-out);
+}
+
+.location-button:hover .location-arrow {
+    transform: translate(2px, -2px);
+}
+
+/* =====================================================
+   5. GALLERY & LIGHTBOX
+   ===================================================== */
+
+.gallery-figure {
+    transition: transform 500ms var(--ease-out), border-color 300ms ease, box-shadow 300ms ease;
+}
+
+.gallery-figure:hover {
+    transform: translateY(-3px);
+}
+
+.gallery-img {
+    transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out);
+}
+
+/* Fade in as they load, with a hint of scale */
+.motion-ready .gallery-img:not(.is-loaded) {
+    opacity: 0;
+    transform: scale(1.01);
+}
+
+.gallery-figure:hover .gallery-img {
+    transform: scale(1.03);
+}
+
+.gallery-overlay {
+    transition: opacity 300ms ease;
+}
+
+.gallery-figure:hover .gallery-overlay,
+.gallery-figure:focus-visible .gallery-overlay {
+    opacity: 1;
+}
+
+/* Lightbox: soft fade and scale 0.98 -> 1. Controls are clickable from the first frame. */
+.lightbox-modal {
+    visibility: hidden;
+    transition: opacity 350ms var(--ease-out), visibility 0s linear 350ms;
+}
+
+/* Opening: visible at once (controls usable from the first frame), only the opacity fades.
+   Closing (rule above): visibility waits for the fade-out to finish. */
+.lightbox-modal.active {
+    visibility: visible;
+    transition: opacity 350ms var(--ease-out), visibility 0s linear 0s;
+}
+
+.lightbox-container {
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 350ms var(--ease-out), transform 450ms var(--ease-out);
+}
+
+.lightbox-modal.active .lightbox-container {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.lightbox-close:hover {
+    transform: scale(1.05);
+}
+
+.lightbox-nav:hover {
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* =====================================================
+   6. BUTTONS & MICRO-INTERACTIONS
+   Hover: up to 2px.  Press: 0.98.  Focus: gold outline (above).
+   ===================================================== */
+
+.open-button,
+.quick-reveal-btn,
+.skip-reveal-btn,
+.continue-invitation-btn,
+.location-button,
+.copy-address-button,
+.cal-btn,
+.rsvp-submit-btn,
+.rsvp-change-btn,
+.back-to-top-btn,
+.skip-to-invitation,
+.nav-item {
+    transition: transform var(--t-small) var(--ease-out), background-color var(--t-small) ease,
+                border-color var(--t-small) ease, color var(--t-small) ease,
+                box-shadow var(--t-small) ease, opacity var(--t-small) ease;
+}
+
+.open-button:hover,
+.quick-reveal-btn:hover,
+.continue-invitation-btn:hover,
+.location-button:hover,
+.copy-address-button:hover,
+.cal-btn:hover,
+.rsvp-submit-btn:hover,
+.rsvp-change-btn:hover,
+.back-to-top-btn:hover {
+    transform: translateY(-2px);
+}
+
+.nav-item.rsvp-pill:hover {
+    transform: translateY(-1px);
+}
+
+.open-button:active,
+.quick-reveal-btn:active,
+.skip-reveal-btn:active,
+.continue-invitation-btn:active,
+.location-button:active,
+.copy-address-button:active,
+.cal-btn:active,
+.rsvp-submit-btn:active,
+.rsvp-change-btn:active,
+.back-to-top-btn:active,
+.nav-item:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 120ms;
+}
+
+.back-to-top-btn .arrow-up {
+    transition: transform var(--t-small) var(--ease-out);
+}
+
+.back-to-top-btn:hover .arrow-up {
+    transform: translateY(-2px);
+}
+
+/* Copy confirmation: a soft colour change alongside the changed label and toast */
+.copy-address-button.is-success {
+    background: rgba(232, 198, 124, 0.2);
+    border-color: var(--gold-300);
+    color: var(--gold-100);
+}
+
+/* RSVP: the confirmation fades up once. No bounce, no shake. */
+.success-icon {
+    animation: none;
+}
+
+.rsvp-success-message:not([hidden]) {
+    --rise: 10px;
+    animation: riseIn 600ms var(--ease-out) backwards;
+}
+
+.blessing-heart {
+    transition: transform var(--t-small) var(--ease-out);
+}
+
+.blessing-heart:hover {
+    transform: scale(1.12);
+}
+
+/* Visible keyboard focus on the radio cards, whose real input is visually hidden */
+.radio-card input:focus-visible + .radio-content {
+    outline: 2px solid var(--gold-300);
+    outline-offset: 3px;
+}
+
+/* The old spinning border keyframes no longer exist; make sure nothing references them */
+.couple-photo-border {
+    animation: none;
+}
+
+/* =====================================================
+   7. REDUCED MOTION
+   Keeps everything readable and usable, drops nonessential movement.
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    /* Entrances and reveals become opacity-only fades; gold lines simply fade */
+    *,
+    *::before,
+    *::after {
+        --rise: 0px !important;
+        --from-scale: 1 !important;
+        --line-from: 1 !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    /* Ambient and decorative loops stop */
+    .ambient-glow,
+    .opening-screen::before,
+    .opening-screen::after,
+    .btn-sparkle-left,
+    .btn-sparkle-right,
+    .scratch-hand-icon,
+    .scroll-wheel,
+    .reveal-cover::after,
+    .music-bars span,
+    .envelope-wrapper::before,
+    .envelope-wrapper::after,
+    .detail-card::after,
+    .location-button::after {
+        animation: none !important;
+    }
+
+    .music-bars span {
+        transform: none;
+    }
+
+    .scratch-particles {
+        display: none;
+    }
+
+    /* Envelope: no 3D rotation, no lift, no large transforms; a plain crossfade */
+    .opening-screen.opening .envelope-flap {
+        transform: none;
+        opacity: 0;
+        transition: opacity 300ms ease;
+    }
+
+    .opening-screen.opening .letter {
+        transform: none;
+    }
+
+    .opening-screen.opening .envelope-wrapper,
+    .envelope-wrapper:hover {
+        transform: none;
+    }
+
+    .opening-screen.opening .wax-seal {
+        transform: translate(-50%, -50%);
+    }
+
+    .opening-screen.hidden,
+    .reveal-section {
+        transform: none;
+    }
+
+    /* Photo reveal: no scale settling */
+    .reveal-image,
+    .photo-reveal-card:hover .reveal-image,
+    .reveal-section.reveal-done .photo-reveal-card .reveal-image {
+        transform: none;
+    }
+
+    .reveal-complete,
+    .reveal-complete.visible {
+        transform: none;
+    }
+
+    /* Timeline and gallery: fade, don't scale */
+    .motion-ready .timeline-item.mr:not(.is-in) .timeline-node,
+    .timeline-item.is-in .timeline-node {
+        transform: translateX(-50%);
+        animation: none;
+    }
+
+    .motion-ready .gallery-img:not(.is-loaded),
+    .gallery-figure:hover .gallery-img {
+        transform: none;
+    }
+
+    .lightbox-container,
+    .lightbox-modal.active .lightbox-container {
+        transform: none;
+    }
+
+    /* No hover lifts on content; only the existing colour/border changes remain */
+    .couple-card:hover,
+    .detail-card:hover,
+    .blessing-card:hover,
+    .timeline-content:hover,
+    .countdown-box:hover,
+    .gallery-figure:hover {
+        transform: none;
+    }
+
+    /* Floating UI appears with opacity only */
+    .quick-nav-dock {
+        transform: translateX(-50%);
+    }
+
+    .toast-notification,
+    .toast-notification.show {
+        transform: translateX(-50%);
     }
 }

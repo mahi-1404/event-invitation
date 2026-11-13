@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=8">
 </head>
 
 <body>
@@ -36,14 +36,14 @@
     <!-- =====================================
          FLOATING AUDIO CONTROLLER
     ====================================== -->
-    <div class="music-pill" id="musicToggle" role="button" tabindex="0" aria-label="Toggle background music">
+    <div class="music-pill paused" id="musicToggle" role="button" tabindex="0" aria-label="Play music" aria-pressed="false">
         <div class="music-bars" aria-hidden="true">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
         </div>
-        <span class="music-label" id="musicStatusText">Music Playing</span>
+        <span class="music-label" id="musicStatusText">Music Paused</span>
         <span class="music-icon" id="musicIcon">♪</span>
     </div>
 
@@ -244,7 +244,7 @@
                     <!-- Royal Filigree Emblem -->
                     <div class="hero-crest" aria-hidden="true">
                         <div class="royal-flourish">❦</div>
-                        <div class="crest-monogram">NL</div>
+                        <div class="crest-monogram">N&nbsp;&amp;&nbsp;L</div>
                         <div class="crest-stars">✦ ✦ ✦</div>
                     </div>
 
@@ -256,16 +256,16 @@
 
                     <!-- Main Event Title -->
                     <h1 class="hero-main-title">
-                        <span class="title-line-1" id="eventTitleLine1">Nithin</span>
+                        <span class="title-line-1" id="eventTitleLine1">Nithin N S</span>
                         <span class="title-line-amp">&</span>
-                        <span class="title-line-2" id="eventTitleLine2">Lekhana</span>
+                        <span class="title-line-2" id="eventTitleLine2">Lekhana C</span>
                     </h1>
                     <div class="wedding-badge-pill">✦ WEDDING CELEBRATION ✦</div>
 
                     <!-- Host / Couple Announcement -->
                     <div class="host-announcement">
-                        <span class="host-prefix" id="welcomeNamesSuffix">together with our parents & families</span>
-                        <h2 class="host-names" id="eventNames">Nithin & Lekhana</h2>
+                        <span class="host-prefix" id="welcomeNamesSuffix">With the blessings of our families</span>
+                        <h2 class="host-names" id="eventNames">Nithin N S &amp; Lekhana C</h2>
                         <span class="host-family" id="familyLine">cordially invite you to celebrate our wedding</span>
                     </div>
 
@@ -292,7 +292,7 @@
                             </div>
                         </div>
                         <div class="date-time-row">
-                            <span class="time-badge">✦ Muhurtham at <span id="eventTime">10:30 AM</span> • <span id="eventVenue">Karnataka Police Bhavana</span> ✦</span>
+                            <span class="time-badge">✦ Muhurtham <span id="eventTime">10:20 AM – 11:10 AM</span> • <span id="eventVenue">Police Bhavan</span> ✦</span>
                         </div>
                     </div>
 
@@ -371,8 +371,7 @@
                             </div>
                             <div class="couple-card-body">
                                 <span class="couple-role">THE GROOM</span>
-                                <h3 class="couple-name">Nithin</h3>
-                                <p class="couple-quote">"In her eyes, I found my home; in her heart, my forever love."</p>
+                                <h3 class="couple-name">Nithin N S</h3>
                             </div>
                         </div>
 
@@ -392,8 +391,7 @@
                             </div>
                             <div class="couple-card-body">
                                 <span class="couple-role">THE BRIDE</span>
-                                <h3 class="couple-name">Lekhana</h3>
-                                <p class="couple-quote">"Together is my favorite place to be. Hand in hand, always."</p>
+                                <h3 class="couple-name">Lekhana C</h3>
                             </div>
                         </div>
                     </div>
@@ -432,9 +430,9 @@
                                 <span class="icon-symbol">📅</span>
                             </div>
                             <div class="detail-card-content">
-                                <span class="detail-label" id="dateDetailsLabel">DATE & DAY</span>
-                                <h3 class="detail-title" id="eventDateDisplay">26 November 2026</h3>
-                                <p class="detail-sub" id="eventDetailsWeekday">Thursday</p>
+                                <span class="detail-label">RECEPTION</span>
+                                <h3 class="detail-title" id="receptionDate">25 November 2026</h3>
+                                <p class="detail-sub" id="receptionTime">7:00 PM onwards</p>
                             </div>
                         </div>
 
@@ -446,9 +444,9 @@
                                 <span class="icon-symbol">⏰</span>
                             </div>
                             <div class="detail-card-content">
-                                <span class="detail-label" id="timeDetailsLabel">TIME</span>
-                                <h3 class="detail-title" id="eventDetailsTime">10:30 AM</h3>
-                                <p class="detail-sub" id="eventTimeNote">Muhurtham at 10:30 AM • Guests welcome from 9:30 AM</p>
+                                <span class="detail-label">MUHURTHAM</span>
+                                <h3 class="detail-title" id="muhurthamDate">26 November 2026</h3>
+                                <p class="detail-sub" id="muhurthamTime">10:20 AM – 11:10 AM</p>
                             </div>
                         </div>
 
@@ -461,8 +459,10 @@
                             </div>
                             <div class="detail-card-content">
                                 <span class="detail-label" id="venueDetailsLabel">VENUE</span>
-                                <h3 class="detail-title" id="eventDetailsVenue">Karnataka Police Bhavana</h3>
-                                <p class="detail-sub" id="eventAddress">Mysore</p>
+                                <h3 class="detail-title" id="eventDetailsVenue">Police Bhavan</h3>
+                                <p class="detail-sub" id="eventAddress">Jockey Quarters
+JC Nagar
+Mysuru</p>
                             </div>
                         </div>
 
@@ -471,9 +471,9 @@
                     <!-- Interactive Venue & Map Card -->
                     <div class="venue-showcase-card">
                         <div class="venue-info">
-                            <div class="venue-pin">✦ KARNATAKA POLICE BHAVANA ✦</div>
-                            <h3 class="venue-name">Mysore</h3>
-                            <p class="venue-note">We are eagerly waiting to welcome you to our wedding celebrations!</p>
+                            <div class="venue-pin">✦ THE VENUE ✦</div>
+                            <h3 class="venue-name">Police Bhavan</h3>
+                            <p class="venue-note">Jockey Quarters<br>JC Nagar<br>Mysuru</p>
                             
                             <div class="venue-actions">
                                 <button class="location-button" id="locationButton" type="button">
@@ -487,21 +487,6 @@
                             </div>
                         </div>
 
-                        <!-- Event Highlights Pills -->
-                        <div class="event-meta-pills">
-                            <div class="meta-pill">
-                                <span class="pill-icon">👔</span>
-                                <span class="pill-text">Dress Code: Festive Elegance</span>
-                            </div>
-                            <div class="meta-pill">
-                                <span class="pill-icon">🅿️</span>
-                                <span class="pill-text">Parking Available on Premise</span>
-                            </div>
-                            <div class="meta-pill">
-                                <span class="pill-icon">🍲</span>
-                                <span class="pill-text">Grand Feast & Refreshments</span>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
@@ -618,7 +603,7 @@
 
                             <div class="form-group">
                                 <label for="guestBlessing">Heartfelt Blessing or Wedding Wish for the Couple</label>
-                                <textarea id="guestBlessing" rows="2" placeholder="Write a sweet message, blessing, or warm wedding wish for Nithin & Lekhana..."></textarea>
+                                <textarea id="guestBlessing" rows="2" placeholder="Write a sweet message, blessing, or warm wedding wish for Nithin N S & Lekhana C..."></textarea>
                             </div>
 
                             <button type="submit" class="rsvp-submit-btn" id="rsvpSubmitBtn">
@@ -629,7 +614,7 @@
                         </form>
 
                         <!-- Success Confirmation Message (Hidden Initially) -->
-                        <div class="rsvp-success-message" id="rsvpSuccessMessage" hidden>
+                        <div class="rsvp-success-message" id="rsvpSuccessMessage" role="status" hidden>
                             <div class="success-icon">✨</div>
                             <h3 id="rsvpSuccessTitle">Thank You So Much!</h3>
                             <p id="rsvpSuccessDetail">We have received your response and look forward to celebrating together!</p>
@@ -683,8 +668,8 @@
                         <span class="footer-right" id="detailsFooterRight">SEE YOU THERE</span>
                     </div>
 
-                    <h3 class="footer-names">Nithin & Lekhana</h3>
-                    <p class="footer-note">Together with our families, we thank you with all our hearts for your love & blessings.</p>
+                    <h3 class="footer-names">Nithin N S &amp; Lekhana C</h3>
+                    <p class="footer-note">Your presence and blessings will make our celebration complete.</p>
 
                     <button class="back-to-top-btn" id="backToTopBtn" type="button" aria-label="Back to Top">
                         <span class="arrow-up">↑</span>
@@ -692,7 +677,7 @@
                     </button>
 
                     <div class="footer-copy">
-                        <small>The Wedding Celebration of Nithin & Lekhana • Mysore</small>
+                        <small>The Wedding Celebration of Nithin N S &amp; Lekhana C • Mysuru</small>
                     </div>
 
                 </div>
@@ -742,7 +727,7 @@
          SCRIPTS
     ====================================== -->
     <script src="event-data.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=8"></script>
 
 </body>
 
