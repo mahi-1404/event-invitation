@@ -4976,3 +4976,30 @@ textarea:focus-visible {
         animation: none !important;
     }
 }
+
+
+/* =====================================================
+   WAIT FOR A TAP
+   After the card has come out, the open button returns as a
+   gently breathing "TAP TO CONTINUE" prompt. Nothing advances
+   until the guest taps.
+   ===================================================== */
+
+.opening-screen.opening.awaiting-tap .open-button {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 700ms var(--ease-out), transform var(--t-small) var(--ease-out),
+                box-shadow var(--t-small) ease;
+    animation: tapBreathe 2.4s var(--ease-soft) 800ms infinite;
+}
+
+@keyframes tapBreathe {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .opening-screen.opening.awaiting-tap .open-button {
+        animation: none;
+    }
+}

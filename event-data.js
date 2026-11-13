@@ -6,6 +6,7 @@ const eventData = {
         emphasis: "Invited",
         line2: "TO CELEBRATE OUR WEDDING",
         openButton: "OPEN INVITATION",
+        continueButton: "TAP TO CONTINUE",
         hint: "A beautiful celebration awaits"
     },
     reveal: {

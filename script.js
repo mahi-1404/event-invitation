@@ -32,8 +32,7 @@
     // Timings (ms) for the envelope choreography. Keep in step with the CSS tokens.
     const ENVELOPE_TIMING = {
         sealPress: 220,        // seal responds to the tap
-        screenFade: 1750,      // flap (850) + letter lift (950) have finished
-        reducedFade: 450,      // reduced motion: plain, short crossfade
+        promptDelay: 5000,     // the card stays up this long (from the tap), then a tap is requested
         revealSettle: [200, 600, 1200]
     };
     const HERO_START_DELAY = 380; // let the previous screen finish fading first
@@ -535,6 +534,9 @@
        ===================================================== */
 
     let envelopeOpened = false;
+    // closed -> opening (card on show) -> awaiting (asking for a tap) -> done
+    let envelopeState = "closed";
+    const CONTINUE_LABEL = (data.opening && data.opening.continueButton) || "TAP TO CONTINUE";
     const openingScreen = document.getElementById("openingScreen");
     const envelopeWrapper = document.getElementById("envelopeWrapper");
     const openInvitationBtn = document.getElementById("openInvitation");
@@ -569,9 +571,32 @@
         ENVELOPE_TIMING.revealSettle.forEach(ms => envelopeLater(setupScratchCanvas, ms));
     }
 
+    // After the card has come out the screen waits. A tap is only requested once
+    // the guest has had time to read the card; the scratch screen follows that tap.
+    function showTapPrompt() {
+        if (envelopeState !== "opening" || !openingScreen) return;
+        envelopeState = "awaiting";
+        const label = document.getElementById("openButtonText");
+        if (label) label.textContent = CONTINUE_LABEL;
+        if (openInvitationBtn) {
+            openInvitationBtn.setAttribute("aria-label", CONTINUE_LABEL);
+            openInvitationBtn.focus({ preventScroll: true }); // keyboard users can press Enter
+        }
+        openingScreen.classList.add("awaiting-tap");
+    }
+
+    function continueToReveal() {
+        if (envelopeState !== "awaiting") return;
+        envelopeState = "done";
+        if (openingScreen) openingScreen.classList.remove("awaiting-tap");
+        showRevealScreen();
+    }
+
     function openEnvelope() {
         if (envelopeOpened) return;
         envelopeOpened = true;
+        envelopeState = "opening";
+        if (envelopeWrapper) envelopeWrapper.removeAttribute("data-cursor"); // it no longer says "Open"
 
         // Start background music (user gesture, so browsers allow it)
         startMusic();
@@ -581,10 +606,10 @@
             return;
         }
 
-        // Reduced motion: no seal choreography or 3D flap, just a short crossfade
+        // Reduced motion: no seal choreography or 3D flap; the card simply appears
         if (prefersReducedMotion()) {
             openingScreen.classList.add("opening");
-            envelopeLater(showRevealScreen, ENVELOPE_TIMING.reducedFade);
+            envelopeLater(showTapPrompt, ENVELOPE_TIMING.promptDelay);
             return;
         }
 
@@ -597,8 +622,8 @@
             openingScreen.classList.add("opening");
         }, ENVELOPE_TIMING.sealPress);
 
-        // 3. Opening screen fades out while the reveal screen fades in
-        envelopeLater(showRevealScreen, ENVELOPE_TIMING.screenFade);
+        // 3. The screen waits on the open card, then asks for a tap
+        envelopeLater(showTapPrompt, ENVELOPE_TIMING.promptDelay);
     }
 
     if (openInvitationBtn) openInvitationBtn.addEventListener("click", openEnvelope);
@@ -614,6 +639,15 @@
         });
     }
     if (waxSeal) waxSeal.addEventListener("click", (e) => { e.stopPropagation(); openEnvelope(); });
+
+    // Once a tap has been requested, a tap anywhere on the screen continues (Skip keeps its own job)
+    if (openingScreen) {
+        openingScreen.addEventListener("click", (e) => {
+            if (envelopeState !== "awaiting") return;
+            if (e.target.closest && e.target.closest("#skipEnvelopeBtn")) return;
+            continueToReveal();
+        });
+    }
 
 
     /* =====================================================
@@ -946,6 +980,7 @@
     if (skipEnvelopeBtn) {
         skipEnvelopeBtn.addEventListener("click", () => {
             envelopeOpened = true; // the envelope can no longer be opened underneath
+            envelopeState = "done";
             startMusic();
             if (openingScreen) openingScreen.classList.add("hidden");
             enterFullInvitation();
