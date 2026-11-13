@@ -2560,7 +2560,7 @@ textarea:focus-visible {
     --t-small: 220ms;                                 /* hover / focus / press */
     --t-section: 700ms;                               /* section entrances */
     --t-reveal: 1000ms;                               /* main reveals */
-    --rise: 16px;                                     /* default upward travel */
+    --rise: 24px;                                     /* default upward travel */
     --line-from: 0;                                   /* gold lines grow from 0 (1 = just fade) */
 }
 
@@ -2577,8 +2577,8 @@ textarea:focus-visible {
 }
 
 @keyframes mrIn {
-    from { opacity: 0; transform: translate3d(0, var(--rise, 16px), 0); }
-    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+    from { opacity: 0; transform: translate3d(0, var(--rise, 24px), 0) scale(var(--from-scale, 1)); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes lineGrow {
@@ -3175,14 +3175,14 @@ textarea:focus-visible {
 
 .motion-ready .mr:not(.is-in) {
     opacity: 0;
-    transform: translate3d(0, var(--rise), 0);
+    transform: translate3d(0, var(--rise), 0) scale(var(--from-scale, 1));
 }
 
 .mr.is-in {
     animation: mrIn var(--t-section) var(--ease-out) var(--rd, 0ms) backwards;
 }
 
-.mr-small { --rise: 10px; }
+.mr-small { --rise: 14px; }
 .mr-fade  { --rise: 0px; }
 
 .mr-fade.is-in {
@@ -4687,5 +4687,60 @@ textarea:focus-visible {
 @media (prefers-reduced-motion: reduce) {
     .panorama-img {
         animation: none !important;
+    }
+}
+
+
+/* =====================================================
+   SCROLL EFFECTS
+   Progress line, pop-in cards, banner depth, active nav.
+   ===================================================== */
+
+/* Thin gold line at the very top that fills as you scroll */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 1200;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, #8c6206, #e5c982 60%, #fdf3cd);
+    box-shadow: 0 0 10px rgba(229, 201, 130, 0.5);
+    opacity: 0;
+    transition: opacity 300ms ease;
+    pointer-events: none;
+}
+
+.scroll-progress.is-on {
+    opacity: 1;
+}
+
+/* Pop-in: cards and photos grow slightly as they rise */
+.mr-pop {
+    --from-scale: 0.94;
+}
+
+/* The banner is a little wider than tall so its photo has room to slide */
+.panorama-photo {
+    aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 600px) {
+    .panorama-photo {
+        aspect-ratio: 16 / 10;
+    }
+}
+
+/* The nav highlights the section you are reading */
+.nav-item.is-active:not(.rsvp-pill) {
+    color: var(--gold-200);
+    background: rgba(232, 198, 124, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-progress {
+        display: none;
     }
 }

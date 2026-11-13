@@ -1498,6 +1498,7 @@
                 el.classList.add(o.line ? "mr-line" : "mr");
                 if (o.fade) el.classList.add("mr-fade");
                 if (o.small) el.classList.add("mr-small");
+                if (o.pop) el.classList.add("mr-pop");
                 const base = typeof o.base === "function" ? o.base(i) : (o.base || 0);
                 el.dataset.rdBase = String(base);
                 el.dataset.rdStep = String(o.step || 110);
@@ -1509,16 +1510,16 @@
         add(".section-header", { skip: el => !!el.closest(".blessings-section") });
 
         // The panoramic portrait and its caption
-        add(".panorama-frame");
+        add(".panorama-frame", { pop: true });
         add(".panorama-caption", { fade: true });
 
         // Couple: the two cards with a very small stagger, emblem between them
-        add(".couple-card", { step: 120 });
+        add(".couple-card", { step: 120, pop: true });
         add(".couple-union-divider", { fade: true, step: 120 });
 
         // Reception, then muhurtham, then venue (document order = reading order)
-        add(".detail-card", { small: true, step: 140 });
-        add(".venue-showcase-card");
+        add(".detail-card", { small: true, step: 140, pop: true });
+        add(".venue-showcase-card", { pop: true });
 
         // Timeline: the central line draws, then the event items arrive
         add(".itinerary-timeline", { line: true });
@@ -1528,7 +1529,7 @@
         add(".gallery-figure", { base: i => (i === 0 ? 0 : 140), step: 90 });
 
         // RSVP card and form arrive together; blessings and footer just fade
-        add(".rsvp-card");
+        add(".rsvp-card", { pop: true });
         add(".blessings-section .section-container", { fade: true });
         add(".footer-inner", { fade: true });
 
@@ -2133,6 +2134,102 @@
     }
 
 
+    /* ---------- 15h. Scroll effects ----------
+       Simple, scroll-linked touches:
+       - a thin gold progress line at the top of the screen
+       - the hero drifts down and softly fades as you scroll past it
+       - the wide banner photo slides slowly inside its frame (depth)
+       - the bottom nav highlights the section you are in
+       One passive scroll listener, batched into a single frame. */
+
+    function initScrollEffects() {
+        if (!invitationScrollContainer) return;
+
+        const bar = document.createElement("div");
+        bar.className = "scroll-progress";
+        bar.setAttribute("aria-hidden", "true");
+        document.body.appendChild(bar);
+
+        const hero = document.querySelector(".hero-inner");
+        const heroSection = document.getElementById("welcomeSection");
+        const pano = document.querySelector(".panorama-img");
+        const panoBox = pano ? pano.parentNode : null;
+        let queued = false;
+
+        function update() {
+            queued = false;
+            const active = invitationScrollContainer.classList.contains("active");
+            const y = window.scrollY;
+            const vh = window.innerHeight;
+            const max = document.documentElement.scrollHeight - vh;
+
+            bar.style.transform = `scaleX(${active && max > 0 ? Math.min(1, y / max).toFixed(4) : 0})`;
+            bar.classList.toggle("is-on", active && y > 8);
+
+            if (!active) return;
+
+            if (prefersReducedMotion()) {
+                if (hero) { hero.style.translate = ""; hero.style.opacity = ""; }
+                if (pano) pano.style.objectPosition = "";
+                return;
+            }
+
+            // Hero: drifts down a little and fades as it leaves the screen
+            if (hero && heroSection) {
+                const h = heroSection.offsetHeight || vh;
+                const p = Math.min(1, Math.max(0, y / (h * 0.85)));
+                hero.style.translate = p ? `0 ${(p * 46).toFixed(1)}px` : "";
+                hero.style.opacity = p ? (1 - p * 0.7).toFixed(3) : "";
+            }
+
+            // Banner photo: slides slowly inside its frame while the frame scrolls past
+            if (pano && panoBox) {
+                const r = panoBox.getBoundingClientRect();
+                if (r.bottom > -60 && r.top < vh + 60) {
+                    const p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
+                    const c = Math.max(-1, Math.min(1, p));
+                    pano.style.objectPosition = `center ${(68 + c * 30).toFixed(1)}%`;
+                }
+            }
+        }
+
+        window.addEventListener("scroll", () => {
+            if (queued) return;
+            queued = true;
+            requestAnimationFrame(update);
+        }, { passive: true });
+        window.addEventListener("resize", () => requestAnimationFrame(update));
+        onReduceMotionChange(() => requestAnimationFrame(update));
+    }
+
+    function initScrollSpy() {
+        if (!("IntersectionObserver" in window)) return;
+        const links = Array.from(document.querySelectorAll(".quick-nav-dock .nav-item"));
+        const sections = new Map();
+        links.forEach(a => {
+            const id = a.getAttribute("href");
+            const sec = id && id.charAt(0) === "#" ? document.querySelector(id) : null;
+            if (sec) sections.set(sec, a);
+        });
+        if (!sections.size) return;
+
+        // The section crossing the middle of the screen is "current"
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const current = sections.get(entry.target);
+                links.forEach(l => {
+                    const on = l === current;
+                    l.classList.toggle("is-active", on);
+                    if (on) l.setAttribute("aria-current", "true");
+                    else l.removeAttribute("aria-current");
+                });
+            });
+        }, { rootMargin: "-45% 0px -50% 0px" });
+
+        sections.forEach((a, sec) => io.observe(sec));
+    }
+
     /* =====================================================
        16. BOOTSTRAP INVITATION
        ===================================================== */
@@ -2154,6 +2251,8 @@
         initCursor();
         initKenBurns();
         initLiquidHover();
+        initScrollEffects();
+        initScrollSpy();
     }
 
     if (document.readyState === "loading") {
