@@ -1112,30 +1112,6 @@ body {
     stroke-dashoffset: 0;
 }
 
-.crest-monogram {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(232, 198, 124, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-serif);
-    font-size: 21px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--gold-200);
-    background: radial-gradient(circle, rgba(46, 28, 77, 0.5) 0%, rgba(14, 9, 24, 0.8) 100%);
-    box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
-    margin: 4px 0;
-}
-
-.crest-stars {
-    color: var(--gold-400);
-    font-size: 10px;
-    letter-spacing: 6px;
-}
 
 .hero-eyebrow-group {
     display: flex;
@@ -3794,11 +3770,6 @@ textarea:focus-visible {
         width: min(176px, 54vw);
     }
 
-    .crest-monogram {
-        width: 70px;
-        height: 70px;
-        font-size: 18px;
-    }
 
     .hero-eyebrow-group {
         margin-bottom: 8px;
@@ -4431,12 +4402,85 @@ textarea:focus-visible {
 }
 
 
-/* Fine inner ring on the hero monogram, echoing the flourish above it */
-.crest-monogram::before {
-    content: "";
-    position: absolute;
-    inset: 5px;
-    border-radius: 50%;
-    border: 1px solid rgba(232, 198, 124, 0.28);
-    pointer-events: none;
+/* =====================================================
+   HERO MONOGRAM MEDALLION
+   Layered gold rings, a dotted ring, compass diamonds, a laurel
+   wreath and a serif N, script & and serif L. It builds itself
+   once the hero starts: rings and stems draw, then leaves, letters
+   and details fade in. Everything is an SVG, so it stays sharp.
+   ===================================================== */
+
+.monogram-medallion {
+    display: block;
+    width: 116px;
+    height: 116px;
+    margin: 6px 0 2px;
+    overflow: visible;
+    filter: drop-shadow(0 0 16px rgba(212, 175, 55, 0.28));
+}
+
+.med-n,
+.med-l {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.med-amp {
+    font-family: var(--font-script);
+    font-size: 25px;
+}
+
+/* Strokes that get drawn in */
+.med-ring,
+.med-stem {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+}
+
+.hero-play .med-ring {
+    animation: crestDraw 1600ms var(--ease-soft) 200ms backwards;
+}
+
+.hero-play .med-stem {
+    animation: crestDraw 1200ms var(--ease-soft) 800ms backwards;
+}
+
+.hero-play .med-leaf {
+    animation: openFade 500ms var(--ease-out) calc(1000ms + var(--i) * 110ms) backwards;
+}
+
+.hero-play .med-dots,
+.hero-play .med-gems {
+    animation: openFade 900ms var(--ease-out) 900ms backwards;
+}
+
+.hero-play .med-letters {
+    animation: openFade 1000ms var(--ease-out) 700ms backwards;
+}
+
+.hero-play .med-star,
+.hero-play .med-rule {
+    animation: openFade 800ms var(--ease-out) 1300ms backwards;
+}
+
+@media (max-width: 600px) {
+    .monogram-medallion {
+        width: 100px;
+        height: 100px;
+        margin-top: 4px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .med-ring,
+    .med-stem,
+    .med-leaf,
+    .med-dots,
+    .med-gems,
+    .med-letters,
+    .med-star,
+    .med-rule {
+        animation: none !important;
+    }
 }
