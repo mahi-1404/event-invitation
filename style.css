@@ -4355,3 +4355,30 @@ textarea:focus-visible {
         display: none;
     }
 }
+
+
+/* =====================================================
+   NAV DOCK ON SMALL PHONES
+   Sizes to its content, never wraps, and always keeps a margin
+   from both screen edges (it used to be clipped at 320px).
+   ===================================================== */
+
+@media (max-width: 480px) {
+    .quick-nav-dock {
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        max-width: calc(100vw - 16px);
+        padding: 6px 8px;
+        gap: 2px;
+    }
+
+    .nav-item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 9px;
+        font-size: 9px;
+        letter-spacing: 1px;
+        white-space: nowrap;
+    }
+}
