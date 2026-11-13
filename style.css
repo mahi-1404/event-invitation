@@ -3952,3 +3952,651 @@ textarea:focus-visible {
         transform: translateX(-50%);
     }
 }
+
+
+/* =====================================================
+   COMPACT PHONE SPACING
+   -----------------------------------------------------
+   Phones only. Tightens vertical rhythm so the invitation
+   needs far less scrolling. Desktop and tablet are untouched.
+   Some earlier rules use !important, so those are matched.
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+    /* Section rhythm */
+    .invitation-details-section,
+    .itinerary-section,
+    .gallery-section,
+    .rsvp-section {
+        padding: 40px 16px;
+    }
+
+    .couple-spotlight-section {
+        padding: 36px 16px 24px;
+    }
+
+    .section-header {
+        margin-bottom: 24px;
+    }
+
+    .section-title {
+        font-size: clamp(30px, 9vw, 38px);
+    }
+
+    .section-badge {
+        margin-bottom: 8px;
+    }
+
+    .luxury-divider {
+        margin: 14px auto;
+    }
+
+    .section-intro {
+        font-size: 12.5px;
+        line-height: 1.65;
+    }
+
+    /* Hero: names first, no forced full-screen height */
+    .invitation-hero-section {
+        min-height: 0;
+        padding: 72px 16px 32px;
+    }
+
+    .hero-crest {
+        margin-bottom: 12px;
+    }
+
+    .royal-flourish {
+        font-size: 20px;
+    }
+
+    .crest-monogram {
+        width: 56px;
+        height: 56px;
+        font-size: 18px;
+    }
+
+    .hero-eyebrow-group {
+        margin-bottom: 8px;
+    }
+
+    .hero-main-title {
+        margin: 4px 0 8px;
+    }
+
+    .wedding-badge-pill {
+        margin: 4px 0 14px;
+    }
+
+    .host-announcement {
+        margin-bottom: 8px;
+        gap: 4px;
+    }
+
+    .welcome-text {
+        font-size: 13px;
+        line-height: 1.7;
+        margin: 0 auto 18px;
+    }
+
+    .royal-date-card {
+        padding: 18px 16px;
+        margin-bottom: 18px;
+    }
+
+    .date-day-num {
+        font-size: clamp(54px, 16vw, 72px);
+    }
+
+    .date-time-row {
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+
+    .countdown-wrapper {
+        margin-bottom: 18px;
+    }
+
+    .countdown-header {
+        margin-bottom: 8px;
+    }
+
+    .countdown-box {
+        padding: 8px 4px;
+    }
+
+    .calendar-actions {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .cal-btn {
+        padding: 10px 16px;
+    }
+
+    /* The animated mouse is a desktop cue; touch users already know to scroll */
+    .scroll-animated-mouse {
+        display: none;
+    }
+
+    .scroll-indicator {
+        gap: 0;
+    }
+
+    /* Couple */
+    .couple-cards-row {
+        gap: 8px !important;
+    }
+
+    .couple-card {
+        padding: 20px 16px !important;
+    }
+
+    .couple-photo-wrap {
+        width: 116px !important;
+        height: 116px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .couple-name {
+        font-size: 26px;
+        margin-bottom: 0;
+    }
+
+    .couple-union-divider {
+        margin: 0 !important;
+    }
+
+    .union-circle {
+        width: 44px;
+        height: 44px;
+    }
+
+    .union-rings {
+        font-size: 14px;
+    }
+
+    /* Details and venue */
+    .details-cards-grid {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .detail-card {
+        padding: 18px 16px;
+    }
+
+    .detail-icon-badge {
+        width: 46px;
+        height: 46px;
+        margin-bottom: 10px;
+    }
+
+    .detail-label {
+        margin-bottom: 4px;
+    }
+
+    .venue-showcase-card {
+        padding: 24px 16px;
+    }
+
+    .venue-note {
+        margin-bottom: 16px;
+    }
+
+    .venue-actions {
+        gap: 10px;
+        margin-bottom: 0;
+    }
+
+    /* Timeline */
+    .itinerary-timeline {
+        padding: 4px 0;
+    }
+
+    .timeline-item {
+        margin-bottom: 16px;
+    }
+
+    .timeline-content {
+        padding: 16px;
+    }
+
+    /* Gallery: one feature photo, then the others side by side
+       (about 590px instead of 1,400px) */
+    .media-gallery {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .gallery-figure:first-child {
+        grid-column: 1 / -1;
+        aspect-ratio: 1 / 1;
+    }
+
+    .gallery-img {
+        object-position: center 20%;
+    }
+
+    /* RSVP */
+    .rsvp-card {
+        padding: 28px 16px;
+    }
+
+    .rsvp-header {
+        margin-bottom: 18px;
+    }
+
+    .rsvp-symbol {
+        font-size: 26px;
+        margin-bottom: 6px;
+    }
+
+    .attendance-options {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .radio-content {
+        padding: 12px 8px;
+    }
+
+    .radio-content small {
+        display: none;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+        gap: 6px;
+    }
+
+    .form-row {
+        margin-bottom: 0;
+    }
+
+    .rsvp-submit-btn {
+        margin-top: 4px;
+    }
+
+    /* Blessings: no heading above an empty wall. It appears as soon as
+       there is a blessing to show. */
+    .blessings-section:has(.blessings-grid:empty) {
+        display: none;
+    }
+
+    .blessings-section {
+        padding: 36px 16px;
+    }
+
+    /* Footer */
+    .royal-footer {
+        padding: 40px 16px 96px; /* room for the floating nav dock */
+    }
+
+    .footer-crest {
+        margin-bottom: 12px;
+    }
+
+    .footer-note {
+        margin: 6px 0 20px;
+    }
+
+    .back-to-top-btn {
+        margin-bottom: 20px;
+    }
+}
+
+
+/* =====================================================
+   PREMIUM FLOURISHES
+   -----------------------------------------------------
+   SVG crest drawing, split-text headings, Ken Burns,
+   magnetic buttons, card spotlight, custom cursor and the
+   liquid hover canvas. JS lives in script.js section 15.
+   ===================================================== */
+
+/* ---------- SVG crest draws itself ---------- */
+
+.crest-ring,
+.crest-star {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+}
+
+.opening-screen .opening-crest {
+    animation: openFade 500ms var(--ease-out) backwards;
+}
+
+.opening-screen .crest-ring {
+    animation: crestDraw 1700ms var(--ease-soft) 150ms backwards;
+}
+
+.opening-screen .crest-star {
+    animation: crestDraw 1500ms var(--ease-soft) 650ms backwards,
+               crestFill 900ms var(--ease-out) 1700ms backwards;
+}
+
+.opening-screen .crest-ring-outer {
+    animation: openFade 1100ms var(--ease-out) 1300ms backwards;
+}
+
+@keyframes crestDraw {
+    from { stroke-dashoffset: 1; }
+    to   { stroke-dashoffset: 0; }
+}
+
+@keyframes crestFill {
+    from { fill-opacity: 0; }
+    to   { fill-opacity: 1; }
+}
+
+/* The rest of the opening waits for the drawing, a little */
+.opening-screen .intro-text       { animation-delay: 1000ms; }
+.opening-screen .envelope-wrapper { animation-delay: 1350ms; }
+.opening-screen .open-button      { animation-delay: 1950ms; }
+.opening-screen .bottom-hint      { animation-delay: 2150ms; }
+
+/* ---------- Split-text headings ---------- */
+
+.sw {
+    display: inline-block;
+    white-space: nowrap;
+    /* Mask: hides letters below the baseline while they wait. Generous on
+       the sides and top so italics and descenders are never clipped. */
+    clip-path: inset(-0.3em -0.2em -0.2em -0.2em);
+}
+
+.ch {
+    display: inline-block;
+}
+
+/* The earlier rule `.section-title span` styles every span as italic gold;
+   the split pieces must simply inherit from whatever contains them. */
+.section-title .sw,
+.section-title .ch {
+    font-style: inherit;
+    color: inherit;
+}
+
+/* Once the wave has landed, the mask is removed (JS adds .is-settled) */
+.is-settled .sw {
+    clip-path: none;
+}
+
+@keyframes charUp {
+    from { transform: translateY(135%); }
+    to   { transform: translateY(0); }
+}
+
+.motion-ready .section-header:not(.is-in) .ch,
+.motion-ready .invitation-hero-section:not(.hero-play) .ch {
+    transform: translateY(135%);
+}
+
+.section-header.is-in .section-title .ch {
+    animation: charUp 800ms var(--ease-out) calc(var(--rd, 0ms) + 120ms + var(--ci) * 28ms) backwards;
+}
+
+/* The hero names use the letters instead of the whole-line rise */
+.hero-play .title-line-1.is-split,
+.hero-play .title-line-2.is-split {
+    animation: none;
+}
+
+.hero-play .title-line-1 .ch {
+    animation: charUp 1000ms var(--ease-out) calc(180ms + var(--ci) * 45ms) backwards;
+}
+
+.hero-play .title-line-2 .ch {
+    animation: charUp 1000ms var(--ease-out) calc(380ms + var(--ci) * 45ms) backwards;
+}
+
+/* ---------- Ken Burns: slow, continuous drift ---------- */
+
+@keyframes kenBurns {
+    from { scale: 1;    translate: 0 0; }
+    to   { scale: 1.06; translate: var(--kb-x, -10px) var(--kb-y, -8px); }
+}
+
+/* Paused until the photo is on screen (JS toggles .kb-on) */
+.gallery-img.is-loaded {
+    animation: kenBurns 26s ease-in-out infinite alternate;
+    animation-play-state: paused;
+}
+
+.gallery-figure.kb-on .gallery-img.is-loaded {
+    animation-play-state: running;
+}
+
+.gallery-figure:nth-child(2) .gallery-img { --kb-x: 9px;  --kb-y: -7px; animation-duration: 30s; }
+.gallery-figure:nth-child(3) .gallery-img { --kb-x: -8px; --kb-y: 9px;  animation-duration: 28s; }
+
+.reveal-section.active .reveal-image {
+    animation: kenBurns 24s ease-in-out infinite alternate;
+}
+
+/* ---------- Liquid hover canvas ---------- */
+
+.gl-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 180ms ease-out;
+}
+
+.gl-canvas.is-live {
+    opacity: 1;
+}
+
+.gallery-overlay {
+    z-index: 2;
+}
+
+/* While the canvas is active the photo holds still, so the two match exactly */
+.gallery-figure.gl-on .gallery-img {
+    transition: none;
+    transform: none !important;
+    animation-play-state: paused !important;
+}
+
+/* ---------- Magnetic hover (desktop mouse) ---------- */
+
+.magnet {
+    transition: transform var(--t-small) var(--ease-out), background-color var(--t-small) ease,
+                border-color var(--t-small) ease, color var(--t-small) ease,
+                box-shadow var(--t-small) ease, translate 180ms var(--ease-out);
+}
+
+/* On release the element settles back with a small spring */
+.magnet.is-released {
+    transition: transform var(--t-small) var(--ease-out), background-color var(--t-small) ease,
+                border-color var(--t-small) ease, color var(--t-small) ease,
+                box-shadow var(--t-small) ease, translate 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.reveal-complete .continue-invitation-btn.magnet {
+    transition: opacity 600ms var(--ease-out) 350ms, transform var(--t-small) var(--ease-out),
+                box-shadow var(--t-small) ease, translate 180ms var(--ease-out);
+}
+
+.reveal-complete .continue-invitation-btn.magnet.is-released {
+    transition: opacity 600ms var(--ease-out) 350ms, transform var(--t-small) var(--ease-out),
+                box-shadow var(--t-small) ease, translate 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.magnet-inner {
+    display: inline-block;
+    transition: translate 200ms var(--ease-out);
+}
+
+/* ---------- Card spotlight + custom cursor (desktop mouse only) ---------- */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .detail-card::before,
+    .venue-showcase-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 300ms ease;
+        background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%),
+                    rgba(245, 215, 127, 0.17), rgba(245, 215, 127, 0.05) 45%, transparent 70%);
+    }
+
+    .detail-card:hover::before,
+    .venue-showcase-card:hover::before {
+        opacity: 1;
+    }
+
+    /* Keep the card content above the light */
+    .detail-card-content,
+    .venue-info {
+        position: relative;
+        z-index: 1;
+    }
+
+    .cursor-dot,
+    .cursor-ring {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 200ms ease;
+    }
+
+    body.cursor-visible .cursor-dot,
+    body.cursor-visible .cursor-ring {
+        opacity: 1;
+    }
+
+    body.cursor-native .cursor-dot,
+    body.cursor-native .cursor-ring {
+        opacity: 0;
+    }
+
+    .cursor-dot {
+        width: 6px;
+        height: 6px;
+        margin: -3px 0 0 -3px;
+        border-radius: 50%;
+        background: var(--gold-300);
+        box-shadow: 0 0 8px rgba(229, 201, 130, 0.6);
+    }
+
+    .cursor-ring {
+        width: 34px;
+        height: 34px;
+        margin: -17px 0 0 -17px;
+        border-radius: 50%;
+        border: 1px solid rgba(229, 201, 130, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 200ms ease, width 260ms var(--ease-out), height 260ms var(--ease-out),
+                    margin 260ms var(--ease-out), background-color 260ms ease, border-color 260ms ease;
+    }
+
+    .cursor-ring.is-link {
+        width: 48px;
+        height: 48px;
+        margin: -24px 0 0 -24px;
+        border-color: rgba(253, 243, 205, 0.9);
+    }
+
+    .cursor-ring.is-labelled {
+        width: 78px;
+        height: 78px;
+        margin: -39px 0 0 -39px;
+        background: rgba(12, 8, 23, 0.5);
+    }
+
+    /* While pressing (scratching), shrink so the photo underneath stays visible */
+    .cursor-ring.is-down {
+        width: 26px;
+        height: 26px;
+        margin: -13px 0 0 -13px;
+        background: transparent;
+    }
+
+    .cursor-label {
+        font-family: var(--font-sans);
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold-100);
+        opacity: 0;
+        transition: opacity 200ms ease;
+    }
+
+    .cursor-ring.is-labelled .cursor-label {
+        opacity: 1;
+    }
+
+    .cursor-ring.is-down .cursor-label {
+        opacity: 0;
+    }
+
+    /* The system pointer is hidden only after the first real mouse movement,
+       and stays native over form fields so typing and selecting feel normal */
+    body.has-custom-cursor,
+    body.has-custom-cursor * {
+        cursor: none !important;
+    }
+
+    body.has-custom-cursor :is(input, textarea, select, option) {
+        cursor: auto !important;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .cursor-dot,
+    .cursor-ring {
+        display: none;
+    }
+}
+
+/* ---------- Reduced motion: none of the above moves ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .crest-ring,
+    .crest-star,
+    .crest-ring-outer,
+    .gallery-img,
+    .reveal-image,
+    .ch {
+        animation: none !important;
+    }
+
+    .ch,
+    .motion-ready .section-header:not(.is-in) .ch,
+    .motion-ready .invitation-hero-section:not(.hero-play) .ch {
+        transform: none;
+    }
+
+    .ambient-glow,
+    .hero-crest,
+    .couple-union-divider,
+    .rsvp-symbol,
+    .footer-crest {
+        translate: none !important;
+    }
+
+    .cursor-dot,
+    .cursor-ring {
+        display: none;
+    }
+}

@@ -1210,6 +1210,7 @@
             fig.setAttribute("role", "button");
             fig.setAttribute("tabindex", "0");
             fig.setAttribute("aria-label", `View photo ${index + 1}`);
+            fig.dataset.cursor = "View";
 
             fig.innerHTML = `
                 <img src="${item.src}" alt="${item.caption || "Special moment"}" class="gallery-img" loading="lazy">
@@ -1552,7 +1553,584 @@
 
 
     /* =====================================================
-       15. BOOTSTRAP INVITATION
+       15. PREMIUM FLOURISHES
+       -----------------------------------------------------
+       Extra polish layered on top of the core animation system.
+       Rules for everything in this section:
+       - Off entirely under prefers-reduced-motion.
+       - Mouse-driven effects only run with a real mouse
+         ((hover: hover) and (pointer: fine)); phones never pay for them.
+       - Each effect is independent and fails silently, so the
+         invitation is complete without any of them.
+       ===================================================== */
+
+    const finePointerQuery = window.matchMedia ? window.matchMedia("(hover: hover) and (pointer: fine)") : null;
+
+    function hasFinePointer() {
+        return !!(finePointerQuery && finePointerQuery.matches);
+    }
+
+    /* ---------- 15a. Parallax depth ----------
+       Ambient glows drift slower than the content; a few small
+       ornaments float slightly faster. Uses the individual
+       `translate` property so it never fights the transforms that
+       entrance animations and hovers already use. */
+
+    function initParallax() {
+        const glows = [
+            // Both drift upward (the same way the page scrolls), far slower than the content
+            { el: document.querySelector(".glow-1"), range: -170 },
+            { el: document.querySelector(".glow-2"), range: -240 }
+        ].filter(g => g.el);
+        const floaters = Array.from(document.querySelectorAll(
+            ".hero-crest, .couple-union-divider, .rsvp-symbol, .footer-crest"
+        )).map(el => ({ el, applied: 0 }));
+
+        let queued = false;
+        let cleared = false;
+
+        function update() {
+            queued = false;
+
+            if (prefersReducedMotion() || !invitationScrollContainer || !invitationScrollContainer.classList.contains("active")) {
+                if (!cleared) {
+                    glows.forEach(g => { g.el.style.translate = ""; });
+                    floaters.forEach(f => { f.el.style.translate = ""; f.applied = 0; });
+                    cleared = true;
+                }
+                return;
+            }
+            cleared = false;
+
+            const y = window.scrollY;
+            const vh = window.innerHeight;
+
+            // Ambient light: a slow, bounded drift (never leaves the screen)
+            glows.forEach(g => {
+                g.el.style.translate = `0 ${(g.range * Math.tanh(y / 2600)).toFixed(1)}px`;
+            });
+
+            // Read every position first, then write: one layout pass per frame
+            const centres = floaters.map(f => {
+                const r = f.el.getBoundingClientRect();
+                return r.top + r.height / 2 - f.applied; // remove our own offset
+            });
+            floaters.forEach((f, i) => {
+                const c = centres[i];
+                if (c < -240 || c > vh + 240) return; // off screen: leave as is
+                const offset = Math.max(-34, Math.min(34, -(c - vh / 2) * 0.07));
+                f.applied = offset;
+                f.el.style.translate = `0 ${offset.toFixed(1)}px`;
+            });
+        }
+
+        window.addEventListener("scroll", () => {
+            if (queued) return;
+            queued = true;
+            requestAnimationFrame(update);
+        }, { passive: true });
+
+        onReduceMotionChange(() => requestAnimationFrame(update));
+    }
+
+    /* ---------- 15b. Split text ----------
+       Headings are split into words and letters. CSS then unmasks the
+       letters in a left-to-right wave. The full text stays available to
+       screen readers through aria-label; the split pieces are hidden. */
+
+    function splitIntoLetters(el) {
+        if (!el || el.dataset.split) return;
+        let index = 0;
+
+        function walk(node) {
+            Array.from(node.childNodes).forEach(child => {
+                if (child.nodeType === 3) {
+                    const frag = document.createDocumentFragment();
+                    child.textContent.split(/(\s+)/).forEach(part => {
+                        if (!part) return;
+                        if (/^\s+$/.test(part)) {
+                            frag.appendChild(document.createTextNode(" "));
+                            return;
+                        }
+                        const word = document.createElement("span");
+                        word.className = "sw";
+                        word.setAttribute("aria-hidden", "true");
+                        Array.from(part).forEach(ch => {
+                            const letter = document.createElement("span");
+                            letter.className = "ch";
+                            letter.style.setProperty("--ci", String(index++));
+                            letter.textContent = ch;
+                            word.appendChild(letter);
+                        });
+                        frag.appendChild(word);
+                    });
+                    node.replaceChild(frag, child);
+                } else if (child.nodeType === 1 && child.tagName !== "BR") {
+                    walk(child);
+                }
+            });
+        }
+
+        walk(el);
+        el.dataset.split = "1";
+        el.classList.add("is-split");
+
+        // Once the last letter lands, drop the clipping mask so glows and
+        // italic overhangs are never cut off at rest.
+        const last = index - 1;
+        el.addEventListener("animationend", (e) => {
+            if (e.target.classList && e.target.classList.contains("ch") &&
+                Number(e.target.style.getPropertyValue("--ci")) === last) {
+                el.classList.add("is-settled");
+            }
+        });
+    }
+
+    function initSplitText() {
+        if (prefersReducedMotion()) return;
+
+        document.querySelectorAll(".section-title").forEach(title => {
+            const label = title.textContent.replace(/\s+/g, " ").trim();
+            splitIntoLetters(title);
+            title.setAttribute("aria-label", label);
+        });
+
+        // Hero names: the h1 keeps one readable label; each line splits visually
+        const heroTitle = document.querySelector(".hero-main-title");
+        const line1 = document.getElementById("eventTitleLine1");
+        const line2 = document.getElementById("eventTitleLine2");
+        if (heroTitle && line1 && line2) {
+            heroTitle.setAttribute("aria-label", `${line1.textContent} & ${line2.textContent}`);
+            splitIntoLetters(line1);
+            splitIntoLetters(line2);
+        }
+    }
+
+    /* ---------- 15c. Magnetic hover ----------
+       Primary buttons and the RSVP choice cards lean a few pixels toward
+       the cursor; their label leans a little further. On release they
+       settle back with a small spring. Desktop mouse only. */
+
+    function initMagnetic() {
+        if (!hasFinePointer() || prefersReducedMotion()) return;
+
+        const defs = [
+            { sel: ".open-button", inner: "#openButtonText", radius: 90, pull: 0.26, max: 9 },
+            { sel: ".continue-invitation-btn", inner: "span", radius: 90, pull: 0.26, max: 9 },
+            { sel: ".location-button", inner: "span", radius: 70, pull: 0.24, max: 8 },
+            { sel: ".rsvp-submit-btn", inner: "span", radius: 70, pull: 0.1, max: 5 },
+            { sel: ".radio-card", target: ".radio-content", inner: ".radio-emoji", radius: 50, pull: 0.12, max: 6 }
+        ];
+
+        const magnets = [];
+        defs.forEach(def => {
+            document.querySelectorAll(def.sel).forEach(host => {
+                const target = def.target ? host.querySelector(def.target) : host;
+                const inner = def.inner ? target.querySelector(def.inner) : null;
+                if (!target) return;
+                target.classList.add("magnet");
+                if (inner) inner.classList.add("magnet-inner");
+                magnets.push({ host, target, inner, def, x: 0, y: 0, active: false });
+            });
+        });
+        if (!magnets.length) return;
+
+        let pointer = null;
+        let queued = false;
+
+        function settle(m) {
+            if (!m.active && m.x === 0 && m.y === 0) return;
+            m.active = false;
+            m.x = 0;
+            m.y = 0;
+            m.target.classList.add("is-released"); // springy return
+            m.target.style.translate = "";
+            if (m.inner) m.inner.style.translate = "";
+        }
+
+        function update() {
+            queued = false;
+            if (!pointer) {
+                magnets.forEach(settle);
+                return;
+            }
+            magnets.forEach(m => {
+                const r = m.host.getBoundingClientRect();
+                if (!r.width || !r.height) { settle(m); return; }
+
+                const cx = r.left + r.width / 2 - (m.def.target ? 0 : m.x);
+                const cy = r.top + r.height / 2 - (m.def.target ? 0 : m.y);
+                const dx = Math.max(r.left - pointer.x, 0, pointer.x - r.right);
+                const dy = Math.max(r.top - pointer.y, 0, pointer.y - r.bottom);
+
+                if (Math.hypot(dx, dy) > m.def.radius) {
+                    settle(m);
+                    return;
+                }
+
+                const clamp = (v) => Math.max(-m.def.max, Math.min(m.def.max, v));
+                m.x = clamp((pointer.x - cx) * m.def.pull);
+                m.y = clamp((pointer.y - cy) * m.def.pull);
+                m.active = true;
+                m.target.classList.remove("is-released");
+                m.target.style.translate = `${m.x.toFixed(1)}px ${m.y.toFixed(1)}px`;
+                if (m.inner) m.inner.style.translate = `${(m.x * 0.6).toFixed(1)}px ${(m.y * 0.6).toFixed(1)}px`;
+            });
+        }
+
+        document.addEventListener("pointermove", (e) => {
+            if (e.pointerType !== "mouse") return;
+            pointer = { x: e.clientX, y: e.clientY };
+            if (!queued) {
+                queued = true;
+                requestAnimationFrame(update);
+            }
+        }, { passive: true });
+
+        document.documentElement.addEventListener("mouseleave", () => {
+            pointer = null;
+            requestAnimationFrame(update);
+        });
+    }
+
+    /* ---------- 15d. Spotlight on cards ----------
+       A soft gold light follows the cursor across the detail and venue
+       cards. The cursor position is handed to CSS as two variables. */
+
+    function initSpotlight() {
+        if (!hasFinePointer() || prefersReducedMotion()) return;
+
+        document.querySelectorAll(".detail-card, .venue-showcase-card").forEach(card => {
+            card.addEventListener("pointermove", (e) => {
+                if (e.pointerType !== "mouse") return;
+                const r = card.getBoundingClientRect();
+                card.style.setProperty("--mx", `${(e.clientX - r.left).toFixed(0)}px`);
+                card.style.setProperty("--my", `${(e.clientY - r.top).toFixed(0)}px`);
+            }, { passive: true });
+        });
+    }
+
+    /* ---------- 15e. Custom cursor ----------
+       A small gold dot with a ring that trails it. Over the scratch card,
+       the envelope and gallery photos the ring grows and names the action.
+       Only switches on after the first real mouse movement, and never over
+       form fields, so typing and selecting stay native. */
+
+    function initCursor() {
+        if (!hasFinePointer() || prefersReducedMotion()) return;
+
+        const dot = document.createElement("div");
+        dot.className = "cursor-dot";
+        const ring = document.createElement("div");
+        ring.className = "cursor-ring";
+        const label = document.createElement("span");
+        label.className = "cursor-label";
+        ring.appendChild(label);
+        [dot, ring].forEach(el => {
+            el.setAttribute("aria-hidden", "true");
+            document.body.appendChild(el);
+        });
+
+        // Say what each interactive surface does
+        if (photoRevealCard) photoRevealCard.dataset.cursor = "Scratch";
+        if (envelopeWrapper) envelopeWrapper.dataset.cursor = "Open";
+
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        let raf = 0;
+        let started = false;
+
+        function placeDot() {
+            dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+        }
+
+        function loop() {
+            raf = 0;
+            rx += (mx - rx) * 0.2;
+            ry += (my - ry) * 0.2;
+            ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+            if (Math.abs(mx - rx) > 0.1 || Math.abs(my - ry) > 0.1) {
+                raf = requestAnimationFrame(loop);
+            }
+        }
+
+        document.addEventListener("pointermove", (e) => {
+            if (e.pointerType !== "mouse") return;
+            mx = e.clientX;
+            my = e.clientY;
+            if (!started) {
+                started = true;
+                rx = mx;
+                ry = my;
+                document.body.classList.add("has-custom-cursor");
+            }
+            document.body.classList.add("cursor-visible");
+            placeDot();
+            if (!raf) raf = requestAnimationFrame(loop);
+        }, { passive: true });
+
+        document.addEventListener("pointerover", (e) => {
+            if (e.pointerType !== "mouse" || !e.target.closest) return;
+            const t = e.target;
+
+            const native = t.closest("input, textarea, select, option");
+            document.body.classList.toggle("cursor-native", !!native);
+
+            const named = t.closest("[data-cursor]");
+            if (named) {
+                label.textContent = named.dataset.cursor;
+                ring.classList.add("is-labelled");
+            } else {
+                ring.classList.remove("is-labelled");
+            }
+
+            ring.classList.toggle("is-link", !named && !!t.closest("a, button, [role='button'], label, .radio-card"));
+        });
+
+        document.addEventListener("pointerdown", (e) => {
+            if (e.pointerType === "mouse") ring.classList.add("is-down");
+        });
+        document.addEventListener("pointerup", () => ring.classList.remove("is-down"));
+        document.addEventListener("pointercancel", () => ring.classList.remove("is-down"));
+
+        document.documentElement.addEventListener("mouseleave", () => document.body.classList.remove("cursor-visible"));
+        document.documentElement.addEventListener("mouseenter", () => {
+            if (started) document.body.classList.add("cursor-visible");
+        });
+    }
+
+    /* ---------- 15f. Ken Burns ----------
+       Gallery photos drift very slowly (CSS). They only run while on
+       screen, so off-screen photos cost nothing. */
+
+    function initKenBurns() {
+        if (prefersReducedMotion() || !("IntersectionObserver" in window)) return;
+        const figures = document.querySelectorAll(".gallery-figure");
+        if (!figures.length) return;
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => entry.target.classList.toggle("kb-on", entry.isIntersecting));
+        }, { threshold: 0.05 });
+
+        figures.forEach(fig => io.observe(fig));
+    }
+
+    /* ---------- 15g. Liquid hover (raw WebGL, no library) ----------
+       Hovering a gallery photo sends a soft ripple out from the cursor.
+       One shared canvas is moved onto the hovered figure, so only a single
+       WebGL context ever exists. If WebGL is missing or the browser blocks
+       reading the image (for example opened from file://), nothing happens
+       and the normal CSS hover is used. */
+
+    function initLiquidHover() {
+        if (!hasFinePointer() || prefersReducedMotion()) return;
+        const figures = Array.from(document.querySelectorAll(".gallery-figure"));
+        if (!figures.length) return;
+
+        const canvas = document.createElement("canvas");
+        canvas.className = "gl-canvas";
+        canvas.setAttribute("aria-hidden", "true");
+
+        let gl = null;
+        try {
+            gl = canvas.getContext("webgl", { alpha: true, antialias: false, premultipliedAlpha: true });
+        } catch (err) {
+            gl = null;
+        }
+        if (!gl) return;
+
+        const vertexSrc = "attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
+        const fragmentSrc = [
+            "#ifdef GL_FRAGMENT_PRECISION_HIGH",
+            "precision highp float;",
+            "#else",
+            "precision mediump float;",
+            "#endif",
+            "uniform sampler2D uTex;",
+            "uniform vec2 uRes;",
+            "uniform vec4 uRect;",
+            "uniform vec2 uMouse;",
+            "uniform float uTime;",
+            "uniform float uStrength;",
+            "uniform float uTexAspect;",
+            "uniform float uObjY;",
+            "uniform float uDpr;",
+            "void main(){",
+            "  vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;",
+            "  vec2 d = px - uMouse;",
+            "  float r = length(d);",
+            "  float wave = sin(r * 0.055 - uTime * 4.2) * exp(-r * 0.011);",
+            "  px += (d / max(r, 1.0)) * wave * 9.0 * uStrength;",
+            "  px += vec2(sin(px.y * 0.035 + uTime * 1.6), cos(px.x * 0.03 + uTime * 1.3)) * 1.6 * uStrength;",
+            "  vec2 q = (px - uRect.xy) / uRect.zw;",
+            "  float a = uRect.z / uRect.w;",
+            "  if (uTexAspect > a) { q.x = (q.x - 0.5) * (a / uTexAspect) + 0.5; }",
+            "  else { float f = uTexAspect / a; q.y = q.y * f + (1.0 - f) * uObjY; }",
+            "  gl_FragColor = texture2D(uTex, clamp(q, 0.0, 1.0));",
+            "}"
+        ].join("\n");
+
+        function compile(type, src) {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, src);
+            gl.compileShader(s);
+            return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+        }
+
+        const vs = compile(gl.VERTEX_SHADER, vertexSrc);
+        const fs = compile(gl.FRAGMENT_SHADER, fragmentSrc);
+        if (!vs || !fs) return;
+
+        const program = gl.createProgram();
+        gl.attachShader(program, vs);
+        gl.attachShader(program, fs);
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+        gl.useProgram(program);
+
+        const buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+        const loc = gl.getAttribLocation(program, "p");
+        gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+        const U = {};
+        ["uTex", "uRes", "uRect", "uMouse", "uTime", "uStrength", "uTexAspect", "uObjY", "uDpr"].forEach(n => {
+            U[n] = gl.getUniformLocation(program, n);
+        });
+
+        let disabled = false;
+        canvas.addEventListener("webglcontextlost", (e) => { e.preventDefault(); disabled = true; });
+
+        // Textures are built once per photo, downscaled so a huge original never reaches the GPU
+        const textures = new Map();
+        function textureFor(img) {
+            if (textures.has(img.currentSrc)) return textures.get(img.currentSrc);
+            const longest = Math.max(img.naturalWidth, img.naturalHeight);
+            const scale = Math.min(1, 1280 / longest);
+            const w = Math.max(1, Math.round(img.naturalWidth * scale));
+            const h = Math.max(1, Math.round(img.naturalHeight * scale));
+            const c = document.createElement("canvas");
+            c.width = w;
+            c.height = h;
+            c.getContext("2d").drawImage(img, 0, 0, w, h);
+
+            const tex = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, tex);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c); // throws if the image is tainted
+            const rec = { tex, aspect: w / h };
+            textures.set(img.currentSrc, rec);
+            return rec;
+        }
+
+        let state = null;      // { fig, img, rec, rect, mouse, origin, target, strength }
+        let raf = 0;
+        let leaveTimer = 0;
+
+        function finish() {
+            clearTimeout(leaveTimer);
+            cancelAnimationFrame(raf);
+            raf = 0;
+            if (!state) return;
+            state.fig.classList.remove("gl-on");
+            canvas.classList.remove("is-live");
+            if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+            state = null;
+        }
+
+        function draw(now) {
+            gl.bindTexture(gl.TEXTURE_2D, state.rec.tex);
+            gl.uniform1i(U.uTex, 0);
+            gl.uniform2f(U.uRes, canvas.width, canvas.height);
+            gl.uniform4f(U.uRect, state.rect[0], state.rect[1], state.rect[2], state.rect[3]);
+            gl.uniform2f(U.uMouse, state.mouse[0], state.mouse[1]);
+            gl.uniform1f(U.uTime, now / 1000);
+            gl.uniform1f(U.uStrength, state.strength);
+            gl.uniform1f(U.uTexAspect, state.rec.aspect);
+            gl.uniform1f(U.uObjY, state.objY);
+            gl.uniform1f(U.uDpr, state.dpr);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        }
+
+        function frame(now) {
+            raf = 0;
+            if (!state) return;
+            state.strength += (state.target - state.strength) * 0.1;
+            draw(now);
+            if (!canvas.classList.contains("is-live") && state.target > 0) canvas.classList.add("is-live");
+            raf = requestAnimationFrame(frame);
+        }
+
+        function enter(fig, e) {
+            if (disabled || e.pointerType !== "mouse") return;
+            const img = fig.querySelector(".gallery-img");
+            if (!img || !img.complete || !img.naturalWidth) return;
+            if (state) finish();
+
+            let rec;
+            try {
+                rec = textureFor(img);
+            } catch (err) {
+                disabled = true; // tainted image or no GPU memory: keep the CSS hover
+                return;
+            }
+
+            // Freeze the photo's own motion so the canvas matches it exactly
+            fig.classList.add("gl-on");
+            const figRect = fig.getBoundingClientRect();   // flushes styles
+            const imgRect = img.getBoundingClientRect();
+            const originX = figRect.left + fig.clientLeft;
+            const originY = figRect.top + fig.clientTop;
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            canvas.width = Math.max(1, Math.round(fig.clientWidth * dpr));
+            canvas.height = Math.max(1, Math.round(fig.clientHeight * dpr));
+            gl.viewport(0, 0, canvas.width, canvas.height);
+
+            const pos = (getComputedStyle(img).objectPosition || "50% 50%").split(" ");
+            const objY = pos[1] && pos[1].endsWith("%") ? parseFloat(pos[1]) / 100 : 0.5;
+
+            state = {
+                fig, img, rec, dpr, objY,
+                rect: [imgRect.left - originX, imgRect.top - originY, imgRect.width, imgRect.height],
+                origin: [originX, originY],
+                mouse: [e.clientX - originX, e.clientY - originY],
+                target: 1,
+                strength: 0
+            };
+
+            fig.appendChild(canvas);
+            draw(performance.now());
+            raf = requestAnimationFrame(frame);
+        }
+
+        function move(e) {
+            if (!state || e.pointerType !== "mouse") return;
+            state.mouse = [e.clientX - state.origin[0], e.clientY - state.origin[1]];
+        }
+
+        function leave() {
+            if (!state) return;
+            state.target = 0;
+            canvas.classList.remove("is-live");
+            clearTimeout(leaveTimer);
+            leaveTimer = setTimeout(finish, 260);
+        }
+
+        figures.forEach(fig => {
+            fig.addEventListener("pointerenter", (e) => enter(fig, e));
+            fig.addEventListener("pointermove", move, { passive: true });
+            fig.addEventListener("pointerleave", leave);
+        });
+    }
+
+
+    /* =====================================================
+       16. BOOTSTRAP INVITATION
        ===================================================== */
 
     let hasBooted = false;
@@ -1561,10 +2139,17 @@
         if (hasBooted) return; // never wire up listeners twice
         hasBooted = true;
         loadEventData();
+        initSplitText();
         initScrollReveal();
         initAmbientCanvas();
         initConfettiCanvas();
         initAudio();
+        initParallax();
+        initMagnetic();
+        initSpotlight();
+        initCursor();
+        initKenBurns();
+        initLiquidHover();
     }
 
     if (document.readyState === "loading") {

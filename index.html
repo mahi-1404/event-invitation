@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=10">
 </head>
 
 <body>
@@ -60,9 +60,10 @@
             <!-- Decorative Monogram Crest -->
             <div class="opening-crest" aria-hidden="true">
                 <svg class="crest-svg" viewBox="0 0 100 100" fill="none">
-                    <circle cx="50" cy="50" r="46" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="4 2"/>
-                    <circle cx="50" cy="50" r="41" stroke="url(#goldGrad)" stroke-width="0.8"/>
-                    <path d="M50 16 L53 30 L67 33 L55 42 L58 56 L50 47 L42 56 L45 42 L33 33 L47 30 Z" fill="url(#goldGrad)" opacity="0.85"/>
+                    <!-- pathLength="1" lets CSS draw each outline with a simple 0 -> 1 dash offset -->
+                    <circle class="crest-ring-outer" cx="50" cy="50" r="46" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                    <circle class="crest-ring" pathLength="1" cx="50" cy="50" r="41" stroke="url(#goldGrad)" stroke-width="0.8"/>
+                    <path class="crest-star" pathLength="1" d="M50 16 L53 30 L67 33 L55 42 L58 56 L50 47 L42 56 L45 42 L33 33 L47 30 Z" fill="url(#goldGrad)" stroke="url(#goldGrad)" stroke-width="0.6" stroke-linejoin="round" opacity="0.85"/>
                     <defs>
                         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#fdf3cd"/>
@@ -727,7 +728,7 @@ Mysuru</p>
          SCRIPTS
     ====================================== -->
     <script src="event-data.js"></script>
-    <script src="script.js?v=8"></script>
+    <script src="script.js?v=11"></script>
 
 </body>
 
