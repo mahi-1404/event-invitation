@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=24">
+    <link rel="stylesheet" href="style.css?v=25">
 </head>
 
 <body>
@@ -624,7 +624,42 @@
                         <div class="card-corner-decor br"></div>
 
                         <div class="rsvp-header">
-                            <span class="rsvp-symbol">💌</span>
+                            <span class="rsvp-symbol" aria-hidden="true">
+                                <svg class="rsvp-heart-svg" viewBox="0 0 80 72" fill="none" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                    <defs>
+                                        <linearGradient id="rhGold" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0" stop-color="#fdf3cd"/>
+                                            <stop offset="0.5" stop-color="#e5c982"/>
+                                            <stop offset="1" stop-color="#b8860b"/>
+                                        </linearGradient>
+                                        <linearGradient id="rhHeart" x1="0.2" y1="0" x2="0.8" y2="1">
+                                            <stop offset="0" stop-color="#ff8aa8"/>
+                                            <stop offset="0.55" stop-color="#f0436f"/>
+                                            <stop offset="1" stop-color="#b3174a"/>
+                                        </linearGradient>
+                                        <linearGradient id="rhEnv" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0" stop-color="#2f1d4c"/>
+                                            <stop offset="1" stop-color="#150d24"/>
+                                        </linearGradient>
+                                        <radialGradient id="rhGlow" cx="50%" cy="50%" r="50%">
+                                            <stop offset="0" stop-color="#ff5c8a" stop-opacity="0.55"/>
+                                            <stop offset="1" stop-color="#ff5c8a" stop-opacity="0"/>
+                                        </radialGradient>
+                                    </defs>
+                                    <circle class="rh-glow" cx="40" cy="30" r="26" fill="url(#rhGlow)"/>
+                                    <rect x="8" y="26" width="64" height="40" rx="4" fill="url(#rhEnv)" stroke="url(#rhGold)" stroke-width="1.3"/>
+                                    <path d="M8 26 L40 6 L72 26 Z" fill="#241738" stroke="url(#rhGold)" stroke-width="1.2"/>
+                                    <g class="rh-rise">
+                                        <g class="rh-beat">
+                                            <path d="M40 44 C26 34 22 24 29 19 C34 15.5 39 18 40 22 C41 18 46 15.5 51 19 C58 24 54 34 40 44 Z" fill="url(#rhHeart)"/>
+                                            <path d="M31 22.5 C32.5 20.4 35 20 36.6 21.4" stroke="#ffd2de" stroke-width="1.3" opacity="0.8"/>
+                                        </g>
+                                    </g>
+                                    <path d="M8 66 L8 30 L40 50 L72 30 L72 66 Z" fill="url(#rhEnv)" stroke="url(#rhGold)" stroke-width="1.3"/>
+                                    <path class="rh-mini rh-mini-a" d="M21 16 C17 12.5 16 9.6 18.4 8.2 C19.8 7.4 21 8.2 21 9.4 C21 8.2 22.2 7.4 23.6 8.2 C26 9.6 25 12.5 21 16 Z" fill="#ff7c9f"/>
+                                    <path class="rh-mini rh-mini-b" d="M61 14 C57 10.5 56 7.6 58.4 6.2 C59.8 5.4 61 6.2 61 7.4 C61 6.2 62.2 5.4 63.6 6.2 C66 7.6 65 10.5 61 14 Z" fill="#ff7c9f"/>
+                                </svg>
+                            </span>
                             <h2 class="rsvp-title">Kindly Respond</h2>
                             <p class="rsvp-sub">Please let us know if you can join us for this joyous occasion.</p>
                         </div>
@@ -821,7 +856,7 @@
          SCRIPTS
     ====================================== -->
     <script src="event-data.js?v=2"></script>
-    <script src="script.js?v=15"></script>
+    <script src="script.js?v=16"></script>
 
 </body>
 

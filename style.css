@@ -4744,3 +4744,120 @@ textarea:focus-visible {
         display: none;
     }
 }
+
+
+/* =====================================================
+   RSVP LOVE LETTER
+   The heart rises out of the envelope when the card arrives, then
+   beats softly with a pulsing glow while the card is on screen.
+   (kb-on is set by the in-view observer.)
+   ===================================================== */
+
+.rsvp-symbol {
+    display: inline-block;
+    line-height: 0;
+    margin-bottom: 10px;
+}
+
+.rsvp-heart-svg {
+    display: block;
+    width: 92px;
+    height: auto;
+    overflow: visible;
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+}
+
+.rh-rise,
+.rh-beat {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+@keyframes rhRise {
+    from { opacity: 0; transform: translateY(20px) scale(0.55); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* A soft "lub-dub" heartbeat with a long rest in between */
+@keyframes rhBeat {
+    0%, 52%, 100% { transform: scale(1); }
+    10% { transform: scale(1.16); }
+    22% { transform: scale(1); }
+    34% { transform: scale(1.1); }
+}
+
+@keyframes rhGlow {
+    0%, 52%, 100% { opacity: 0.35; }
+    10% { opacity: 1; }
+    22% { opacity: 0.4; }
+    34% { opacity: 0.85; }
+}
+
+@keyframes rhFloat {
+    0%   { opacity: 0;   transform: translateY(6px) scale(0.7); }
+    25%  { opacity: 0.9; }
+    100% { opacity: 0;   transform: translateY(-16px) scale(1.05); }
+}
+
+.rh-mini {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+/* Nothing loops until the card is on screen */
+.rh-beat,
+.rh-glow,
+.rh-mini {
+    animation-play-state: paused;
+}
+
+.rsvp-card.kb-on .rh-beat,
+.rsvp-card.kb-on .rh-glow,
+.rsvp-card.kb-on .rh-mini {
+    animation-play-state: running;
+}
+
+.rsvp-card.is-in .rh-rise {
+    animation: rhRise 900ms var(--ease-out) 500ms backwards;
+}
+
+.rsvp-card.is-in .rh-beat {
+    animation: rhBeat 2.8s ease-in-out 1.6s infinite;
+    animation-play-state: paused;
+}
+
+.rsvp-card.is-in.kb-on .rh-beat {
+    animation-play-state: running;
+}
+
+.rsvp-card.is-in .rh-glow {
+    animation: rhGlow 2.8s ease-in-out 1.6s infinite;
+}
+
+.rsvp-card.is-in .rh-mini-a {
+    animation: rhFloat 4.2s ease-out 2.2s infinite;
+}
+
+.rsvp-card.is-in .rh-mini-b {
+    animation: rhFloat 4.2s ease-out 3.6s infinite;
+}
+
+@media (max-width: 600px) {
+    .rsvp-heart-svg {
+        width: 78px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rh-rise,
+    .rh-beat,
+    .rh-glow,
+    .rh-mini {
+        animation: none !important;
+    }
+
+    .rh-glow {
+        opacity: 0.4;
+    }
+}

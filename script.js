@@ -1909,7 +1909,7 @@
 
     function initKenBurns() {
         if (prefersReducedMotion() || !("IntersectionObserver" in window)) return;
-        const figures = document.querySelectorAll(".gallery-figure, .panorama-frame");
+        const figures = document.querySelectorAll(".gallery-figure, .panorama-frame, .rsvp-card");
         if (!figures.length) return;
 
         const io = new IntersectionObserver((entries) => {
