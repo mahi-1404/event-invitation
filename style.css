@@ -1098,23 +1098,33 @@ body {
 }
 
 .royal-flourish {
-    color: var(--gold-400);
-    font-size: 26px;
-    opacity: 0.85;
+    display: block;
+    width: min(210px, 58vw);
+    height: auto;
+    overflow: visible;
+    margin-bottom: 2px;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.25));
+}
+
+/* The strokes draw themselves in once the hero starts (see the motion block) */
+.fl-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
 }
 
 .crest-monogram {
-    width: 68px;
-    height: 68px;
+    position: relative;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     border: 1.5px solid rgba(232, 198, 124, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-serif);
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     color: var(--gold-200);
     background: radial-gradient(circle, rgba(46, 28, 77, 0.5) 0%, rgba(14, 9, 24, 0.8) 100%);
     box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
@@ -3781,12 +3791,12 @@ textarea:focus-visible {
     }
 
     .royal-flourish {
-        font-size: 20px;
+        width: min(176px, 54vw);
     }
 
     .crest-monogram {
-        width: 56px;
-        height: 56px;
+        width: 70px;
+        height: 70px;
         font-size: 18px;
     }
 
@@ -4381,4 +4391,52 @@ textarea:focus-visible {
         letter-spacing: 1px;
         white-space: nowrap;
     }
+}
+
+
+/* =====================================================
+   HERO FLOURISH ORNAMENT
+   The scrolls draw outward from the gem, then the gem
+   and dots settle in. Reuses the crestDraw keyframes.
+   ===================================================== */
+
+@keyframes flGemIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.fl-gem {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.hero-play .fl-line {
+    animation: crestDraw 1500ms var(--ease-soft) 350ms backwards;
+}
+
+.hero-play .fl-gem {
+    animation: flGemIn 900ms var(--ease-out) 150ms backwards;
+}
+
+.hero-play .fl-dot {
+    animation: openFade 800ms var(--ease-out) 1500ms backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fl-line,
+    .fl-gem,
+    .fl-dot {
+        animation: none !important;
+    }
+}
+
+
+/* Fine inner ring on the hero monogram, echoing the flourish above it */
+.crest-monogram::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: 50%;
+    border: 1px solid rgba(232, 198, 124, 0.28);
+    pointer-events: none;
 }
