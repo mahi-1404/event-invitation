@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=25">
+    <link rel="stylesheet" href="style.css?v=27">
 </head>
 
 <body>
@@ -92,12 +92,26 @@
                         <!-- Parchment Letter Inside -->
                         <div class="letter" id="envelopeLetter">
                             <div class="letter-inner">
-                                <div class="letter-top-flourish">✦ ✧ ✦</div>
-                                <span class="letter-sub" id="letterLine1"></span>
-                                <strong class="letter-main" id="letterEmphasis"></strong>
-                                <span class="letter-desc" id="letterLine2"></span>
+                                <svg class="letter-orn" viewBox="0 0 200 44" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                    <g>
+                                    <path d="M111 22 C122 22 126 13 139 13 C151 13 155 22 167 22" stroke-width="2.4"/>
+                                    <path d="M167 22 C173 22 177 17.5 174 14 C172 11.8 168.5 13.3 169.6 16" stroke-width="2.2"/>
+                                    <path d="M115 22.6 C122 31 133 34.5 144 30 C150 27.4 154 29 159 31.5" stroke-width="2.2"/>
+                                    <circle cx="184" cy="22" r="2.6" fill="currentColor" stroke="none"/>
+                                    </g>
+                                    <g transform="translate(200 0) scale(-1 1)">
+                                    <path d="M111 22 C122 22 126 13 139 13 C151 13 155 22 167 22" stroke-width="2.4"/>
+                                    <path d="M167 22 C173 22 177 17.5 174 14 C172 11.8 168.5 13.3 169.6 16" stroke-width="2.2"/>
+                                    <path d="M115 22.6 C122 31 133 34.5 144 30 C150 27.4 154 29 159 31.5" stroke-width="2.2"/>
+                                    <circle cx="184" cy="22" r="2.6" fill="currentColor" stroke="none"/>
+                                    </g>
+                                    <path d="M100 10 L107 22 L100 34 L93 22 Z M100 16.5 L103.4 22 L100 27.5 L96.6 22 Z" fill="currentColor" fill-rule="evenodd" stroke="none"/>
+                                </svg>
+                                <strong class="letter-name" id="letterGroom">Nithin N S</strong>
+                                <span class="letter-weds" aria-label="weds"><i></i><em>weds</em><i></i></span>
+                                <strong class="letter-name" id="letterBride">Lekhana C</strong>
                                 <div class="letter-divider"></div>
-                                <span class="letter-seal-mini"><svg class="letter-seal-svg" viewBox="0 0 64 14" fill="none" aria-hidden="true" focusable="false"><path d="M4 7 H24" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M40 7 H60" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M32 1.5 L37 7 L32 12.5 L27 7 Z" fill="currentColor"/><circle cx="1.6" cy="7" r="1" fill="currentColor"/><circle cx="62.4" cy="7" r="1" fill="currentColor"/></svg></span>
+                                <span class="letter-date" id="letterDate">26 NOVEMBER 2026</span>
                             </div>
                         </div>
 
@@ -360,21 +374,6 @@
                         Come celebrate a beautiful moment with us and be part of memories that will last forever.
                     </p>
 
-                    <!-- Large Interactive Date Display -->
-                    <div class="royal-date-card">
-                        <div class="date-weekday" id="eventWeekday">Thursday</div>
-                        <div class="date-main-row">
-                            <span class="date-day-num" id="eventDateDay">26</span>
-                            <div class="date-col">
-                                <span class="date-month-name" id="eventDateMonth">NOVEMBER</span>
-                                <span class="date-year-num" id="eventDateYear">2026</span>
-                            </div>
-                        </div>
-                        <div class="date-time-row">
-                            <span class="time-badge">✦ Muhurtham <span id="eventTime">10:20 AM – 11:10 AM</span> • <span id="eventVenue">Police Bhavan</span> ✦</span>
-                        </div>
-                    </div>
-
                     <!-- Live Countdown Timer -->
                     <div class="countdown-wrapper" id="countdownWrapper">
                         <div class="countdown-header">COUNTDOWN TO THE CELEBRATION</div>
@@ -422,6 +421,73 @@
                         </div>
                     </div>
 
+                </div>
+            </section>
+
+
+            <!-- ---------------------------------
+                 SECTION: THE WEDDING CARD (Nithin weds Lekhana)
+            ---------------------------------- -->
+            <section class="card-section" id="cardSection">
+                <div class="section-container">
+                    <article class="wedding-card" aria-label="Wedding invitation">
+                        <span class="wc-gem tl" aria-hidden="true"></span>
+                        <span class="wc-gem tr" aria-hidden="true"></span>
+                        <span class="wc-gem bl" aria-hidden="true"></span>
+                        <span class="wc-gem br" aria-hidden="true"></span>
+                        <span class="wc-shine" aria-hidden="true"></span>
+
+                        <svg class="wc-orn" viewBox="0 0 200 44" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                            <g>
+                                <path class="fl-line" pathLength="1" d="M111 22 C122 22 126 13 139 13 C151 13 155 22 167 22" stroke-width="1.9"/>
+                                <path class="fl-line" pathLength="1" d="M167 22 C173 22 177 17.5 174 14 C172 11.8 168.5 13.3 169.6 16" stroke-width="1.7"/>
+                                <path class="fl-line" pathLength="1" d="M115 22.6 C122 31 133 34.5 144 30 C150 27.4 154 29 159 31.5" stroke-width="1.7"/>
+                                <path class="fl-line" pathLength="1" d="M124 17.5 C126 12.5 131 9.5 137 9.5" stroke-width="1.4"/>
+                                <circle class="fl-dot" cx="184" cy="22" r="2.2" fill="currentColor" stroke="none"/>
+                                <circle class="fl-dot" cx="192" cy="22" r="1.5" fill="currentColor" stroke="none"/>
+                            </g>
+                            <g transform="translate(200 0) scale(-1 1)">
+                                <path class="fl-line" pathLength="1" d="M111 22 C122 22 126 13 139 13 C151 13 155 22 167 22" stroke-width="1.9"/>
+                                <path class="fl-line" pathLength="1" d="M167 22 C173 22 177 17.5 174 14 C172 11.8 168.5 13.3 169.6 16" stroke-width="1.7"/>
+                                <path class="fl-line" pathLength="1" d="M115 22.6 C122 31 133 34.5 144 30 C150 27.4 154 29 159 31.5" stroke-width="1.7"/>
+                                <path class="fl-line" pathLength="1" d="M124 17.5 C126 12.5 131 9.5 137 9.5" stroke-width="1.4"/>
+                                <circle class="fl-dot" cx="184" cy="22" r="2.2" fill="currentColor" stroke="none"/>
+                                <circle class="fl-dot" cx="192" cy="22" r="1.5" fill="currentColor" stroke="none"/>
+                            </g>
+                            <path class="fl-gem" d="M100 10 L107 22 L100 34 L93 22 Z M100 16.5 L103.4 22 L100 27.5 L96.6 22 Z" fill="currentColor" fill-rule="evenodd" stroke="none"/>
+                        </svg>
+
+                        <p class="wc-kicker">THE WEDDING OF</p>
+                        <h2 class="wc-names">
+                            <span id="cardGroom">Nithin N S</span>
+                            <em class="wc-weds" aria-label="weds">weds</em>
+                            <span id="cardBride">Lekhana C</span>
+                        </h2>
+
+                        <div class="wc-rule" aria-hidden="true"><i></i><svg class="wc-gem-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 2 L19 12 L12 22 L5 12 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 8 L15 12 L12 16 L9 12 Z" fill="currentColor"/></svg><i></i></div>
+
+                        <div class="wc-events">
+                            <div class="wc-event">
+                                <span class="wc-label">RECEPTION</span>
+                                <strong class="wc-date" id="receptionDate">25 November 2026</strong>
+                                <span class="wc-time" id="receptionTime">7:00 PM onwards</span>
+                            </div>
+                            <i class="wc-sep" aria-hidden="true"></i>
+                            <div class="wc-event">
+                                <span class="wc-label">MUHURTHAM</span>
+                                <strong class="wc-date" id="muhurthamDate">26 November 2026</strong>
+                                <span class="wc-time" id="muhurthamTime">10:20 AM – 11:10 AM</span>
+                            </div>
+                        </div>
+
+                        <div class="wc-rule" aria-hidden="true"><i></i><svg class="wc-gem-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 2 L19 12 L12 22 L5 12 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 8 L15 12 L12 16 L9 12 Z" fill="currentColor"/></svg><i></i></div>
+
+                        <p class="wc-venue">
+                            <span class="wc-label">AT</span>
+                            <strong id="cardVenue">Police Bhavan</strong>
+                            <span id="cardCity">Mysuru</span>
+                        </p>
+                    </article>
                 </div>
             </section>
 
@@ -510,53 +576,6 @@
             ---------------------------------- -->
             <section class="invitation-details-section" id="eventDetailsSection">
                 <div class="section-container">
-
-                    <!-- Section Header -->
-                    <div class="section-header">
-                        <div class="section-badge" id="detailsEyebrow">THE CELEBRATION</div>
-                        <h2 class="section-title" id="detailsTitle">A Day To<br><span>Remember</span></h2>
-                        <div class="luxury-divider">
-                            <span class="divider-line"></span>
-                            <span class="divider-gem">✦</span>
-                            <span class="divider-line"></span>
-                        </div>
-                        <p class="section-intro" id="detailsIntro">
-                            Join us as we celebrate this beautiful occasion surrounded by the people who mean the most to us.
-                        </p>
-                    </div>
-
-                    <!-- 3 Feature Detail Cards -->
-                    <div class="details-cards-grid">
-
-                        <!-- Card 1: Date -->
-                        <div class="detail-card card-date">
-                            <div class="card-glow"></div>
-                            <div class="detail-icon-badge">
-                                <span class="icon-number">01</span>
-                                <span class="icon-symbol">📅</span>
-                            </div>
-                            <div class="detail-card-content">
-                                <span class="detail-label">RECEPTION</span>
-                                <h3 class="detail-title" id="receptionDate">25 November 2026</h3>
-                                <p class="detail-sub" id="receptionTime">7:00 PM onwards</p>
-                            </div>
-                        </div>
-
-                        <!-- Card 2: Time -->
-                        <div class="detail-card card-time">
-                            <div class="card-glow"></div>
-                            <div class="detail-icon-badge">
-                                <span class="icon-number">02</span>
-                                <span class="icon-symbol">⏰</span>
-                            </div>
-                            <div class="detail-card-content">
-                                <span class="detail-label">MUHURTHAM</span>
-                                <h3 class="detail-title" id="muhurthamDate">26 November 2026</h3>
-                                <p class="detail-sub" id="muhurthamTime">10:20 AM – 11:10 AM</p>
-                            </div>
-                        </div>
-
-                    </div>
 
                     <!-- Interactive Venue & Map Card -->
                     <div class="venue-showcase-card">
@@ -820,7 +839,7 @@
     <!-- Floating Bottom Navigation Dock -->
     <nav class="quick-nav-dock" id="quickNavDock" aria-label="Quick navigation">
         <a href="#coupleSection" class="nav-item">The Couple</a>
-        <a href="#eventDetailsSection" class="nav-item">Details</a>
+        <a href="#eventDetailsSection" class="nav-item">Venue</a>
         <a href="#gallerySection" class="nav-item">Gallery</a>
         <a href="#rsvpSection" class="nav-item rsvp-pill">RSVP</a>
     </nav>
@@ -856,7 +875,7 @@
          SCRIPTS
     ====================================== -->
     <script src="event-data.js?v=2"></script>
-    <script src="script.js?v=16"></script>
+    <script src="script.js?v=18"></script>
 
 </body>
 

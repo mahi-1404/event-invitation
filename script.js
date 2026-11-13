@@ -70,9 +70,9 @@
         }
 
         // Screen 1: Opening Screen
-        setMany(["openingLine1", "letterLine1"], opening.line1 || "YOU ARE");
-        setMany(["openingEmphasis", "letterEmphasis"], opening.emphasis || "Invited");
-        setMany(["openingLine2", "letterLine2"], opening.line2 || "TO SOMETHING SPECIAL");
+        setText("openingLine1", opening.line1 || "YOU ARE");
+        setText("openingEmphasis", opening.emphasis || "Invited");
+        setText("openingLine2", opening.line2 || "TO SOMETHING SPECIAL");
         setText("openButtonText", opening.openButton || "TAP TO OPEN");
         setText("openingHint", opening.hint || "A little moment awaits you");
 
@@ -112,6 +112,18 @@
         const title = data.title || {};
         setText("eventTitleLine1", title.line1 || "Nithin N S");
         setText("eventTitleLine2", title.line2 || "Lekhana C");
+
+        // The card inside the envelope says who is getting married, and when
+        setText("letterGroom", title.line1 || names[0] || "Nithin N S");
+        setText("letterBride", title.line2 || names[1] || "Lekhana C");
+        setText("letterDate", [date.day, date.month, date.year].filter(Boolean).join(" "));
+
+        // The wedding card: names, venue and city come from the same data
+        setText("cardGroom", title.line1 || names[0] || "Nithin N S");
+        setText("cardBride", title.line2 || names[1] || "Lekhana C");
+        setText("cardVenue", data.venue || "Police Bhavan");
+        const addressLines = String(data.address || "Jockey Quarters\nJC Nagar\nMysuru").split("\n").filter(Boolean);
+        setText("cardCity", addressLines[addressLines.length - 1] || "");
         setText("familyLine", invitation.familyLine || "Together with our beloved families");
 
         // Date Display
@@ -1511,6 +1523,7 @@
 
         // The panoramic portrait and its caption
         add(".panorama-frame", { pop: true });
+        add(".wedding-card", { pop: true });
         add(".panorama-caption", { fade: true });
 
         // Couple: the two cards with a very small stagger, emblem between them
@@ -1518,7 +1531,6 @@
         add(".couple-union-divider", { fade: true, step: 120 });
 
         // Reception, then muhurtham, then venue (document order = reading order)
-        add(".detail-card", { small: true, step: 140, pop: true });
         add(".venue-showcase-card", { pop: true });
 
         // Timeline: the central line draws, then the event items arrive
@@ -1805,7 +1817,7 @@
     function initSpotlight() {
         if (!hasFinePointer() || prefersReducedMotion()) return;
 
-        document.querySelectorAll(".detail-card, .venue-showcase-card").forEach(card => {
+        document.querySelectorAll(".venue-showcase-card").forEach(card => {
             card.addEventListener("pointermove", (e) => {
                 if (e.pointerType !== "mouse") return;
                 const r = card.getBoundingClientRect();
