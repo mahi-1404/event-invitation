@@ -1583,7 +1583,7 @@
             { el: document.querySelector(".glow-2"), range: -240 }
         ].filter(g => g.el);
         const floaters = Array.from(document.querySelectorAll(
-            ".hero-crest, .couple-union-divider, .rsvp-symbol, .footer-crest"
+            ".hero-crest, .rsvp-symbol, .footer-crest"
         )).map(el => ({ el, applied: 0 }));
 
         let queued = false;

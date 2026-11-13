@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=17">
+    <link rel="stylesheet" href="style.css?v=20">
 </head>
 
 <body>
@@ -97,7 +97,7 @@
                                 <strong class="letter-main" id="letterEmphasis"></strong>
                                 <span class="letter-desc" id="letterLine2"></span>
                                 <div class="letter-divider"></div>
-                                <span class="letter-seal-mini">❦</span>
+                                <span class="letter-seal-mini"><svg class="letter-seal-svg" viewBox="0 0 64 14" fill="none" aria-hidden="true" focusable="false"><path d="M4 7 H24" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M40 7 H60" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M32 1.5 L37 7 L32 12.5 L27 7 Z" fill="currentColor"/><circle cx="1.6" cy="7" r="1" fill="currentColor"/><circle cx="62.4" cy="7" r="1" fill="currentColor"/></svg></span>
                             </div>
                         </div>
 
@@ -436,7 +436,7 @@
                         <h2 class="section-title">The Groom <span>&</span> The Bride</h2>
                         <div class="luxury-divider">
                             <span class="divider-line"></span>
-                            <span class="divider-gem">❦</span>
+                            <span class="divider-gem"><svg class="gem-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 2 L19 12 L12 22 L5 12 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 8 L15 12 L12 16 L9 12 Z" fill="currentColor"/></svg></span>
                             <span class="divider-line"></span>
                         </div>
                     </div>
@@ -456,10 +456,7 @@
 
                         <!-- Union Emblem -->
                         <div class="couple-union-divider">
-                            <div class="union-circle">
-                                <span class="union-rings">💍</span>
-                                <span class="union-text">N & L</span>
-                            </div>
+                            <span class="union-amp" aria-hidden="true">&amp;</span>
                         </div>
 
                         <!-- Bride Profile -->
@@ -697,7 +694,40 @@
                 <div class="footer-inner">
                     
                     <div class="footer-crest" aria-hidden="true">
-                        <span>❦</span>
+                        <svg class="footer-flourish" viewBox="0 0 200 44" fill="none" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                            <defs>
+                                <linearGradient id="flGoldF" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="200" y2="0">
+                                    <stop offset="0" stop-color="#b8860b"/>
+                                    <stop offset="0.5" stop-color="#fdf3cd"/>
+                                    <stop offset="1" stop-color="#b8860b"/>
+                                </linearGradient>
+                            </defs>
+                            <g stroke="url(#flGoldF)">
+                                <g class="fl-half">
+                                    <path class="fl-line" pathLength="1" d="M111 22 C122 22 126 13 139 13 C151 13 155 22 167 22" stroke-width="1.1"/>
+                                    <path class="fl-line" pathLength="1" d="M167 22 C173 22 177 17.5 174 14 C172 11.8 168.5 13.3 169.6 16" stroke-width="1"/>
+                                    <path class="fl-line" pathLength="1" d="M115 22.6 C122 31 133 34.5 144 30 C150 27.4 154 29 159 31.5" stroke-width="1"/>
+                                    <path class="fl-line" pathLength="1" d="M159 31.5 C162 33 165 32.5 165 30.4" stroke-width="0.9"/>
+                                    <path class="fl-line" pathLength="1" d="M124 17.5 C126 12.5 131 9.5 137 9.5" stroke-width="0.8"/>
+                                    <circle class="fl-dot" cx="184" cy="22" r="1.5" fill="url(#flGoldF)" stroke="none"/>
+                                    <circle class="fl-dot" cx="192" cy="22" r="1" fill="url(#flGoldF)" stroke="none"/>
+                                </g>
+                                <g class="fl-half" transform="translate(200 0) scale(-1 1)">
+                                    <path class="fl-line" pathLength="1" d="M111 22 C122 22 126 13 139 13 C151 13 155 22 167 22" stroke-width="1.1"/>
+                                    <path class="fl-line" pathLength="1" d="M167 22 C173 22 177 17.5 174 14 C172 11.8 168.5 13.3 169.6 16" stroke-width="1"/>
+                                    <path class="fl-line" pathLength="1" d="M115 22.6 C122 31 133 34.5 144 30 C150 27.4 154 29 159 31.5" stroke-width="1"/>
+                                    <path class="fl-line" pathLength="1" d="M159 31.5 C162 33 165 32.5 165 30.4" stroke-width="0.9"/>
+                                    <path class="fl-line" pathLength="1" d="M124 17.5 C126 12.5 131 9.5 137 9.5" stroke-width="0.8"/>
+                                    <circle class="fl-dot" cx="184" cy="22" r="1.5" fill="url(#flGoldF)" stroke="none"/>
+                                    <circle class="fl-dot" cx="192" cy="22" r="1" fill="url(#flGoldF)" stroke="none"/>
+                                </g>
+                            </g>
+                            <g class="fl-gem">
+                                <path d="M100 11 L106.5 22 L100 33 L93.5 22 Z M100 17 L103 22 L100 27 L97 22 Z" fill="url(#flGoldF)" fill-rule="evenodd" stroke="url(#flGoldF)" stroke-width="0.6"/>
+                                <circle cx="100" cy="5.5" r="1.4" fill="url(#flGoldF)" stroke="none"/>
+                                <circle cx="100" cy="38.5" r="1.4" fill="url(#flGoldF)" stroke="none"/>
+                            </g>
+                        </svg>
                         <div class="footer-dots">✦ ✧ ✦</div>
                     </div>
 
@@ -761,7 +791,7 @@
          SCRIPTS
     ====================================== -->
     <script src="event-data.js"></script>
-    <script src="script.js?v=12"></script>
+    <script src="script.js?v=13"></script>
 
 </body>
 

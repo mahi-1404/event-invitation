@@ -1430,137 +1430,6 @@ body {
     position: relative;
 }
 
-.couple-cards-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 28px;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.couple-card {
-    flex: 1;
-    max-width: 360px;
-    background: var(--grad-royal-card);
-    border: 1px solid rgba(232, 198, 124, 0.28);
-    border-radius: var(--radius-lg);
-    padding: 34px 26px;
-    text-align: center;
-    box-shadow: var(--shadow-card);
-    backdrop-filter: blur(14px);
-    transition: all 0.4s var(--ease-out-expo);
-    position: relative;
-    overflow: hidden;
-}
-
-.groom-card {
-    order: 1;
-}
-
-.couple-union-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    order: 2;
-}
-
-.bride-card {
-    order: 3;
-}
-
-.couple-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--gold-400);
-    box-shadow: var(--shadow-card-hover), var(--glow-gold);
-}
-
-.couple-photo-wrap {
-    position: relative;
-    width: 170px;
-    height: 170px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    padding: 6px;
-    background: linear-gradient(135deg, rgba(245, 215, 127, 0.7) 0%, rgba(184, 134, 11, 0.3) 100%);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-}
-
-.couple-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    border-radius: 50%;
-    display: block;
-}
-
-.couple-photo-border {
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 1px dashed rgba(232, 198, 124, 0.45);
-    pointer-events: none;
-}
-
-.couple-role {
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold-400);
-    font-weight: 600;
-    display: block;
-    margin-bottom: 6px;
-}
-
-.couple-name {
-    font-family: var(--font-serif);
-    font-size: 32px;
-    font-weight: 600;
-    color: #f7eee2;
-    margin-bottom: 10px;
-}
-
-.couple-quote {
-    font-family: var(--font-serif);
-    font-size: 15px;
-    color: rgba(247, 238, 226, 0.7);
-    font-style: italic;
-    line-height: 1.6;
-}
-
-.couple-union-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.union-circle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #3d2360 0%, #170f28 100%);
-    border: 1.5px solid var(--gold-400);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 20px rgba(232, 198, 124, 0.4);
-}
-
-.union-rings {
-    font-size: 18px;
-    line-height: 1;
-}
-
-.union-text {
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--gold-300);
-    margin-top: 2px;
-}
-
 /* Floating Quick Navigation Dock */
 .quick-nav-dock {
     position: fixed;
@@ -2475,40 +2344,6 @@ body {
         gap: 18px;
     }
 
-    /* Mobile / Tablet Couple Layout: Groom up, Bride below */
-    .couple-cards-row {
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 16px !important;
-        width: 100% !important;
-        max-width: 380px !important;
-    }
-
-    .couple-card {
-        width: 100% !important;
-        max-width: 340px !important;
-        padding: 28px 20px !important;
-    }
-
-    .groom-card {
-        order: 1 !important; /* Groom up on mobile */
-    }
-
-    .couple-union-divider {
-        order: 2 !important; /* Union emblem between them */
-        margin: 4px 0 !important;
-    }
-
-    .bride-card {
-        order: 3 !important; /* Bride below on mobile */
-    }
-
-    .couple-photo-wrap {
-        width: 145px !important;
-        height: 145px !important;
-        margin-bottom: 16px !important;
-    }
-
     .lightbox-prev { left: 10px; }
     .lightbox-next { right: 10px; }
 }
@@ -2641,7 +2476,6 @@ textarea:focus-visible {
 }
 
 .detail-card,
-.couple-card,
 .venue-showcase-card,
 .rsvp-card {
     background: linear-gradient(180deg, rgba(24, 34, 53, 0.88), rgba(11, 16, 28, 0.94));
@@ -3366,13 +3200,11 @@ textarea:focus-visible {
 }
 
 /* Cards: no `transition: all`, so opacity/transform reveals and hovers never fight */
-.couple-card,
 .detail-card,
 .blessing-card {
     transition: transform 300ms var(--ease-out), border-color 300ms ease, box-shadow 300ms ease;
 }
 
-.couple-card:hover,
 .detail-card:hover,
 .blessing-card:hover {
     transform: translateY(-3px);
@@ -3596,11 +3428,6 @@ textarea:focus-visible {
     outline-offset: 3px;
 }
 
-/* The old spinning border keyframes no longer exist; make sure nothing references them */
-.couple-photo-border {
-    animation: none;
-}
-
 /* =====================================================
    7. REDUCED MOTION
    Keeps everything readable and usable, drops nonessential movement.
@@ -3694,8 +3521,7 @@ textarea:focus-visible {
     }
 
     /* No hover lifts on content; only the existing colour/border changes remain */
-    .couple-card:hover,
-.detail-card:hover,
+    .detail-card:hover,
 .blessing-card:hover,
 .countdown-box:hover,
 .gallery-figure:hover {
@@ -3831,39 +3657,6 @@ textarea:focus-visible {
 
     .scroll-indicator {
         gap: 0;
-    }
-
-    /* Couple */
-    .couple-cards-row {
-        gap: 8px !important;
-    }
-
-    .couple-card {
-        padding: 20px 16px !important;
-    }
-
-    .couple-photo-wrap {
-        width: 116px !important;
-        height: 116px !important;
-        margin-bottom: 10px !important;
-    }
-
-    .couple-name {
-        font-size: 26px;
-        margin-bottom: 0;
-    }
-
-    .couple-union-divider {
-        margin: 0 !important;
-    }
-
-    .union-circle {
-        width: 44px;
-        height: 44px;
-    }
-
-    .union-rings {
-        font-size: 14px;
     }
 
     /* Details and venue */
@@ -4324,10 +4117,9 @@ textarea:focus-visible {
     }
 
     .ambient-glow,
-    .hero-crest,
-    .couple-union-divider,
-    .rsvp-symbol,
-    .footer-crest {
+.hero-crest,
+.rsvp-symbol,
+.footer-crest {
         translate: none !important;
     }
 
@@ -4475,6 +4267,280 @@ textarea:focus-visible {
     .med-letters,
     .med-star,
     .med-rule {
+        animation: none !important;
+    }
+}
+
+
+/* =====================================================
+   THE COUPLE: ARCHED PORTRAIT FRAMES
+   -----------------------------------------------------
+   Two arched, double-framed gold portraits with a sealed "&"
+   emblem between them, names in gold italic beneath. The
+   bride's frame sits a little lower for an editorial rhythm.
+   ===================================================== */
+
+.couple-cards-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(12px, 4vw, 64px);
+    max-width: 780px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+.couple-card {
+    width: 100%;
+    max-width: 330px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    background: none;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    overflow: visible;
+}
+
+/* A gentle stagger: the bride's portrait sits lower than the groom's */
+.bride-card {
+    margin-top: clamp(18px, 5vw, 48px);
+}
+
+/* The arch: gold outer frame, dark gap, then the photograph */
+.couple-photo-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    padding: 6px;
+    border-radius: 999px 999px 14px 14px;
+    background: linear-gradient(150deg, #fdf3cd 0%, #c8a45d 38%, #8c6206 62%, #e5c982 100%);
+    box-shadow: 0 26px 50px rgba(0, 0, 0, 0.55), 0 0 44px rgba(212, 175, 55, 0.14);
+    margin-bottom: 22px;
+}
+
+/* Gold diamond at the crown of the arch */
+.couple-photo-wrap::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    width: 11px;
+    height: 11px;
+    margin-left: -5.5px;
+    transform: rotate(45deg);
+    background: linear-gradient(135deg, #fdf3cd, #b8860b);
+    box-shadow: 0 0 12px rgba(245, 215, 127, 0.55);
+    z-index: 3;
+}
+
+.couple-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: 999px 999px 9px 9px;
+    box-shadow: inset 0 0 0 2px #120b1f;   /* dark gap between frame and photo */
+}
+
+/* A fine hairline mat inside the photograph, like an engraved card */
+.couple-photo-border {
+    position: absolute;
+    inset: 15px;
+    border-radius: 999px 999px 4px 4px;
+    border: 1px solid rgba(253, 243, 205, 0.5);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Caption: label with gold rules, then the name */
+.couple-role {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-400);
+}
+
+.couple-role::before,
+.couple-role::after {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-400));
+}
+
+.couple-role::after {
+    transform: scaleX(-1);
+}
+
+.couple-name {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(26px, 6.2vw, 40px);
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+    margin: 0;
+    background: linear-gradient(180deg, #fff6dc 0%, #e5c982 55%, #b8860b 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.2));
+}
+
+/* The sealed "&" between the two portraits */
+.couple-union-divider {
+    position: absolute;
+    left: 50%;
+    top: 36%;
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid #d4af37;
+    background: radial-gradient(circle at 50% 40%, #3b2360 0%, #130c22 100%);
+    box-shadow: 0 0 0 5px rgba(8, 11, 20, 0.85), 0 0 28px rgba(212, 175, 55, 0.4);
+}
+
+.couple-union-divider::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    border: 1px solid rgba(253, 243, 205, 0.35);
+}
+
+.union-amp {
+    font-family: var(--font-script);
+    font-size: 30px;
+    line-height: 1;
+    padding-top: 4px;
+    background: linear-gradient(180deg, #fff6dc, #e5c982 60%, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+@media (max-width: 600px) {
+    .couple-photo-wrap {
+        padding: 5px;
+        margin-bottom: 16px;
+    }
+
+    .couple-photo-border {
+        inset: 12px;
+    }
+
+    .couple-role {
+        gap: 6px;
+        font-size: 8px;
+        letter-spacing: 3px;
+    }
+
+    .couple-role::before,
+    .couple-role::after {
+        width: 12px;
+    }
+
+    .couple-name {
+        font-size: 22px;
+    }
+
+    .couple-union-divider {
+        width: 46px;
+        height: 46px;
+        margin: -23px 0 0 -23px;
+        top: 33%;
+    }
+
+    .union-amp {
+        font-size: 25px;
+    }
+}
+
+
+/* A slightly larger seal between the bigger desktop portraits */
+@media (min-width: 900px) {
+    .couple-union-divider {
+        width: 68px;
+        height: 68px;
+        margin: -34px 0 0 -34px;
+        top: 38%;
+    }
+
+    .union-amp {
+        font-size: 36px;
+    }
+}
+
+
+/* =====================================================
+   DRAWN ORNAMENTS (replace the old text glyph)
+   ===================================================== */
+
+.divider-gem {
+    display: inline-flex;
+    align-items: center;
+}
+
+.divider-gem .gem-svg {
+    display: block;
+    width: 15px;
+    height: 15px;
+    filter: drop-shadow(0 0 6px rgba(232, 198, 124, 0.6));
+}
+
+.letter-seal-mini {
+    display: inline-flex;
+}
+
+.letter-seal-svg {
+    display: block;
+    width: 54px;
+    height: 12px;
+}
+
+.footer-flourish {
+    display: block;
+    width: min(190px, 52vw);
+    height: auto;
+    margin: 0 auto 6px;
+    overflow: visible;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.22));
+}
+
+/* The footer flourish draws itself in as the footer arrives */
+.footer-inner.is-in .footer-flourish .fl-line {
+    animation: crestDraw 1500ms var(--ease-soft) 500ms backwards;
+}
+
+.footer-inner.is-in .footer-flourish .fl-gem {
+    animation: flGemIn 900ms var(--ease-out) 300ms backwards;
+}
+
+.footer-inner.is-in .footer-flourish .fl-dot {
+    animation: openFade 800ms var(--ease-out) 1600ms backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer-flourish .fl-line,
+    .footer-flourish .fl-gem,
+    .footer-flourish .fl-dot {
         animation: none !important;
     }
 }
