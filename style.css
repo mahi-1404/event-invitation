@@ -63,7 +63,6 @@
 html {
     width: 100%;
     min-height: 100%;
-    overflow-x: hidden;
     scroll-behavior: smooth;
     background-color: var(--bg-night);
     color: #f5eedf;
@@ -75,7 +74,6 @@ html {
 body {
     width: 100%;
     min-height: 100vh;
-    overflow-x: clip;
     background: radial-gradient(circle at 50% 20%, #170f2b 0%, #0c0817 50%, #05040a 100%);
     color: #f7eee2;
     position: relative;
@@ -5048,16 +5046,12 @@ textarea:focus-visible {
 /* =====================================================
    SMOOTH SCROLLING
    -----------------------------------------------------
-   - html clips sideways overflow without creating a scroller
-     (body used to be a second scroll container, which makes
-     scrolling sticky on iPhones)
+   - no overflow rule on html or body at all: nothing spills sideways,
+     and root-level overflow rules are a known cause of sticky
+     scrolling on Android and iPhones
    - on touch screens the costly effects are switched off:
      backdrop blur over moving content, infinite photo drift
    ===================================================== */
-
-html {
-    overflow-x: clip;
-}
 
 @media (hover: none), (pointer: coarse) {
     *,
@@ -5147,4 +5141,79 @@ html {
     .panorama-title {
         filter: none;
     }
+}
+
+
+/* =====================================================
+   GENERIC SMOOTHNESS PASS
+   ===================================================== */
+
+/* Safety net that creates no scroll container (unlike overflow hidden/auto) */
+.invitation-app {
+    overflow-x: clip;
+}
+
+/* Touch screens: the progress line is drawn by the browser from the page's scroll position,
+   with no script running while the guest scrolls */
+@keyframes scrollGrow {
+    0%   { opacity: 0; transform: scaleX(0); }
+    1%   { opacity: 1; }
+    100% { opacity: 1; transform: scaleX(1); }
+}
+
+html.scroll-timeline .scroll-progress {
+    animation: scrollGrow linear both;
+    animation-timeline: scroll(root block);
+}
+
+/* -----------------------------------------------------
+   LITE-MAX: the lightest look. Switched on automatically for touch
+   phones reporting 4 GB of memory or less, or with ?lite=1.
+   No blurred shadows, no glows, no gradient page background,
+   no looping animations.
+   ----------------------------------------------------- */
+
+.lite-max *,
+.lite-max *::before,
+.lite-max *::after {
+    text-shadow: none !important;
+}
+
+.lite-max body {
+    background: #0f1626;
+}
+
+.lite-max .music-pill,
+.lite-max .quick-nav-dock,
+.lite-max .toast-notification,
+.lite-max .wedding-card,
+.lite-max .panorama-frame,
+.lite-max .couple-photo-wrap,
+.lite-max .couple-union-divider,
+.lite-max .rsvp-card,
+.lite-max .venue-showcase-card,
+.lite-max .gallery-figure,
+.lite-max .blessing-card,
+.lite-max .countdown-box,
+.lite-max .cal-btn,
+.lite-max .location-button,
+.lite-max .copy-address-button,
+.lite-max .rsvp-submit-btn,
+.lite-max .continue-invitation-btn,
+.lite-max .back-to-top-btn,
+.lite-max .wc-gem,
+.lite-max .scroll-progress {
+    box-shadow: none !important;
+}
+
+.lite-max .music-bars span,
+.lite-max .rh-beat,
+.lite-max .rh-glow,
+.lite-max .rh-mini,
+.lite-max .scroll-wheel {
+    animation: none !important;
+}
+
+.lite-max .rh-mini {
+    display: none;
 }

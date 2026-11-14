@@ -566,8 +566,16 @@
     }
 
     // Transition from the envelope screen to the scratch reveal
+    // Once a full-screen layer has faded out it is taken out of rendering entirely, so it
+    // no longer costs memory or graphics layers while the guest scrolls the invitation.
+    function retireScreen(el, delay) {
+        if (!el) return;
+        setTimeout(() => { el.style.display = "none"; }, delay);
+    }
+
     function showRevealScreen() {
         if (openingScreen) openingScreen.classList.add("hidden");
+        retireScreen(openingScreen, 900);
         if (!revealSection) return;
 
         revealSection.classList.add("active");
@@ -956,6 +964,8 @@
 
         // Cancel anything still queued from the opening/reveal sequences
         clearEnvelopeTimers();
+        retireScreen(openingScreen, 900);
+        retireScreen(revealSection, 900);
         const reduced = prefersReducedMotion();
 
         if (revealSection) {
@@ -1826,7 +1836,8 @@
     }
 
     function initSplitText() {
-        if (prefersReducedMotion()) return;
+        // Phones skip the letter-by-letter titles: ~80 fewer pieces to lay out and paint
+        if (prefersReducedMotion() || !hasFinePointer()) return;
 
         document.querySelectorAll(".section-title").forEach(title => {
             const label = title.textContent.replace(/\s+/g, " ").trim();
@@ -2283,6 +2294,17 @@
         bar.className = "scroll-progress";
         bar.setAttribute("aria-hidden", "true");
         document.body.appendChild(bar);
+
+        // Touch screens run no scroll listener at all. Modern Chrome draws the line itself
+        // from a CSS scroll timeline; browsers without it simply go without the line.
+        if (!hasFinePointer()) {
+            if (window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()")) {
+                document.documentElement.classList.add("scroll-timeline");
+            } else {
+                bar.remove();
+            }
+            return;
+        }
 
         const hero = document.querySelector(".hero-inner");
         const heroSection = document.getElementById("welcomeSection");

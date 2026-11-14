@@ -10,6 +10,17 @@
     <meta name="description" content="A special invitation to celebrate a beautiful milestone moment.">
     <meta name="theme-color" content="#090714">
 
+    <!-- Budget phones: switch on the lightest look automatically (4 GB of memory or less on a touch screen).
+         Add ?lite=1 to the address to try it anywhere, or ?lite=0 to turn it off. -->
+    <script>
+        try {
+            var q = location.search, mem = navigator.deviceMemory;
+            if (/[?&]lite=1/.test(q) || (!/[?&]lite=0/.test(q) && mem && mem <= 4 && matchMedia("(pointer: coarse)").matches)) {
+                document.documentElement.classList.add("lite-max");
+            }
+        } catch (e) {}
+    </script>
+
     <!-- =====================================
          GOOGLE FONTS: Luxury Serif & Modern Sans
     ====================================== -->
@@ -18,7 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=32">
+    <link rel="stylesheet" href="style.css?v=33">
 </head>
 
 <body>
@@ -880,7 +891,7 @@
          SCRIPTS
     ====================================== -->
     <script src="event-data.js?v=7"></script>
-    <script src="script.js?v=23"></script>
+    <script src="script.js?v=24"></script>
 
 </body>
 
