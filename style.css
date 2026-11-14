@@ -5091,3 +5091,60 @@ html {
         animation: none !important;
     }
 }
+
+
+/* =====================================================
+   LITE MODE FOR PHONES
+   -----------------------------------------------------
+   Budget Android phones scroll badly when the page keeps extra
+   layers busy. On touch screens these are switched off:
+   - the animated glows and starfield behind the page
+   - hidden-then-animated content while scrolling (content is
+     simply there; the opening, hero and interactions still animate)
+   - heavy blurred shadows and glow filters
+   Desktop keeps the full effects.
+   ===================================================== */
+
+@media (hover: none), (pointer: coarse) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .ambient-glow,
+    .ambient-canvas {
+        display: none;
+    }
+
+    .motion-ready .mr:not(.is-in),
+    .motion-ready .section-header:not(.is-in) .ch,
+    .motion-ready .section-header:not(.is-in) .divider-line {
+        opacity: 1;
+        transform: none;
+    }
+
+    .mr.is-in,
+    .section-header.is-in .section-title .ch,
+    .section-header.is-in .divider-line {
+        animation: none;
+    }
+
+    .wedding-card,
+    .panorama-frame,
+    .couple-photo-wrap,
+    .rsvp-card,
+    .venue-showcase-card,
+    .gallery-figure,
+    .blessing-card,
+    .countdown-box {
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+    }
+
+    .royal-flourish,
+    .footer-flourish,
+    .monogram-medallion,
+    .rsvp-heart-svg,
+    .couple-name,
+    .panorama-title {
+        filter: none;
+    }
+}

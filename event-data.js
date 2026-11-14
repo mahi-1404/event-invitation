@@ -79,15 +79,18 @@ const eventData = {
     // Gallery of wedding memories
     gallery: [
         {
-            src: "assets/photos/WhatsApp Image 2026-11-07 at 10.27.36 PM.jpeg",
+            src: "assets/photos/couple-garden-1100.jpg",
+            full: "assets/photos/couple-garden-1800.jpg",
             caption: "Nithin N S & Lekhana C • Pure Joy"
         },
         {
-            src: "assets/photos/ARU_2045.JPG.jpeg",
+            src: "assets/photos/couple-aru-1100.jpg",
+            full: "assets/photos/couple-aru-1800.jpg",
             caption: "A beautiful beginning"
         },
         {
-            src: "assets/photos/WhatsApp Image 2026-11-07 at 10.27.37 PM.jpeg",
+            src: "assets/photos/couple-stage-1100.jpg",
+            full: "assets/photos/couple-stage-1800.jpg",
             caption: "Together with love"
         }
     ],

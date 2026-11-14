@@ -313,6 +313,10 @@
 
     function startAmbient() {
         ambientWanted = true;
+        if (!hasFinePointer()) {
+            if (ambientCanvas) ambientCanvas.style.display = "none";
+            return;
+        }
         if (!ambientCtx || ambientRunning) return;
         if (document.hidden) return;
         if (prefersReducedMotion() || ambientDegraded) {
@@ -373,6 +377,7 @@
     function initConfettiCanvas() {
         if (!confettiCanvas) return;
         confettiCtx = confettiCanvas.getContext("2d");
+        confettiCanvas.style.display = "none"; // shown only while sparkles are on screen
         function resize() {
             confettiCanvas.width = window.innerWidth;
             confettiCanvas.height = window.innerHeight;
@@ -387,6 +392,7 @@
         const total = Math.min(count, 20, room);
         if (total <= 0) return;
 
+        confettiCanvas.style.display = "block";
         const colors = ["#fdf3cd", "#f5d77f", "#e5c982", "#d4af37"];
         const ox = originX !== undefined ? originX : confettiCanvas.width / 2;
         const oy = originY !== undefined ? originY : confettiCanvas.height / 2;
@@ -419,6 +425,7 @@
 
         if (!confettiParticles.length) {
             isConfettiActive = false;
+            confettiCanvas.style.display = "none";
             return;
         }
 
@@ -1260,7 +1267,7 @@
             fig.dataset.cursor = "View";
 
             fig.innerHTML = `
-                <img src="${item.src}" alt="${item.caption || "Special moment"}" class="gallery-img" loading="lazy">
+                <img src="${item.src}" alt="${item.caption || "Special moment"}" class="gallery-img" loading="lazy" decoding="async">
                 <div class="gallery-overlay">
                     <span class="gallery-zoom-icon">🔍</span>
                     <span class="gallery-caption">${item.caption || "Special Memory"}</span>
@@ -1297,7 +1304,7 @@
         if (!lightboxModal || !galleryItems[index]) return;
         const wasOpen = lightboxModal.classList.contains("active");
         currentLightboxIdx = index;
-        lightboxImg.src = galleryItems[index].src;
+        lightboxImg.src = galleryItems[index].full || galleryItems[index].src; // grid uses the small copy, the viewer the larger one
         lightboxCaption.textContent = galleryItems[index].caption || "Cherished Moment";
         lightboxModal.classList.add("active");
         lightboxModal.setAttribute("aria-hidden", "false");
