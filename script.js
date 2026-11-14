@@ -32,7 +32,7 @@
     // Timings (ms) for the envelope choreography. Keep in step with the CSS tokens.
     const ENVELOPE_TIMING = {
         sealPress: 220,        // seal responds to the tap
-        promptDelay: 5000,     // the card stays up this long (from the tap), then a tap is requested
+        promptDelay: 3000,     // the card stays up this long (from the tap), then a tap is requested
         revealSettle: [200, 600, 1200]
     };
     const HERO_START_DELAY = 380; // let the previous screen finish fading first
@@ -1669,13 +1669,14 @@
             // Items entering together cascade in reading order, capped so nothing lags
             entering.forEach((entry, k) => {
                 const el = entry.target;
-                const base = Number(el.dataset.rdBase) || 0;
-                const step = Number(el.dataset.rdStep) || 110;
-                el.style.setProperty("--rd", `${base + Math.min(k, 4) * step}ms`);
+                // Keep any stagger tiny: content must never feel like it is being held back
+                const base = Math.min(Number(el.dataset.rdBase) || 0, 40);
+                const step = Math.min(Number(el.dataset.rdStep) || 110, 40);
+                el.style.setProperty("--rd", `${base + Math.min(k, 2) * step}ms`);
                 el.classList.add("is-in");
                 io.unobserve(el); // animate once; never re-trigger while scrolling
             });
-        }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+        }, { threshold: 0.01, rootMargin: "0px 0px 30% 0px" }); // start well BEFORE it scrolls into view
 
         targets.forEach(el => io.observe(el));
     }
@@ -1706,6 +1707,8 @@
        entrance animations and hovers already use. */
 
     function initParallax() {
+        // Phones scroll on their own compositor thread; per-frame script work there causes jank
+        if (!hasFinePointer()) return;
         const glows = [
             // Both drift upward (the same way the page scrolls), far slower than the content
             { el: document.querySelector(".glow-1"), range: -170 },
@@ -2286,6 +2289,7 @@
             const y = window.scrollY;
             const vh = window.innerHeight;
             const max = document.documentElement.scrollHeight - vh;
+            const fine = hasFinePointer(); // hero fade and banner slide are desktop-only
 
             bar.style.transform = `scaleX(${active && max > 0 ? Math.min(1, y / max).toFixed(4) : 0})`;
             bar.classList.toggle("is-on", active && y > 8);
@@ -2299,7 +2303,7 @@
             }
 
             // Hero: drifts down a little and fades as it leaves the screen
-            if (hero && heroSection) {
+            if (fine && hero && heroSection) {
                 const h = heroSection.offsetHeight || vh;
                 const p = Math.min(1, Math.max(0, y / (h * 0.85)));
                 hero.style.translate = p ? `0 ${(p * 46).toFixed(1)}px` : "";
@@ -2307,7 +2311,7 @@
             }
 
             // Banner photo: slides slowly inside its frame while the frame scrolls past
-            if (pano && panoBox) {
+            if (fine && pano && panoBox) {
                 const r = panoBox.getBoundingClientRect();
                 if (r.bottom > -60 && r.top < vh + 60) {
                     const p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);

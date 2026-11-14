@@ -75,7 +75,7 @@ html {
 body {
     width: 100%;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: clip;
     background: radial-gradient(circle at 50% 20%, #170f2b 0%, #0c0817 50%, #05040a 100%);
     color: #f7eee2;
     position: relative;
@@ -2331,9 +2331,9 @@ textarea:focus-visible {
     --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);   /* entrances: soft, unhurried */
     --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);        /* breathing / emphasis */
     --t-small: 220ms;                                 /* hover / focus / press */
-    --t-section: 700ms;                               /* section entrances */
+    --t-section: 380ms;                               /* section entrances */
     --t-reveal: 1000ms;                               /* main reveals */
-    --rise: 24px;                                     /* default upward travel */
+    --rise: 14px;                                     /* default upward travel */
     --line-from: 0;                                   /* gold lines grow from 0 (1 = just fade) */
 }
 
@@ -2950,11 +2950,11 @@ textarea:focus-visible {
     animation: mrIn var(--t-section) var(--ease-out) var(--rd, 0ms) backwards;
 }
 
-.mr-small { --rise: 14px; }
+.mr-small { --rise: 10px; }
 .mr-fade  { --rise: 0px; }
 
 .mr-fade.is-in {
-    animation-duration: 1000ms;
+    animation-duration: 450ms;
 }
 
 /* Section header lines draw once the header arrives */
@@ -3580,7 +3580,7 @@ textarea:focus-visible {
 }
 
 .section-header.is-in .section-title .ch {
-    animation: charUp 800ms var(--ease-out) calc(var(--rd, 0ms) + 120ms + var(--ci) * 28ms) backwards;
+    animation: charUp 420ms var(--ease-out) calc(var(--rd, 0ms) + 20ms + var(--ci) * 7ms) backwards;
 }
 
 /* The hero names use the letters instead of the whole-line rise */
@@ -5042,4 +5042,52 @@ textarea:focus-visible {
     height: 1px;
     opacity: 0;
     pointer-events: none;
+}
+
+
+/* =====================================================
+   SMOOTH SCROLLING
+   -----------------------------------------------------
+   - html clips sideways overflow without creating a scroller
+     (body used to be a second scroll container, which makes
+     scrolling sticky on iPhones)
+   - on touch screens the costly effects are switched off:
+     backdrop blur over moving content, infinite photo drift
+   ===================================================== */
+
+html {
+    overflow-x: clip;
+}
+
+@media (hover: none), (pointer: coarse) {
+    *,
+    *::before,
+    *::after {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+
+    /* The blur is gone, so these floating pieces become (nearly) solid */
+    .music-pill {
+        background: rgba(18, 12, 30, 0.94);
+    }
+
+    .quick-nav-dock {
+        background: rgba(18, 12, 30, 0.97);
+    }
+
+    .toast-notification {
+        background: rgba(24, 16, 40, 0.98);
+    }
+
+    .lightbox-backdrop {
+        background: rgba(6, 4, 12, 0.98);
+    }
+
+    /* Continuous photo drift is a desktop touch */
+    .gallery-img.is-loaded,
+    .panorama-img,
+    .reveal-section.active .reveal-image {
+        animation: none !important;
+    }
 }
